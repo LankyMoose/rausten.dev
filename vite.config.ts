@@ -7,6 +7,9 @@ export default defineConfig({
   optimizeDeps: {
     include: ["**/*.css"],
   },
+  build: {
+    outDir: "docs",
+  },
   esbuild: {
     jsxInject: `import * as kaioken from "kaioken"`,
     jsx: "transform",

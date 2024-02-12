@@ -1,5 +1,11 @@
+import { CsharpIcon } from "./components/icons/CsharpIcon"
+import { CssIcon } from "./components/icons/CssIcon"
+import { DotNetIcon } from "./components/icons/DotNetIcon"
 import { GithubIcon } from "./components/icons/GithubIcon"
-import { MenuIcon } from "./components/icons/MenuIcon"
+import { HtmlIcon } from "./components/icons/HtmlIcon"
+import { JavascriptIcon } from "./components/icons/JavascriptIcon"
+import { SqlIcon } from "./components/icons/SqlIcon"
+import { TypescriptIcon } from "./components/icons/TypescriptIcon"
 
 export function App() {
   return (
@@ -9,8 +15,22 @@ export function App() {
       </header>
       <main>
         <HeroSection />
+        <SkillsList />
       </main>
-      <footer></footer>
+      <footer>
+        <div className="flex justify-end">
+          <span>
+            Made with{" "}
+            <a
+              className="font-semibold"
+              href="https://www.npmjs.com/package/kaioken"
+              target="_blank"
+            >
+              Kaioken
+            </a>
+          </span>
+        </div>
+      </footer>
     </>
   )
 }
@@ -18,6 +38,9 @@ export function App() {
 function Nav() {
   return (
     <nav>
+      <a href="/Rob-Austen-Resume.pdf" target="_blank" className="button-link">
+        Resume
+      </a>
       <a
         href="https://github.com/Robby6Strings"
         target="_blank"
@@ -25,12 +48,6 @@ function Nav() {
       >
         <GithubIcon />
       </a>
-      <a href="/Rob-Austen-Resume.pdf" target="_blank" className="button-link">
-        Resume
-      </a>
-      <button className="sm:hidden">
-        <MenuIcon />
-      </button>
     </nav>
   )
 }
@@ -57,5 +74,19 @@ function HeroSection() {
         </p>
       </div>
     </section>
+  )
+}
+
+function SkillsList() {
+  return (
+    <div id="skills-list">
+      <CsharpIcon />
+      <DotNetIcon />
+      <SqlIcon />
+      <TypescriptIcon />
+      <JavascriptIcon />
+      <HtmlIcon />
+      <CssIcon />
+    </div>
   )
 }
