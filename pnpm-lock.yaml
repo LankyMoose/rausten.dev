@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   kaioken:
-    specifier: ^0.4.1
-    version: 0.4.1
+    specifier: ^0.4.2
+    version: 0.4.2
 
 devDependencies:
   autoprefixer:
@@ -757,8 +757,8 @@ packages:
     hasBin: true
     dev: true
 
-  /kaioken@0.4.1:
-    resolution: {integrity: sha512-gtjRelEB4EtkBsOELypQbQp4vffB8DcUy0nfWQICS3XlajPbmq98+FrQiv5WnVQIM7qnTbu2ukP64VYt8W/A6w==}
+  /kaioken@0.4.2:
+    resolution: {integrity: sha512-DNI1upxvgN6JCFPKQObLZwVtvhBI0AL9sZX+Ys+8H7M36QbKGdb96awYWKvMMfMLE6X116jnUoS4O4M312+AKw==}
     dev: false
 
   /lilconfig@2.1.0:

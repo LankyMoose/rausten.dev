@@ -1,43 +1,61 @@
-import { Router, Route, Link, useState } from "kaioken"
+import { GithubIcon } from "./components/icons/GithubIcon"
+import { MenuIcon } from "./components/icons/MenuIcon"
 
 export function App() {
   return (
-    <div className="text-center">
-      <nav className="flex gap-2 justify-center">
-        <Link className="p-2 text-blue-500" to="/">
-          Home
-        </Link>
-        <Link className="p-2 text-blue-500" to="/counter">
-          Counter
-        </Link>
-      </nav>
-      <main className="p-2">
-        <Router>
-          <Route
-            path="/"
-            element={() => (
-              <div className="text-xl font-bold">Hello world!</div>
-            )}
-          />
-          <Route path="/counter" element={Counter} />
-        </Router>
+    <>
+      <header>
+        <Nav />
+      </header>
+      <main>
+        <HeroSection />
       </main>
-    </div>
+      <footer></footer>
+    </>
   )
 }
 
-function Counter() {
-  const [count, setCount] = useState(0)
-
+function Nav() {
   return (
-    <div className="flex flex-col gap-2">
-      <p>Count: {count}</p>
-      <button
-        className="p-2 bg-blue-500 text-white"
-        onclick={() => setCount((prev) => prev + 1)}
+    <nav>
+      <a
+        href="https://github.com/Robby6Strings"
+        target="_blank"
+        className="rounded-full border-2 border-current p-1"
       >
-        Increment
+        <GithubIcon />
+      </a>
+      <a href="/Rob-Austen-Resume.pdf" target="_blank" className="button-link">
+        Resume
+      </a>
+      <button className="sm:hidden">
+        <MenuIcon />
       </button>
-    </div>
+    </nav>
+  )
+}
+
+function HeroSection() {
+  return (
+    <section id="hero">
+      <div className="section-content">
+        <h1 className="mb-8">
+          <small className="text-sm text-spicy">Hi, my name is</small>
+          <br />
+          <big>Rob Austen.</big>
+          <br />
+          <big className="text-muted">I build things for the web.</big>
+        </h1>
+        <p className="text-muted">
+          I'm a software developer focussed on building tools for interactive
+          applications that replace or simplify existing technologies. My latest
+          project is{" "}
+          <a href="https://kaioban.com" target="_blank">
+            Kaioban
+          </a>
+          .
+        </p>
+      </div>
+    </section>
   )
 }
