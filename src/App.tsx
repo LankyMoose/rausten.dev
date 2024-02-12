@@ -79,7 +79,7 @@ function HeroSection() {
 
 function SkillsList() {
   return (
-    <div id="skills-list">
+    <section id="skills-list">
       <CsharpIcon />
       <DotNetIcon />
       <SqlIcon />
@@ -87,6 +87,6 @@ function SkillsList() {
       <JavascriptIcon />
       <HtmlIcon />
       <CssIcon />
-    </div>
+    </section>
   )
 }

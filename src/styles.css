@@ -92,12 +92,19 @@ section {
 }
 
 #hero .section-content h1 small {
-  font-size: 125%;
+  font-size: 150%;
+  font-weight: 600;
 }
 
 #hero .section-content h1 big {
   font-size: 420%;
   line-height: 1;
+  font-weight: 700;
+}
+
+#hero .section-content p {
+  font-size: 150%;
+  font-weight: lighter;
 }
 
 #skills-list {
