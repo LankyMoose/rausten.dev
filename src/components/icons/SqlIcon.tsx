@@ -1,6 +1,6 @@
 export function SqlIcon() {
   return (
-    <svg fill="white" height={64} id="Capa_1" viewBox="0 0 360 360">
+    <svg className="svg-light" height={64} id="Capa_1" viewBox="0 0 360 360">
       <g id="XMLID_978_">
         <path
           id="XMLID_979_"

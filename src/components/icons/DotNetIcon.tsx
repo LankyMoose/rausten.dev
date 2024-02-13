@@ -1,7 +1,7 @@
 export function DotNetIcon() {
   return (
     <svg
-      fill="#fff"
+      className="svg-light"
       height={64}
       viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"

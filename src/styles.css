@@ -4,12 +4,14 @@
 
 :root {
   --dark-blue: #171739;
-  --highlight: #5eafd0;
+  --highlight: #97cad4;
   --radius: 3px;
-  background-image: linear-gradient(black, var(--dark-blue));
-  background-attachment: fixed;
+  /* background-image: linear-gradient(black, var(--dark-blue));
+  background-attachment: fixed; */
+  background-color: #1e1e1d;
   color: #dedeee;
   font-size: 14px;
+  scroll-behavior: smooth;
 }
 
 @media screen and (min-width: 480px) {
@@ -19,12 +21,16 @@
 }
 
 .text-muted {
-  color: #ababbb;
+  color: #ddd0b9;
 }
 
 .text-spicy {
   font-family: monospace;
   color: var(--highlight);
+}
+
+.svg-light {
+  fill: #ddd !important;
 }
 
 a {
@@ -42,6 +48,10 @@ a.button-link {
   background-color: transparent;
   border: 2px solid var(--highlight);
   color: var(--highlight)
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 main {
@@ -74,6 +84,9 @@ footer {
 
 section {
   padding: 0 1rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 #hero {
@@ -84,11 +97,12 @@ section {
 }
 
 #hero .section-content {
-  max-width: 768px;
+  max-width: 860px;
 }
 
 #hero .section-content h1>* {
   display: block;
+  margin-bottom: 1rem;
 }
 
 #hero .section-content h1 small {
@@ -103,8 +117,9 @@ section {
 }
 
 #hero .section-content p {
-  font-size: 150%;
+  font-size: 125%;
   font-weight: lighter;
+  margin-bottom: 3rem;
 }
 
 #skills-list {
@@ -128,4 +143,15 @@ section {
 
 #skills-list svg:hover {
   filter: grayscale(0);
+}
+
+.badge-list {
+  display: flex;
+  gap: .25rem;
+}
+
+.badge {
+  text-shadow: -1px -1px rgba(0, 0, 0, .3);
+  color: #fff;
+  border-radius: var(--radius);
 }
