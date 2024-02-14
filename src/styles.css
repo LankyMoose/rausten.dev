@@ -20,6 +20,17 @@
   }
 }
 
+html,
+body,
+main {
+  height: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+}
+
 .text-muted {
   color: #ddd0b9;
 }
@@ -54,11 +65,6 @@ a:hover {
   text-decoration: underline;
 }
 
-main {
-  display: flex;
-  flex-direction: column;
-}
-
 header {
   position: fixed;
   top: 0;
@@ -83,9 +89,9 @@ footer {
 
 section {
   padding: 1rem;
-  min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 #hero {
@@ -124,7 +130,7 @@ section {
 #skills-list {
   display: flex;
   gap: 1rem;
-  padding: 4rem 1rem;
+  padding: 2rem 1rem;
   justify-content: center;
 }
 
