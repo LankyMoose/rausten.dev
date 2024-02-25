@@ -4,6 +4,8 @@ import { DotNetIcon } from "./components/icons/DotNetIcon"
 import { GithubIcon } from "./components/icons/GithubIcon"
 import { HtmlIcon } from "./components/icons/HtmlIcon"
 import { JavascriptIcon } from "./components/icons/JavascriptIcon"
+import { LinkedInIcon } from "./components/icons/LinkedInIcon"
+import { LogoIcon } from "./components/icons/LogoIcon"
 import { SqlIcon } from "./components/icons/SqlIcon"
 import { TypescriptIcon } from "./components/icons/TypescriptIcon"
 
@@ -23,7 +25,7 @@ export function App() {
             Made with{" "}
             <a
               className="font-semibold"
-              href="https://www.npmjs.com/package/kaioken"
+              href="https://kaioken.dev"
               target="_blank"
             >
               Kaioken
@@ -37,17 +39,31 @@ export function App() {
 
 function Nav() {
   return (
-    <nav>
-      <a href="/Rob-Austen-Resume.pdf" target="_blank" className="button-link">
-        Resume
-      </a>
-      <a
-        href="https://github.com/Robby6Strings"
-        target="_blank"
-        className="rounded-full border-2 border-current p-1"
-      >
-        <GithubIcon />
-      </a>
+    <nav className="justify-between w-full">
+      <LogoIcon />
+      <div className="flex gap-4">
+        <a
+          href="/Rob-Austen-Resume.pdf"
+          target="_blank"
+          className="button-link"
+        >
+          Resume
+        </a>
+        <a
+          href="https://github.com/Robby6Strings"
+          target="_blank"
+          className="rounded-full border-2 border-current p-1"
+        >
+          <GithubIcon />
+        </a>
+        <a
+          href="https://www.linkedin.com/in/rausten/"
+          target="_blank"
+          className="rounded-full border-2 border-current p-1"
+        >
+          <LinkedInIcon />
+        </a>
+      </div>
     </nav>
   )
 }
@@ -60,16 +76,10 @@ function HeroSection() {
           <h1 className="mb-8">
             <small className="text-sm text-spicy">Hi, my name is</small>
             <big>Rob Austen.</big>
-            <big className="text-muted">I build things for the web.</big>
           </h1>
           <p className="text-muted">
-            I'm a software developer focussed on building tools for interactive
-            applications that replace or simplify existing technologies. My
-            latest project is{" "}
-            <a href="https://kaioban.com" target="_blank">
-              Kaioban
-            </a>
-            .
+            I'm a software developer focussed on building interactive
+            applications & tools that make building web applications easier.
           </p>
           {/* <a href="#previous-work" className="button-link text-xl">
             Previous Work
