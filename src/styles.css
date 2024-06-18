@@ -69,8 +69,6 @@ a:hover {
 }
 
 header {
-  position: fixed;
-  top: 0;
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -130,13 +128,13 @@ section {
 #skills-list {
   display: flex;
   gap: 1rem;
-  padding: 2rem 1rem;
+  padding: 1rem;
   justify-content: center;
 }
 
 @media screen and (min-width:480px) {
   #skills-list {
-    padding: 2rem;
+    padding: 1.5rem;
   }
 }
 
