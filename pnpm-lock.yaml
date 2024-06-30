@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       kaioken:
-        specifier: ^0.18.0
-        version: 0.18.0
+        specifier: ^0.21.0
+        version: 0.21.0
     devDependencies:
       autoprefixer:
         specifier: ^10.4.17
@@ -28,8 +28,8 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1
       vite-plugin-kaioken:
-        specifier: ^0.4.0
-        version: 0.4.0(kaioken@0.18.0)
+        specifier: ^0.5.0
+        version: 0.5.0(kaioken@0.21.0)
 
 packages:
 
@@ -468,8 +468,8 @@ packages:
     resolution: {integrity: sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==}
     hasBin: true
 
-  kaioken@0.18.0:
-    resolution: {integrity: sha512-4DodwLaNjMHdOU3EvHUET1tjQOicEgffCvL/MFtnvUR7ZDeDmvOtDl2YEsc/iwmobSZ3duS/102fN7V5oBPm9g==}
+  kaioken@0.21.0:
+    resolution: {integrity: sha512-2ZH/3oMO9C6W8aK59WjXcWqwG6w7KnbYN1olNqz4CW00X2gr3Ge1R5ZFR3pk+AuVHz+XfbS4booV41BYvlvWlg==}
 
   lilconfig@2.1.0:
     resolution: {integrity: sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==}
@@ -696,10 +696,10 @@ packages:
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
-  vite-plugin-kaioken@0.4.0:
-    resolution: {integrity: sha512-mwXCSeMBglFx5XJBdkA07eJHaIXA8bNBgUjiH4yy77fEyzy1C23x730DUG29Dccvv7XWKRRrtKM7NBlKMX491A==}
+  vite-plugin-kaioken@0.5.0:
+    resolution: {integrity: sha512-lN5BTQA8bYc0j0FxT/ob054pcqYrzIS0/IpaaiNZpUzK0LPK+fqdM1dGZkwV8aBmSTy9Six3ZyW9E48FXu0nLQ==}
     peerDependencies:
-      kaioken: '>=0.18.0'
+      kaioken: '>=0.21.0'
 
   vite@5.1.1:
     resolution: {integrity: sha512-wclpAgY3F1tR7t9LL5CcHC41YPkQIpKUGeIuT8MdNwNZr6OqOTLs7JX5vIHAtzqLWXts0T+GDrh9pN2arneKqg==}
@@ -1097,7 +1097,7 @@ snapshots:
 
   jiti@1.21.0: {}
 
-  kaioken@0.18.0: {}
+  kaioken@0.21.0: {}
 
   lilconfig@2.1.0: {}
 
@@ -1326,9 +1326,9 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  vite-plugin-kaioken@0.4.0(kaioken@0.18.0):
+  vite-plugin-kaioken@0.5.0(kaioken@0.21.0):
     dependencies:
-      kaioken: 0.18.0
+      kaioken: 0.21.0
 
   vite@5.1.1:
     dependencies:
