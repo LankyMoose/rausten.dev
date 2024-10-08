@@ -10,13 +10,5 @@ export default defineConfig({
   build: {
     outDir: "docs",
   },
-  esbuild: {
-    jsxInject: `import * as kaioken from "kaioken"`,
-    jsx: "transform",
-    jsxFactory: "kaioken.createElement",
-    jsxFragment: "kaioken.fragment",
-    loader: "tsx",
-    include: ["**/*.tsx", "**/*.ts", "**/*.jsx", "**/*.js"],
-  },
   plugins: [kaioken()],
 })
