@@ -1,8 +1,10 @@
-name: Build
+name: Build and Upload Pages Artifact
+
 on:
   push:
     branches:
       - main
+
 env:
   NODE_ENV: production
 jobs:
@@ -23,3 +25,7 @@ jobs:
         run: pnpm install
       - name: Build
         run: pnpm build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: docs
