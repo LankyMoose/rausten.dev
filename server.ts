@@ -36,10 +36,9 @@ app.use("*all", async (req, res) => {
   try {
     const url = req.originalUrl.replace(base, "")
 
-    /** @type {string} */
-    let template
-    /** @type {import('./src/entry-server.ts').render} */
-    let render
+    let template: string
+    let render: () => string
+
     if (!isProduction) {
       // Always read fresh template in development
       template = await fs.readFile("./index.html", "utf-8")
@@ -47,15 +46,14 @@ app.use("*all", async (req, res) => {
       render = (await vite.ssrLoadModule("/src/entry-server.ts")).render
     } else {
       template = templateHtml
-      // @ts-expect-error fuck you ts
+      // @ts-expect-error heck you ts
       render = (await import("./dist/server/entry-server.js")).render
     }
 
-    const rendered = await render(url)
-
-    const html = template.replace("<body></body>", `<body>${rendered}</body>`)
-
-    res.status(200).set({ "Content-Type": "text/html" }).send(html)
+    res
+      .status(200)
+      .set({ "Content-Type": "text/html" })
+      .send(template.replace("<body></body>", `<body>${render()}</body>`))
   } catch (e) {
     const err = e as Error
     vite?.ssrFixStacktrace(err)
