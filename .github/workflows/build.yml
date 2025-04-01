@@ -22,7 +22,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  NODE_ENV: production
+  NODE_ENV: development
 jobs:
   # Set up build job
   build:
@@ -44,6 +44,7 @@ jobs:
         run: pnpm build
   # Single deploy job since we're just deploying
   deploy:
+    needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
