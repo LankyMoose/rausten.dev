@@ -15,4 +15,3 @@ fs.cpSync("./dist/client", "./docs", { recursive: true })
 // replace "./docs/index.html" with the generated index.html
 
 fs.writeFileSync("./docs/index.html", index)
-console.log("built docs")
