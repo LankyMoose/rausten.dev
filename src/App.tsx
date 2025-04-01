@@ -8,6 +8,7 @@ import { LinkedInIcon } from "./components/icons/LinkedInIcon"
 import { LogoIcon } from "./components/icons/LogoIcon"
 import { SqlIcon } from "./components/icons/SqlIcon"
 import { TypescriptIcon } from "./components/icons/TypescriptIcon"
+import { RepoList } from "./components/RepoList"
 
 export function App() {
   return (
@@ -17,6 +18,8 @@ export function App() {
       </header>
       <main>
         <HeroSection />
+        <RepoList />
+        <SkillsList />
       </main>
       <footer>
         <div className="flex justify-end">
@@ -82,15 +85,20 @@ function HeroSection() {
           </p>
         </div>
       </div>
-      <div id="skills-list">
-        <CsharpIcon />
-        <DotNetIcon />
-        <SqlIcon />
-        <TypescriptIcon />
-        <JavascriptIcon />
-        <HtmlIcon />
-        <CssIcon />
-      </div>
     </section>
+  )
+}
+
+function SkillsList() {
+  return (
+    <div id="skills-list">
+      <CsharpIcon />
+      <DotNetIcon />
+      <SqlIcon />
+      <TypescriptIcon />
+      <JavascriptIcon />
+      <HtmlIcon />
+      <CssIcon />
+    </div>
   )
 }

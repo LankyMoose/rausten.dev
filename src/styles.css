@@ -26,6 +26,7 @@
   /* background-image: linear-gradient(black, var(--dark-blue));
   background-attachment: fixed; */
   background-color: #181a1b;
+  background-image: linear-gradient(#181a1b, #111);
   color: #f2f2f2;
   font-size: 14px;
   scroll-behavior: smooth;
@@ -44,12 +45,6 @@ body {
 }
 
 main {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-#app {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -180,4 +175,21 @@ section {
   text-shadow: -1px -1px rgba(0, 0, 0, .3);
   color: #fff;
   border-radius: var(--radius);
+}
+
+.repos-list {
+  @apply flex gap-4 flex-wrap p-4 text-sm md:text-base;
+}
+
+.repos-list__item {
+  @apply p-4 bg-white/5 rounded-lg border border-white/10 grow basis-[300px];
+  @apply flex flex-col gap-2;
+}
+
+.repos-list__item__header {
+  @apply flex gap-4 justify-between;
+}
+
+a.repos-list__item__stars {
+  @apply flex items-center gap-2 cursor-pointer text-neutral-200 hover:text-amber-300 no-underline;
 }
