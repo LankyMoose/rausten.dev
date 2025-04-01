@@ -7,6 +7,7 @@ export default defineConfig({
   optimizeDeps: {
     include: ["**/*.css"],
   },
+  base: "/rausten.dev",
   build: {
     outDir: "docs",
   },
