@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "tsx ./server.ts",
-    "build": "npm run build:client && npm run build:server",
+    "build": "pnpm build:client && pnpm build:server && pnpm build:ssg",
     "build:client": "vite build --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.ts --outDir dist/server",
-    "preview": "cross-env NODE_ENV=production tsx ./server.ts",
-    "ssg": "cross-env NODE_ENV=production node ./docs-ssg.js"
+    "build:ssg": "cross-env NODE_ENV=production node ./docs-ssg.js",
+    "preview": "cross-env NODE_ENV=production tsx ./server.ts"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.17",
