@@ -72,10 +72,10 @@ function Nav() {
 
 function HeroSection() {
   return (
-    <section className="flex-col">
+    <section className="flex-col min-h-[320px] justify-end">
       <div id="hero">
-        <div className="section-content">
-          <h1 className="mb-8">
+        <div className="section-content flex flex-col gap-2">
+          <h1>
             <small className="text-sm text-spicy">Hi, my name is</small>
             <big>Rob Austen.</big>
           </h1>

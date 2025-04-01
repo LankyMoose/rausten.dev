@@ -121,7 +121,6 @@ section {
 
 #hero .section-content h1>* {
   display: block;
-  margin-bottom: 1rem;
 }
 
 #hero .section-content h1 small {
@@ -138,7 +137,6 @@ section {
 #hero .section-content p {
   font-size: 125%;
   font-weight: lighter;
-  margin-bottom: 3rem;
 }
 
 #skills-list {
