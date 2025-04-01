@@ -28,8 +28,20 @@ async function parseThrowErr(res: Response) {
 
 export function RepoList() {
   const repos = useAsync<Repository[]>(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    return await Promise.all([
+    // check localstorage for recent hit - if it's been less than 60 minutes, don't make another request
+    const fromStorage = localStorage.getItem("repos")
+    if (fromStorage) {
+      try {
+        const parsed = JSON.parse(fromStorage)
+        if (Date.now() - parsed.timestamp < 1000 * 60 * 60) {
+          return parsed.repos
+        }
+      } catch (error) {
+        console.error(error)
+        localStorage.removeItem("repos")
+      }
+    }
+    const res = await Promise.all([
       await fetch("https://api.github.com/users/LankyMoose/repos")
         .then(parseThrowErr)
         .then((res) =>
@@ -43,6 +55,13 @@ export function RepoList() {
         parseThrowErr
       ),
     ]).then((res) => res.flat())
+
+    localStorage.setItem(
+      "repos",
+      JSON.stringify({ repos: res, timestamp: Date.now() })
+    )
+    await new Promise((resolve) => setTimeout(resolve, 500))
+    return res
   }, [])
 
   return (
@@ -104,7 +123,10 @@ export function RepoList() {
                       <a href={repo.html_url} target="_blank">
                         {repo.name}
                       </a>
-                      <a className="repos-list__item__stars">
+                      <a
+                        className="repos-list__item__stars"
+                        href={repo.html_url + "/stargazers"}
+                      >
                         <GithubStar fill="currentColor" />{" "}
                         {repo.stargazers_count}
                       </a>
