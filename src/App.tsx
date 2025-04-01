@@ -72,7 +72,7 @@ function Nav() {
 
 function HeroSection() {
   return (
-    <section>
+    <section className="flex-col">
       <div id="hero">
         <div className="section-content">
           <h1 className="mb-8">
@@ -91,7 +91,7 @@ function HeroSection() {
 
 function SkillsList() {
   return (
-    <div id="skills-list">
+    <section id="skills-list">
       <CsharpIcon />
       <DotNetIcon />
       <SqlIcon />
@@ -99,6 +99,6 @@ function SkillsList() {
       <JavascriptIcon />
       <HtmlIcon />
       <CssIcon />
-    </div>
+    </section>
   )
 }

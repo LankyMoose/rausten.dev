@@ -29,6 +29,7 @@ async function parseThrowErr(res: Response) {
 export function RepoList() {
   const repos = useAsync<Repository[]>(async () => {
     // check localstorage for recent hit - if it's been less than 60 minutes, don't make another request
+    await new Promise((resolve) => setTimeout(resolve, 500))
     const fromStorage = localStorage.getItem("repos")
     if (fromStorage) {
       try {
@@ -60,12 +61,11 @@ export function RepoList() {
       "repos",
       JSON.stringify({ repos: res, timestamp: Date.now() })
     )
-    await new Promise((resolve) => setTimeout(resolve, 500))
     return res
   }, [])
 
   return (
-    <div className="relative w-full flex items-center justify-center min-h-[200px]">
+    <section className="relative w-full flex items-center justify-center min-h-[200px] grow">
       <Transition
         in={repos.loading}
         initialState="entered"
@@ -75,7 +75,7 @@ export function RepoList() {
           const scale = state === "entered" ? "1" : "0"
           return (
             <div
-              className="flex justify-center items-center absolute left-[calc(50vw - 50%)] top-1/2"
+              className="flex justify-center text-primary-500 items-center absolute left-[calc(50vw - 50%)] top-1/2"
               style={{
                 opacity,
                 transform: `translateY(${translateY}%)`,
@@ -140,6 +140,6 @@ export function RepoList() {
           )
         }}
       />
-    </div>
+    </section>
   )
 }
