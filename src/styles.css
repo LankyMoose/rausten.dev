@@ -174,7 +174,7 @@ section {
 }
 
 .repos-list {
-  @apply flex gap-4 flex-wrap p-4 text-sm md:text-base;
+  @apply flex gap-4 flex-wrap text-sm md:text-base;
 }
 
 .repos-list__item {
