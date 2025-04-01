@@ -72,7 +72,7 @@ function Nav() {
 
 function HeroSection() {
   return (
-    <section className="flex-col min-h-[320px] justify-end">
+    <section className="flex-col min-h-[240px] sm:min-h-[320px] justify-end">
       <div id="hero">
         <div className="section-content flex flex-col gap-2">
           <h1>
