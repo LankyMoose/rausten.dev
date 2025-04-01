@@ -9,6 +9,7 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
+
   *,
   ::after,
   ::before,
@@ -43,6 +44,12 @@ body {
 }
 
 main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#app {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
