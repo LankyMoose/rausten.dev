@@ -76,7 +76,7 @@ function HeroSection() {
       <div id="hero">
         <div className="section-content flex flex-col gap-2">
           <h1>
-            <small className="text-sm text-spicy">Hi, my name is</small>
+            <small className="text-sm text-spicy">Hi, my name is </small>
             <big>Rob Austen.</big>
           </h1>
           <p className="text-muted">
