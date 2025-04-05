@@ -12,13 +12,11 @@ async function parseThrowErr(res: Response) {
       if (parsed.message.startsWith("API rate limit exceeded")) {
         msg = "API rate limit exceeded. Please try again later."
       }
+      return
     }
     return parsed
   } catch (error) {
-    if (!res.ok) {
-      throw new Error(res.statusText)
-    }
-    throw new Error("Failed to parse response")
+    throw new Error(res.ok ? "Failed to parse response" : res.statusText)
   } finally {
     if (msg) {
       throw new Error(msg)
@@ -29,12 +27,12 @@ async function parseThrowErr(res: Response) {
 export function RepoList() {
   const repos = useAsync<Repository[]>(async () => {
     // check localstorage for recent hit - if it's been less than 60 minutes, don't make another request
-    await new Promise((resolve) => setTimeout(resolve, 500))
     const fromStorage = localStorage.getItem("repos")
     if (fromStorage) {
       try {
         const parsed = JSON.parse(fromStorage)
         if (Date.now() - parsed.timestamp < 1000 * 60 * 60) {
+          await new Promise((resolve) => setTimeout(resolve, 500))
           return parsed.repos
         }
       } catch (error) {
@@ -42,7 +40,9 @@ export function RepoList() {
         localStorage.removeItem("repos")
       }
     }
-    const res = await Promise.all([
+
+    const start = Date.now()
+    const repos = await Promise.all([
       await fetch("https://api.github.com/users/LankyMoose/repos")
         .then(parseThrowErr)
         .then((res) =>
@@ -56,12 +56,15 @@ export function RepoList() {
         parseThrowErr
       ),
     ]).then((res) => res.flat())
+    const end = Date.now()
+    localStorage.setItem("repos", JSON.stringify({ repos, timestamp: end }))
 
-    localStorage.setItem(
-      "repos",
-      JSON.stringify({ repos: res, timestamp: Date.now() })
-    )
-    return res
+    const duration = end - start
+    if (duration < 500) {
+      await new Promise((resolve) => setTimeout(resolve, 500 - duration))
+    }
+
+    return repos
   }, [])
 
   return (
