@@ -23,10 +23,10 @@
     "tailwindcss": "^4.0.17",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
-    "vite": "^6.2.4",
     "vite-plugin-kaioken": "^0.16.4"
   },
   "dependencies": {
+    "vite": "^6.2.4",
     "express": "^5.1.0",
     "kaioken": "^0.36.4"
   }
