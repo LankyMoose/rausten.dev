@@ -22,7 +22,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  NODE_ENV: development
+  NODE_ENV: production
 jobs:
   # Set up build job
   build:
