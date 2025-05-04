@@ -43,6 +43,9 @@ export function RepoList() {
 
     const start = Date.now()
     const repos = await Promise.all([
+      await fetch("https://api.github.com/repos/CrimsonChi/kaioken").then(
+        parseThrowErr
+      ),
       await fetch("https://api.github.com/users/LankyMoose/repos")
         .then(parseThrowErr)
         .then((res) =>
@@ -52,9 +55,6 @@ export function RepoList() {
             )
           )
         ),
-      await fetch("https://api.github.com/repos/CrimsonChi/kaioken").then(
-        parseThrowErr
-      ),
     ]).then((res) => res.flat())
     const end = Date.now()
     localStorage.setItem("repos", JSON.stringify({ repos, timestamp: end }))
