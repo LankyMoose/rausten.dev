@@ -129,6 +129,7 @@ export function RepoList() {
                       <a
                         className="repos-list__item__stars"
                         href={repo.html_url + "/stargazers"}
+                        target="_blank"
                       >
                         <GithubStar fill="currentColor" />{" "}
                         {repo.stargazers_count}
