@@ -1,4 +1,4 @@
-import { Transition } from "kaioken"
+import { Transition, useEffect, useRef } from "kaioken"
 import { Repository } from "../types"
 import { GithubStar } from "./icons/GithubStar"
 import { Loader } from "./Loader"
@@ -6,6 +6,13 @@ import { useRepos } from "../hooks/useRepos"
 
 export function RepoList() {
   const repos = useRepos()
+  const loaderContainer = useRef<HTMLDivElement>(null)
+  useEffect(function maintainLoaderTopOffset() {
+    if (loaderContainer.current) {
+      const computedTop = window.getComputedStyle(loaderContainer.current).top
+      loaderContainer.current.style.top = `${parseInt(computedTop)}px`
+    }
+  }, [])
 
   return (
     <section className="relative w-full flex items-center justify-center min-h-[200px] grow">
@@ -18,6 +25,7 @@ export function RepoList() {
           const scale = state === "entered" ? "1" : "0"
           return (
             <div
+              ref={loaderContainer}
               className="flex justify-center text-primary-500 items-center absolute left-[calc(50vw - 50%)] top-1/2"
               style={{
                 opacity,
