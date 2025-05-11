@@ -178,7 +178,7 @@ section {
 }
 
 .repos-list__item {
-  @apply p-4 bg-white/2 rounded-lg border border-white/5 grow basis-[300px];
+  @apply p-4 bg-white/2 rounded-lg border border-white/5 grow basis-[300px] md:basis-1/4 lg:basis-1/5;
   @apply flex flex-col gap-2;
 }
 
