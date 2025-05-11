@@ -18,8 +18,8 @@ export function App() {
       </header>
       <main>
         <HeroSection />
-        <RepoList />
         <SkillsList />
+        <RepoList />
       </main>
       <footer>
         <div className="flex justify-end">
