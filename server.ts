@@ -37,7 +37,7 @@ app.use("*all", async (req, res) => {
     const url = req.originalUrl.replace(base, "")
 
     let template: string
-    let render: () => string
+    let render: ({ path }: { path: string }) => Promise<string>
 
     if (!isProduction) {
       // Always read fresh template in development
@@ -53,7 +53,12 @@ app.use("*all", async (req, res) => {
     res
       .status(200)
       .set({ "Content-Type": "text/html" })
-      .send(template.replace("<body></body>", `<body>${render()}</body>`))
+      .send(
+        template.replace(
+          "<body></body>",
+          `<body>${await render({ path: req.originalUrl })}</body>`
+        )
+      )
   } catch (e) {
     const err = e as Error
     vite?.ssrFixStacktrace(err)

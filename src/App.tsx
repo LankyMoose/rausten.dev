@@ -1,25 +1,18 @@
-import { CsharpIcon } from "./components/icons/CsharpIcon"
-import { CssIcon } from "./components/icons/CssIcon"
-import { DotNetIcon } from "./components/icons/DotNetIcon"
+import { Link } from "kaioken/router"
+import { useRouter } from "./components/ClientRouter"
 import { GithubIcon } from "./components/icons/GithubIcon"
-import { HtmlIcon } from "./components/icons/HtmlIcon"
-import { JavascriptIcon } from "./components/icons/JavascriptIcon"
 import { LinkedInIcon } from "./components/icons/LinkedInIcon"
 import { LogoIcon } from "./components/icons/LogoIcon"
-import { SqlIcon } from "./components/icons/SqlIcon"
-import { TypescriptIcon } from "./components/icons/TypescriptIcon"
-import { RepoList } from "./components/RepoList"
 
 export function App() {
+  const { Page } = useRouter()
   return (
     <>
       <header>
         <Nav />
       </header>
       <main>
-        <HeroSection />
-        <SkillsList />
-        <RepoList />
+        <Page />
       </main>
       <footer>
         <div className="flex justify-end">
@@ -42,7 +35,14 @@ export function App() {
 function Nav() {
   return (
     <nav className="justify-between w-full">
-      <LogoIcon />
+      <div className="flex gap-2">
+        <Link to="/" className="flex items-center">
+          <LogoIcon />
+        </Link>
+        <Link to="/blog" className="flex items-center">
+          Blog
+        </Link>
+      </div>
       <div className="flex gap-4">
         <a
           href="/Rob-Austen-Resume.pdf"
@@ -67,38 +67,5 @@ function Nav() {
         </a>
       </div>
     </nav>
-  )
-}
-
-function HeroSection() {
-  return (
-    <section className="flex-col min-h-[240px] sm:min-h-[320px] justify-end">
-      <div id="hero">
-        <div className="section-content flex flex-col gap-2">
-          <h1>
-            <small className="text-sm text-spicy">Hi, my name is </small>
-            <big>Rob Austen.</big>
-          </h1>
-          <p className="text-muted">
-            I'm a software developer focussed on building interactive
-            applications & tools that make building web applications easier.
-          </p>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function SkillsList() {
-  return (
-    <section id="skills-list">
-      <CsharpIcon />
-      <DotNetIcon />
-      <SqlIcon />
-      <TypescriptIcon />
-      <JavascriptIcon />
-      <HtmlIcon />
-      <CssIcon />
-    </section>
   )
 }

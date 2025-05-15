@@ -1,7 +1,6 @@
 import { defineConfig } from "vite"
 import kaioken from "vite-plugin-kaioken"
-
-// https://github.com/Applelo/unplugin-inject-preload
+import mdx from "@mdx-js/rollup"
 
 export default defineConfig({
   optimizeDeps: {
@@ -10,5 +9,12 @@ export default defineConfig({
   build: {
     outDir: "docs",
   },
-  plugins: [kaioken()],
+  plugins: [
+    kaioken(),
+    mdx({
+      jsx: false,
+      jsxImportSource: "kaioken",
+      jsxRuntime: "automatic",
+    }),
+  ],
 })

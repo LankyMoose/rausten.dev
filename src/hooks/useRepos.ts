@@ -1,6 +1,5 @@
 import { useAsync } from "kaioken"
 import { Repository } from "../types"
-import { parseThrowErr } from "../utils"
 
 export function useRepos() {
   return useAsync<Repository[]>(async () => {
@@ -21,11 +20,11 @@ export function useRepos() {
 
     const start = Date.now()
     const repos = await Promise.all([
-      await fetch("https://api.github.com/repos/CrimsonChi/kaioken").then(
-        parseThrowErr
+      await fetch("https://api.github.com/repos/CrimsonChi/kaioken").then((r) =>
+        r.json()
       ),
       await fetch("https://api.github.com/users/LankyMoose/repos")
-        .then(parseThrowErr)
+        .then((r) => r.json())
         .then((res) =>
           res.filter((repo: Repository) =>
             [

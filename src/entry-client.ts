@@ -1,4 +1,10 @@
 import { hydrate } from "kaioken/ssr/client"
-import { App } from "./App"
+import { Wrapper } from "./Wrapper"
+import { loadPageByPath } from "./utils"
 
-hydrate(App, document.body)
+loadPageByPath(window.location.pathname).then((Page) =>
+  hydrate(Wrapper, document.body, {
+    path: window.location.pathname,
+    Page,
+  })
+)

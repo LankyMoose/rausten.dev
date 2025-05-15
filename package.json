@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx ./server.ts",
+    "dev": "tsx ./server.ts --watch",
     "build": "pnpm build:client && pnpm build:server && pnpm build:ssg",
     "build:client": "vite build --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.ts --outDir dist/server",
@@ -14,20 +14,23 @@
   "devDependencies": {
     "@types/compression": "^1.7.5",
     "@types/express": "^5.0.1",
-    "@types/node": "^22.15.3",
+    "@types/node": "^22.15.18",
     "compression": "^1.8.0",
     "sirv": "^3.0.1",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@tailwindcss/postcss": "^4.1.5",
+    "@mdx-js/mdx": "^3.1.0",
+    "@mdx-js/rollup": "^3.1.0",
+    "@tailwindcss/postcss": "^4.1.6",
+    "@types/mdx": "^2.0.13",
     "cross-env": "^7.0.3",
     "express": "^5.1.0",
-    "kaioken": "^0.38.2",
+    "kaioken": "^0.39.0",
     "postcss": "^8.5.3",
-    "tailwindcss": "^4.1.5",
-    "vite": "^6.3.4",
-    "vite-plugin-kaioken": "^0.18.2"
+    "tailwindcss": "^4.1.6",
+    "vite": "^6.3.5",
+    "vite-plugin-kaioken": "^0.19.0"
   }
 }

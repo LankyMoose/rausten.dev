@@ -3,7 +3,10 @@ import { render } from "./dist/server/entry-server.js"
 
 const html = fs.readFileSync("./dist/client/index.html", "utf-8")
 
-const index = html.replace("<body></body>", `<body>${render()}</body>`)
+const index = html.replace(
+  "<body></body>",
+  `<body>${render({ url: "/" })}</body>`
+)
 
 //fs.writeFileSync("./dist/client/index.html", index)
 
