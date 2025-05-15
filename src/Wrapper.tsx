@@ -8,7 +8,6 @@ export const Wrapper = ({
   path: string
   Page: () => JSX.Element
 }) => {
-  console.log("Wrapper", path, Page)
   return (
     <ClientRouter initialState={{ path, Page }} transition>
       <App />

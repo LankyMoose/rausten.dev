@@ -39,7 +39,8 @@ export const ClientRouter: Kaioken.FC<ClientRouterProps> = (props) => {
   useLayoutEffect(() => {
     const handler = async () => {
       const nextPage = await loadPageByPath(window.location.pathname)
-      console.log("nextPage", nextPage)
+      // @ts-ignore
+      console.log("nextPage", nextPage, nextPage.frontmatter)
       if (!document.startViewTransition || !props.transition) {
         setPage(() => nextPage)
         return setPathname(window.location.pathname)
