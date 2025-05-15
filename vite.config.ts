@@ -5,7 +5,6 @@ import fs from "node:fs/promises"
 import { read } from "to-vfile"
 import { matter } from "vfile-matter"
 import remarkFrontmatter from "remark-frontmatter"
-import remarkMdxFrontmatter from "remark-mdx-frontmatter"
 
 export default defineConfig({
   optimizeDeps: {
@@ -20,7 +19,7 @@ export default defineConfig({
       jsx: false,
       jsxImportSource: "kaioken",
       jsxRuntime: "automatic",
-      remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+      remarkPlugins: [remarkFrontmatter],
     }),
     articleDiscovery(),
   ],
