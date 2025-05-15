@@ -44,7 +44,7 @@ function PageContentDisplay({
   Page: () => JSX.Element
   route: string
 }) {
-  if (Page.name === "MDXContent") {
+  if (route.startsWith("/blog/")) {
     const manifestEntry = blogManifest[route.slice(6)]
     console.log("PageContentDisplay", manifestEntry)
     return (
