@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin '@tailwindcss/typography';
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
@@ -26,6 +27,7 @@
 }
 
 :root {
+  color-scheme: dark;
   background-color: #181a1b;
   background-image: linear-gradient(#181a1b, #060606);
   color: #f2f2f2;
@@ -87,6 +89,10 @@ a:hover {
   text-decoration: underline;
 }
 
+h1 {
+  @apply text-neutral-50;
+}
+
 header {
   width: 100%;
   display: flex;
@@ -115,7 +121,7 @@ section {
   justify-content: center;
 }
 
-#hero .section-content {
+#hero .section-content:not(.prose .section-content) {
   max-width: 678px;
 }
 
@@ -124,11 +130,14 @@ section {
 }
 
 #hero .section-content h1 small {
+  view-transition-name: hero-sub;
   font-size: 150%;
   font-weight: 600;
 }
 
 #hero .section-content h1 big {
+  view-transition-name: hero-title;
+  @apply text-neutral-50;
   font-size: 420%;
   line-height: 1;
   font-weight: 700;

@@ -14,6 +14,7 @@ export default defineConfig({
     outDir: "docs",
   },
   plugins: [
+    articleDiscovery(),
     kaioken(),
     mdx({
       jsx: false,
@@ -21,7 +22,6 @@ export default defineConfig({
       jsxRuntime: "automatic",
       remarkPlugins: [remarkFrontmatter],
     }),
-    articleDiscovery(),
   ],
 })
 
@@ -38,7 +38,9 @@ function articleDiscovery() {
       if (file.endsWith(".mdx")) {
         const vFile = await read(`./src/pages/blog/${file}`)
         matter(vFile)
-        articles[file] = vFile.data.matter as Record<string, any> | undefined
+        articles[file.split(".")[0]] = vFile.data.matter as
+          | Record<string, any>
+          | undefined
       }
     }
   }
@@ -46,50 +48,22 @@ function articleDiscovery() {
   return {
     // scans /pages/blog for mdx files, and creates a route for each of them
     name: "article-discovery",
+    enforce: "post",
+    async hotUpdate({ file }) {
+      if (file.endsWith("mdx")) {
+        console.log("hot update", file)
+        const { moduleGraph, ws } = server!
+        await scanArticles()
+        moduleGraph.invalidateModule(
+          moduleGraph.getModuleById(resolvedVirtualManifestModuleId)!
+        )
+        ws.send({
+          type: "full-reload",
+        })
+      }
+    },
     configureServer(devServer) {
       server = devServer
-
-      // Watch for changes in the blog directory
-      devServer.watcher.add("./src/pages/blog")
-
-      devServer.watcher.on("add", async (file) => {
-        if (file.endsWith(".mdx")) {
-          await scanArticles()
-          const { moduleGraph } = server!
-          moduleGraph.invalidateModule(
-            moduleGraph.getModuleById(resolvedVirtualManifestModuleId)!
-          )
-          server?.ws.send({
-            type: "full-reload",
-          })
-        }
-      })
-
-      devServer.watcher.on("unlink", async (file) => {
-        if (file.endsWith(".mdx")) {
-          delete articles[file]
-          const { moduleGraph, ws } = server!
-          moduleGraph.invalidateModule(
-            moduleGraph.getModuleById(resolvedVirtualManifestModuleId)!
-          )
-          ws.send({
-            type: "full-reload",
-          })
-        }
-      })
-
-      devServer.watcher.on("change", async (file) => {
-        if (file.endsWith(".mdx")) {
-          await scanArticles()
-          const { moduleGraph, ws } = server!
-          moduleGraph.invalidateModule(
-            moduleGraph.getModuleById(resolvedVirtualManifestModuleId)!
-          )
-          ws.send({
-            type: "full-reload",
-          })
-        }
-      })
     },
     resolveId(id) {
       if (id === virtualManifestModuleId) {

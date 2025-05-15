@@ -1,11 +1,10 @@
 import {
   createContext,
-  useAppContext,
   useContext,
   useLayoutEffect,
   useMemo,
-  useRef,
   useState,
+  useViewTransition,
 } from "kaioken"
 import { loadPageByPath } from "../utils"
 
@@ -21,11 +20,9 @@ export const useRouter = () => useContext(ClientRouterContext)
 
 type ClientRouterProps = {
   initialState: { path: string; Page: () => JSX.Element }
-  transition?: boolean
 }
 export const ClientRouter: Kaioken.FC<ClientRouterProps> = (props) => {
-  const appCtx = useAppContext()
-  const viewTransition = useRef<ViewTransition | null>(null)
+  const transition = useViewTransition()
   const [pathname, setPathname] = useState(props.initialState.path)
   const [Page, setPage] = useState(() => props.initialState.Page)
 
@@ -39,20 +36,9 @@ export const ClientRouter: Kaioken.FC<ClientRouterProps> = (props) => {
   useLayoutEffect(() => {
     const handler = async () => {
       const nextPage = await loadPageByPath(window.location.pathname)
-      // @ts-ignore
-      console.log("nextPage", nextPage, nextPage.frontmatter)
-      if (!document.startViewTransition || !props.transition) {
-        setPage(() => nextPage)
-        return setPathname(window.location.pathname)
-      }
-
-      viewTransition.current = document.startViewTransition(() => {
+      transition(() => {
         setPage(() => nextPage)
         setPathname(window.location.pathname)
-        appCtx.flushSync()
-      })
-      viewTransition.current.finished.then(() => {
-        viewTransition.current = null
       })
     }
     window.addEventListener("popstate", handler)
