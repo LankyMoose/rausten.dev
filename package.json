@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx ./server.ts --watch",
-    "build": "pnpm build:client && pnpm build:server",
+    "build": "pnpm build:client && pnpm build:server && pnpm build:ssg",
     "build:client": "vite build --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.ts --outDir dist/server",
     "build:ssg": "cross-env NODE_ENV=production node ./docs-ssg.js",
