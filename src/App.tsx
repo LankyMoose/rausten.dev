@@ -3,9 +3,7 @@ import { useRouter } from "./components/ClientRouter"
 import { GithubIcon } from "./components/icons/GithubIcon"
 import { LinkedInIcon } from "./components/icons/LinkedInIcon"
 import { LogoIcon } from "./components/icons/LogoIcon"
-
-// @ts-ignore
-import blogManifest from "virtual:blog-manifest"
+import { BlogHeader } from "./components/BlogHeader"
 
 export function App() {
   const { Page, path } = useRouter()
@@ -45,10 +43,8 @@ function PageContentDisplay({
   route: string
 }) {
   if (route.startsWith("/blog/")) {
-    const manifestEntry = blogManifest[route.slice(6)]
-    console.log("PageContentDisplay", manifestEntry)
     return (
-      <section
+      <article
         className={[
           "prose prose-invert prose-headings:font-bold prose-headings:text-neutral-50 max-w-full",
           "flex-col",
@@ -58,22 +54,11 @@ function PageContentDisplay({
           // @ts-ignore
           components={{
             h1: ({ children }: any) => (
-              <div className="flex flex-col min-h-[240px] sm:min-h-[320px] justify-end">
-                <div id="hero">
-                  <div className="section-content flex flex-col gap-2">
-                    <h1 className="not-prose">
-                      <big>{children}</big>
-                      <small className="text-sm text-spicy">
-                        {manifestEntry["created-at"]}
-                      </small>
-                    </h1>
-                  </div>
-                </div>
-              </div>
+              <BlogHeader route={route}>{children}</BlogHeader>
             ),
           }}
         />
-      </section>
+      </article>
     )
   }
   return <Page />

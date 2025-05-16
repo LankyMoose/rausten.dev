@@ -27,6 +27,7 @@
 }
 
 :root {
+  --content-width: 768px;
   color-scheme: dark;
   background-color: #181a1b;
   background-image: linear-gradient(#181a1b, #060606);
@@ -111,7 +112,6 @@ footer {
 }
 
 section {
-  padding: 1rem;
   display: flex;
 }
 
@@ -121,21 +121,30 @@ section {
   justify-content: center;
 }
 
-#hero .section-content:not(.prose .section-content) {
-  max-width: 678px;
+article {
+  width: calc(var(--content-width) + 2rem);
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+#hero .section-content {
+  width: var(--content-width);
 }
 
 #hero .section-content h1>* {
   display: block;
 }
 
+
 #hero .section-content h1 small {
+  contain: layout;
   view-transition-name: hero-sub;
   font-size: 150%;
   font-weight: 600;
 }
 
 #hero .section-content h1 big {
+  contain: layout;
   view-transition-name: hero-title;
   @apply text-neutral-50;
   font-size: 420%;
@@ -144,6 +153,7 @@ section {
 }
 
 #hero .section-content p {
+  view-transition-name: hero-para;
   font-size: 125%;
   font-weight: lighter;
 }

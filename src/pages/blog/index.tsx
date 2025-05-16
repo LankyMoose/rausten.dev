@@ -7,17 +7,20 @@ export default function Page() {
   console.log({ routeMap, blogManifest })
   return (
     <>
-      <section className="flex-col min-h-[240px] sm:min-h-[320px] justify-end">
+      <section className="p-4 flex-col min-h-[240px] sm:min-h-[320px] justify-end">
         <div id="hero">
           <div className="section-content flex flex-col gap-2">
             <h1>
+              <small className="text-sm text-spicy"></small>
               <big>Blog</big>
-              <small className="text-sm text-spicy">/Shower thoughts</small>
             </h1>
+            <p className="text-muted">
+              Some random ramblings accompanied by code.
+            </p>
           </div>
         </div>
       </section>
-      <section className="flex flex-wrap gap-4">
+      <section className="p-4 mx-auto w-full flex flex-wrap gap-4 max-w-[calc(var(--content-width)+2rem)]">
         {Object.keys(routeMap)
           .filter((route) => route.startsWith("/blog/") && route.length > 6)
           .map((route) => (

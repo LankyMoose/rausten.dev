@@ -2,7 +2,6 @@ import {
   createContext,
   useContext,
   useLayoutEffect,
-  useMemo,
   useState,
   useViewTransition,
 } from "kaioken"
@@ -10,8 +9,6 @@ import { loadPageByPath } from "../utils"
 
 type ClientRouterContextType = {
   path: string
-  segments: string[]
-  navigate: (path: string) => void
   Page: () => JSX.Element
 }
 const ClientRouterContext = createContext<ClientRouterContextType>(null!)
@@ -26,13 +23,6 @@ export const ClientRouter: Kaioken.FC<ClientRouterProps> = (props) => {
   const [pathname, setPathname] = useState(props.initialState.path)
   const [Page, setPage] = useState(() => props.initialState.Page)
 
-  const segments = useMemo(
-    () => pathname.split("/").filter(Boolean),
-    [pathname]
-  )
-
-  const navigate = (path: string) => history.pushState(null, "", path)
-
   useLayoutEffect(() => {
     const handler = async () => {
       const nextPage = await loadPageByPath(window.location.pathname)
@@ -46,9 +36,7 @@ export const ClientRouter: Kaioken.FC<ClientRouterProps> = (props) => {
   }, [])
 
   return (
-    <ClientRouterContext.Provider
-      value={{ path: pathname, segments, navigate, Page }}
-    >
+    <ClientRouterContext.Provider value={{ path: pathname, Page }}>
       {props.children}
     </ClientRouterContext.Provider>
   )

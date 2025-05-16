@@ -19,7 +19,7 @@ export default function Page() {
 
 function HeroSection() {
   return (
-    <section className="flex-col min-h-[240px] sm:min-h-[320px] justify-end">
+    <section className="p-4 flex-col min-h-[240px] sm:min-h-[320px] justify-end">
       <div id="hero">
         <div className="section-content flex flex-col gap-2">
           <h1>
@@ -38,7 +38,7 @@ function HeroSection() {
 
 function SkillsList() {
   return (
-    <section id="skills-list">
+    <section className="p-4" id="skills-list">
       <CsharpIcon />
       <DotNetIcon />
       <SqlIcon />
