@@ -6,18 +6,17 @@ type BlogHeaderProps = {
 }
 export function BlogHeader({ children, route }: BlogHeaderProps) {
   const manifestEntry = blogManifest[route.slice(6)]
+  const { description, date } = manifestEntry
   return (
     <section className="flex flex-col min-h-[240px] sm:min-h-[320px] justify-end">
       <div id="hero">
         <div className="section-content flex flex-col gap-2">
           <h1 className="not-prose">
-            <small className="text-sm text-spicy">
-              {manifestEntry["created-at"]}
-            </small>
+            <small className="text-sm text-spicy">{date}</small>
             <big>{children}</big>
           </h1>
           <p className="text-muted" style="margin:0">
-            {manifestEntry["description"]}
+            {description}
           </p>
         </div>
       </div>

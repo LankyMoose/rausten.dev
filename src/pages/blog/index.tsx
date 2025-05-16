@@ -33,6 +33,7 @@ export default function Page() {
 
 function BlogListItemLink({ route }: { route: string }) {
   const manifestEntry = blogManifest[route.slice(6)]
+  const { title, description, date } = manifestEntry
   return (
     <div
       className={[
@@ -40,10 +41,13 @@ function BlogListItemLink({ route }: { route: string }) {
         "bg-white/2 border border-white/5 rounded-lg",
       ]}
     >
-      <Link to={route}>{manifestEntry?.title}</Link>
-      {manifestEntry?.description && (
-        <p className="text-neutral-300">{manifestEntry.description}</p>
-      )}
+      <div className="flex gap-2 justify-between items-center">
+        <Link to={route}>{title}</Link>
+        <small className="text-neutral-400">
+          {new Date(date).toDateString()}
+        </small>
+      </div>
+      <p className="text-neutral-300">{description}</p>
     </div>
   )
 }

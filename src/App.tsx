@@ -71,9 +71,9 @@ function Nav() {
         <Link to="/" className="flex items-center">
           <LogoIcon />
         </Link>
-        {/* <Link to="/blog" className="flex items-center underline">
+        <Link to="/blog" className="flex items-center underline">
           Blog
-        </Link> */}
+        </Link>
       </div>
       <div className="flex gap-4">
         <a
