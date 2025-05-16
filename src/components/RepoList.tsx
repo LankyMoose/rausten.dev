@@ -1,5 +1,4 @@
 import { Transition, useEffect, useRef } from "kaioken"
-import { Repository } from "../types"
 import { GithubStar } from "./icons/GithubStar"
 import { Loader } from "./Loader"
 import { useRepos } from "../hooks/useRepos"
@@ -18,7 +17,7 @@ export function RepoList() {
     <section className="p-4 relative w-full flex items-center justify-center min-h-[200px] grow">
       <Transition
         in={repos.loading}
-        initialState="entered"
+        initialState={repos.loading ? "entered" : "exited"}
         element={(state) => {
           const opacity = state === "entered" ? "1" : "0"
           const translateY = state === "entered" ? 0 : -100
@@ -41,7 +40,8 @@ export function RepoList() {
       />
       <Transition
         in={!repos.loading}
-        initialState="exited"
+        initialState={repos.loading ? "exited" : "entered"}
+        duration={repos.loading ? 150 : 0}
         element={(state) => {
           const translateY = state === "entered" ? 0 : 10
           const opacity = state === "entered" ? "1" : "0"

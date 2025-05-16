@@ -17,7 +17,7 @@ const routes = fs
   .map((r) => "/" + r.replace(/\\/g, "/"))
   .map(pathToRoute)
 
-console.log({ routes })
+console.log("SSG - routes", routes)
 
 routes.forEach(async (route) => {
   // we need to transform 'blog\\index.tsx' into '/blog/index.tsx'
@@ -39,19 +39,3 @@ routes.forEach(async (route) => {
   }
   fs.writeFileSync("./dist/client" + route + ".html", rendered)
 })
-
-// const index = html.replace(
-//   "<body></body>",
-//   `<body>${render({ url: "/" })}</body>`
-// )
-
-// //fs.writeFileSync("./dist/client/index.html", index)
-
-// // clone the contents of "./dist/client" into "./docs"
-
-// fs.mkdirSync("./docs", { recursive: true })
-// fs.cpSync("./dist/client", "./docs", { recursive: true })
-
-// // replace "./docs/index.html" with the generated index.html
-
-// fs.writeFileSync("./docs/index.html", index)

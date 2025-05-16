@@ -7,7 +7,6 @@ import { BlogHeader } from "./components/BlogHeader"
 
 export function App() {
   const { Page, path } = useRouter()
-  console.log("APP", path)
 
   return (
     <>

@@ -1,3 +1,4 @@
+import blogManifest from "virtual:blog-manifest"
 import { getRouteMap, RouteMapValue } from "./routes"
 
 export async function loadPageByPath(path: string): Promise<() => JSX.Element> {
@@ -19,6 +20,9 @@ export async function getRouteEntryByPath(path: string) {
   if (matchedRoute === null) {
     return (() => import("./pages/404.tsx")) satisfies RouteMapValue
   }
-  console.log("MATCHED ROUTE", matchedRoute)
   return matchedRoute
+}
+
+export function getBlogManifestEntryFromRoute(route: string) {
+  return blogManifest[route.slice(6)]
 }

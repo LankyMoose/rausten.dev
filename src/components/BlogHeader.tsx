@@ -1,12 +1,11 @@
-// @ts-ignore
-import blogManifest from "virtual:blog-manifest"
+import { getBlogManifestEntryFromRoute } from "../utils"
+
 type BlogHeaderProps = {
   children: JSX.Children
   route: string
 }
 export function BlogHeader({ children, route }: BlogHeaderProps) {
-  const manifestEntry = blogManifest[route.slice(6)]
-  const { description, date } = manifestEntry
+  const { description, date } = getBlogManifestEntryFromRoute(route)
   return (
     <section className="flex flex-col min-h-[240px] sm:min-h-[320px] justify-end">
       <div id="hero">

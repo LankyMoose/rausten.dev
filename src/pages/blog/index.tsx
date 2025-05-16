@@ -1,10 +1,9 @@
 import { Link } from "kaioken/router"
 import { getRouteMap } from "../../routes"
-// @ts-ignore
 import blogManifest from "virtual:blog-manifest"
+
 export default function Page() {
   const routeMap = getRouteMap()
-  console.log({ routeMap, blogManifest })
   return (
     <>
       <section className="p-4 flex-col min-h-[240px] sm:min-h-[320px] justify-end">

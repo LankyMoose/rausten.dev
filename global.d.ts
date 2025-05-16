@@ -1,4 +1,11 @@
-export type Repository = {
+type BlogItemMeta = {
+  title: string
+  description: string
+  date: string
+}
+type BlogManifest = Record<string, BlogItemMeta>
+
+type Repository = {
   allow_forking: boolean
   archive_url: string
   archived: boolean
@@ -103,4 +110,9 @@ export type Repository = {
   watchers: number
   watchers_count: number
   web_commit_signoff_required: boolean
+}
+
+declare module "virtual:blog-manifest" {
+  const manifest: BlogManifest
+  export default manifest
 }
