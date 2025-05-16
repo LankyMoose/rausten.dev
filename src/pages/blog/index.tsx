@@ -2,6 +2,7 @@ import { Link } from "kaioken/router"
 import { getRouteMap } from "../../routes"
 import blogManifest from "virtual:blog-manifest"
 import { useHead } from "../../Head"
+import { Hero } from "../../components/Hero"
 
 export default function Page() {
   useHead({
@@ -14,18 +15,11 @@ export default function Page() {
   const routeMap = getRouteMap()
   return (
     <>
-      <section className="p-4 flex-col min-h-[240px] sm:min-h-[320px] justify-end">
-        <div id="hero">
-          <div className="section-content flex flex-col gap-2">
-            <h1>
-              <small className="text-sm text-spicy"></small>
-              <big>Blog</big>
-            </h1>
-            <p className="text-muted">
-              Some random ramblings accompanied by code.
-            </p>
-          </div>
-        </div>
+      <section className="flex flex-col p-4 min-h-[240px] sm:min-h-[320px] justify-end">
+        <Hero
+          big="Blog"
+          description="Some random ramblings accompanied by code."
+        />
       </section>
       <section className="p-4 mx-auto w-full flex flex-wrap gap-4 max-w-[calc(var(--content-width)+2rem)]">
         {Object.keys(routeMap)

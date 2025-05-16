@@ -45,8 +45,8 @@ function PageContentDisplay({
     return (
       <article
         className={[
-          "prose prose-invert prose-headings:font-bold prose-headings:text-neutral-50 max-w-full",
-          "flex-col",
+          "prose prose-invert prose-headings:font-bold prose-headings:text-neutral-50 prose-p:my-4",
+          "flex-col max-w-full",
         ]}
       >
         <Page

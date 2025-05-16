@@ -1,3 +1,4 @@
+import { Hero } from "../components/Hero"
 import { CsharpIcon } from "../components/icons/CsharpIcon"
 import { CssIcon } from "../components/icons/CssIcon"
 import { DotNetIcon } from "../components/icons/DotNetIcon"
@@ -26,19 +27,13 @@ export default function Page() {
 
 function HeroSection() {
   return (
-    <section className="p-4 flex-col min-h-[240px] sm:min-h-[320px] justify-end">
-      <div id="hero">
-        <div className="section-content flex flex-col gap-2">
-          <h1>
-            <small className="text-sm text-spicy">Hi, my name is </small>
-            <big>Rob Austen.</big>
-          </h1>
-          <p className="text-muted">
-            I'm a software developer focussed on building interactive
-            applications & tools that make building web applications easier.
-          </p>
-        </div>
-      </div>
+    <section className="flex flex-col p-4 min-h-[240px] sm:min-h-[320px] justify-end">
+      <Hero
+        small="Hi, my name is "
+        big="Rob Austen."
+        description="I'm a software developer focussed on building interactive
+            applications & tools that make building web applications easier."
+      />
     </section>
   )
 }
