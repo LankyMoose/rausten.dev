@@ -28,11 +28,11 @@ routes.forEach(async (route) => {
       recursive: true,
     })
   }
+  const { body, head } = await render({ path: route })
 
-  const rendered = html.replace(
-    "<body></body>",
-    `<body>${await render({ path: route })}</body>`
-  )
+  const rendered = html
+    .replace("<!-- HEAD -->", head)
+    .replace("<body></body>", `<body>${body}</body>`)
 
   if (route.endsWith("/")) {
     route += "index"

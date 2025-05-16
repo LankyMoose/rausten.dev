@@ -1,8 +1,16 @@
 import { Link } from "kaioken/router"
 import { getRouteMap } from "../../routes"
 import blogManifest from "virtual:blog-manifest"
+import { useHead } from "../../Head"
 
 export default function Page() {
+  useHead({
+    title: "Blog - rausten.dev",
+    meta: {
+      description:
+        "The blog of the personal website of the person named Rob Austen",
+    },
+  })
   const routeMap = getRouteMap()
   return (
     <>

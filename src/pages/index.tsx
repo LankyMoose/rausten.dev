@@ -6,8 +6,15 @@ import { JavascriptIcon } from "../components/icons/JavascriptIcon"
 import { SqlIcon } from "../components/icons/SqlIcon"
 import { TypescriptIcon } from "../components/icons/TypescriptIcon"
 import { RepoList } from "../components/RepoList"
+import { useHead } from "../Head"
 
 export default function Page() {
+  useHead({
+    title: "rausten.dev",
+    meta: {
+      description: "The personal website of Rob Austen",
+    },
+  })
   return (
     <>
       <HeroSection />
