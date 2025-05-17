@@ -129,19 +129,14 @@ article {
   width: var(--content-width);
 }
 
-#hero .section-content h1>* {
-  display: block;
-}
-
-
-#hero .section-content h1 small {
+#hero .section-content small {
   contain: layout;
   view-transition-name: hero-sub;
   font-size: 150%;
   font-weight: 600;
 }
 
-#hero .section-content h1 big {
+#hero .section-content h1 {
   contain: layout;
   view-transition-name: hero-title;
   color: #eee;

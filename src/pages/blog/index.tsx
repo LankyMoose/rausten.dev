@@ -16,10 +16,7 @@ export default function Page() {
   return (
     <>
       <section className="flex flex-col p-4 min-h-[240px] sm:min-h-[320px] justify-end">
-        <Hero
-          big="Blog"
-          description="Some random ramblings accompanied by code."
-        />
+        <Hero heading="Blog" sub="Some random ramblings accompanied by code." />
       </section>
       <section className="p-4 mx-auto w-full flex flex-wrap gap-4 max-w-[calc(var(--content-width)+2rem)]">
         {Object.keys(routeMap)

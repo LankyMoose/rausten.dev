@@ -14,9 +14,9 @@ export function BlogHeader({ route }: BlogHeaderProps) {
   return (
     <section className="flex flex-col min-h-[240px] sm:min-h-[320px] justify-end not-prose mb-6">
       <Hero
-        small={new Date(date).toDateString()}
-        big={title}
-        description={description}
+        sup={new Date(date).toDateString()}
+        heading={title}
+        sub={description}
       />
     </section>
   )

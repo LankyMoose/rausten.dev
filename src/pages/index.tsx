@@ -29,9 +29,9 @@ function HeroSection() {
   return (
     <section className="flex flex-col p-4 min-h-[240px] sm:min-h-[320px] justify-end">
       <Hero
-        small="Hi, my name is "
-        big="Rob Austen."
-        description="I'm a software developer focussed on building interactive
+        sup="Hi, my name is "
+        heading="Rob Austen."
+        sub="I'm a software developer focussed on building interactive
             applications & tools that make building web applications easier."
       />
     </section>
