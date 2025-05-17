@@ -1,0 +1,167 @@
+<svg viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#121212" />
+
+  <defs>
+    <pattern
+      id="dot-pattern"
+      width="20"
+      height="20"
+      patternUnits="userSpaceOnUse"
+    >
+      <circle cx="10" cy="10" r="1" fill="#333333" />
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#dot-pattern)" opacity="0.3" />
+
+  <rect x="0" y="0" width="12" height="630" fill="#5eafd0" />
+
+  <g transform="translate(100, 120)">
+    <text x="0" y="0" font-family="monospace" font-size="24" fill="#97cad4">
+      Hi, my name is
+    </text>
+
+    <text
+      x="0"
+      y="80"
+      font-family="Arial, sans-serif"
+      font-size="72"
+      font-weight="bold"
+      fill="white"
+    >
+      Rob Austen.
+    </text>
+
+    <text
+      x="0"
+      y="140"
+      font-family="Arial, sans-serif"
+      font-size="24"
+      fill="#AAAAAA"
+    >
+      Software developer focused on building
+    </text>
+    <text
+      x="0"
+      y="175"
+      font-family="Arial, sans-serif"
+      font-size="24"
+      fill="#AAAAAA"
+    >
+      interactive applications &amp; tools
+    </text>
+
+    <g transform="translate(0, 240)">
+      <rect x="0" y="0" width="60" height="60" rx="5" fill="#333333" />
+      <text
+        x="30"
+        y="38"
+        font-family="monospace"
+        font-size="24"
+        font-weight="bold"
+        text-anchor="middle"
+        fill="white"
+      >
+        C#
+      </text>
+
+      <rect x="70" y="0" width="60" height="60" rx="5" fill="#333333" />
+      <text
+        x="100"
+        y="38"
+        font-family="monospace"
+        font-size="20"
+        font-weight="bold"
+        text-anchor="middle"
+        fill="white"
+      >
+        .NET
+      </text>
+
+      <rect x="140" y="0" width="60" height="60" rx="5" fill="#333333" />
+      <text
+        x="170"
+        y="38"
+        font-family="monospace"
+        font-size="20"
+        font-weight="bold"
+        text-anchor="middle"
+        fill="white"
+      >
+        SQL
+      </text>
+
+      <rect x="210" y="0" width="60" height="60" rx="5" fill="#333333" />
+      <text
+        x="240"
+        y="38"
+        font-family="monospace"
+        font-size="24"
+        font-weight="bold"
+        text-anchor="middle"
+        fill="white"
+      >
+        TS
+      </text>
+
+      <rect x="280" y="0" width="60" height="60" rx="5" fill="#333333" />
+      <text
+        x="310"
+        y="38"
+        font-family="monospace"
+        font-size="24"
+        font-weight="bold"
+        text-anchor="middle"
+        fill="white"
+      >
+        JS
+      </text>
+
+      <rect x="350" y="0" width="60" height="60" rx="5" fill="#333333" />
+      <text
+        x="380"
+        y="38"
+        font-family="monospace"
+        font-size="22"
+        font-weight="bold"
+        text-anchor="middle"
+        fill="white"
+      >
+        HTML
+      </text>
+
+      <rect x="420" y="0" width="60" height="60" rx="5" fill="#333333" />
+      <text
+        x="450"
+        y="38"
+        font-family="monospace"
+        font-size="24"
+        font-weight="bold"
+        text-anchor="middle"
+        fill="white"
+      >
+        CSS
+      </text>
+    </g>
+  </g>
+
+  <text
+    x="50"
+    y="70"
+    font-family="monospace"
+    font-size="36"
+    font-weight="bold"
+    fill="#5eafd0"
+  >
+    RA
+  </text>
+
+  <text
+    x="100"
+    y="580"
+    font-family="Arial, sans-serif"
+    font-size="24"
+    fill="#AAAAAA"
+  >
+    rausten.dev
+  </text>
+</svg>
