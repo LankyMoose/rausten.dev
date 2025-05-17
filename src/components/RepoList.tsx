@@ -14,7 +14,7 @@ export function RepoList() {
   }, [])
 
   return (
-    <section className="p-4 relative w-full flex items-center justify-center min-h-[200px] grow">
+    <section className="p-4 relative w-full flex items-center justify-center min-h-[200px] grow max-w-7xl mx-auto">
       <Transition
         in={repos.loading}
         initialState={repos.loading ? "entered" : "exited"}

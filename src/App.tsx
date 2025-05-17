@@ -74,7 +74,7 @@ function PageContentDisplay({
 
 function Nav() {
   return (
-    <nav className="justify-between w-full">
+    <nav className="justify-between w-full max-w-7xl mx-auto">
       <div className="flex gap-4">
         <Link to="/" className="flex items-center">
           <LogoIcon />
