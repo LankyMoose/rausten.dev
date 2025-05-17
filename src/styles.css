@@ -144,7 +144,7 @@ article {
 #hero .section-content h1 big {
   contain: layout;
   view-transition-name: hero-title;
-  @apply text-neutral-50;
+  color: #eee;
   font-size: 420%;
   line-height: 1;
   font-weight: 700;

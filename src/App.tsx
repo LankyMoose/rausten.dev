@@ -43,21 +43,30 @@ function PageContentDisplay({
 }) {
   if (route.startsWith("/blog/")) {
     return (
-      <article
-        className={[
-          "prose prose-invert prose-headings:font-bold prose-headings:text-neutral-50 prose-p:my-4",
-          "flex-col max-w-full",
-        ]}
-      >
-        <Page
-          // @ts-ignore
-          components={{
-            h1: ({ children }: any) => (
-              <BlogHeader route={route}>{children}</BlogHeader>
-            ),
-          }}
-        />
-      </article>
+      <Page
+        // @ts-ignore
+        components={{
+          wrapper: ({ children }: any) => (
+            <article
+              className={[
+                "prose prose-invert prose-headings:font-bold prose-headings:text-neutral-50 prose-p:my-4",
+                "flex-col max-w-full",
+              ]}
+            >
+              <BlogHeader route={route}></BlogHeader>
+              {children}
+            </article>
+          ),
+          a: ({ href, children }: any) => (
+            <a
+              href={href}
+              target={href.startsWith("http") ? "_blank" : "_self"}
+            >
+              {children}
+            </a>
+          ),
+        }}
+      />
     )
   }
   return <Page />

@@ -1,7 +1,19 @@
+import { Link } from "kaioken/router"
+import { Hero } from "../components/Hero"
+
 export default function Page() {
   return (
-    <div>
-      <h1>404</h1>
-    </div>
+    <section className="flex flex-col p-4 min-h-[240px] sm:min-h-[320px] justify-end">
+      <Hero
+        small="404"
+        big="Page not found"
+        description={
+          <>
+            Looks like you've wandered off the path. Let's go{" "}
+            <Link to="/">home</Link>.
+          </>
+        }
+      />
+    </section>
   )
 }

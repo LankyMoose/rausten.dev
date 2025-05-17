@@ -24,6 +24,11 @@ export default function Page() {
       <section className="p-4 mx-auto w-full flex flex-wrap gap-4 max-w-[calc(var(--content-width)+2rem)]">
         {Object.keys(routeMap)
           .filter((route) => route.startsWith("/blog/") && route.length > 6)
+          .sort((a, b) => {
+            const aDate = new Date(blogManifest[a.slice(6)].date)
+            const bDate = new Date(blogManifest[b.slice(6)].date)
+            return bDate.getTime() - aDate.getTime()
+          })
           .map((route) => (
             <BlogListItemLink key={route} route={route} />
           ))}
@@ -38,7 +43,7 @@ function BlogListItemLink({ route }: { route: string }) {
   return (
     <div
       className={[
-        "flex flex-col gap-2 basis-[280px] grow p-4",
+        "flex flex-col gap-2 grow p-4",
         "bg-white/2 border border-white/5 rounded-lg",
       ]}
     >
