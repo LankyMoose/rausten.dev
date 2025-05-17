@@ -101,17 +101,9 @@ header {
   padding: 1rem;
 }
 
-nav {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
 footer {
   padding: .5rem;
 }
-
-
 
 #hero {
   display: flex;

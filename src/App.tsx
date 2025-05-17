@@ -4,6 +4,9 @@ import { GithubIcon } from "./components/icons/GithubIcon"
 import { LinkedInIcon } from "./components/icons/LinkedInIcon"
 import { LogoIcon } from "./components/icons/LogoIcon"
 import { BlogHeader } from "./components/BlogHeader"
+import { XIcon } from "./components/icons/XIcon"
+import { TwitchIcon } from "./components/icons/TwitchIcon"
+import { SocialLink } from "./components/SocialLink"
 
 export function App() {
   const { Page, path } = useRouter()
@@ -11,12 +14,46 @@ export function App() {
   return (
     <>
       <header>
-        <Nav />
+        <nav className="flex gap-4 items-center justify-between w-full max-w-7xl mx-auto">
+          <div className="flex gap-4">
+            <Link to="/" className="flex items-center">
+              <LogoIcon />
+            </Link>
+            <Link to="/blog" className="flex items-center">
+              Blog
+            </Link>
+            <a href="/Rob-Austen-Resume.pdf" target="_blank">
+              Resume
+            </a>
+          </div>
+
+          <iframe
+            src="https://github.com/sponsors/LankyMoose/button"
+            title="Sponsor LankyMoose"
+            height="32"
+            width="114"
+            style="border: 0; border-radius: 6px;"
+          ></iframe>
+        </nav>
       </header>
       <main>
-        <PageContentDisplay Page={Page} key={path} route={path} />
+        <PageWrapper Page={Page} key={path} route={path} />
       </main>
-      <footer>
+      <footer className="flex flex-col gap-2">
+        <div className="flex gap-4 items-center mx-auto">
+          <SocialLink href="https://www.github.com/lankymoose">
+            <GithubIcon />
+          </SocialLink>
+          <SocialLink href="https://www.linkedin.com/in/rausten/">
+            <LinkedInIcon />
+          </SocialLink>
+          <SocialLink href="https://www.x.com/lankymoose/">
+            <XIcon />
+          </SocialLink>
+          <SocialLink href="https://www.twitch.tv/lankymoosecodes">
+            <TwitchIcon />
+          </SocialLink>
+        </div>
         <div className="flex justify-end">
           <span>
             Made with{" "}
@@ -34,7 +71,7 @@ export function App() {
   )
 }
 
-function PageContentDisplay({
+function PageWrapper({
   Page,
   route,
 }: {
@@ -70,42 +107,4 @@ function PageContentDisplay({
     )
   }
   return <Page />
-}
-
-function Nav() {
-  return (
-    <nav className="justify-between w-full max-w-7xl mx-auto">
-      <div className="flex gap-4">
-        <Link to="/" className="flex items-center">
-          <LogoIcon />
-        </Link>
-        <Link to="/blog" className="flex items-center underline">
-          Blog
-        </Link>
-      </div>
-      <div className="flex gap-4">
-        <a
-          href="/Rob-Austen-Resume.pdf"
-          target="_blank"
-          className="button-link"
-        >
-          Resume
-        </a>
-        <a
-          href="https://github.com/LankyMoose"
-          target="_blank"
-          className="rounded-full border-2 border-current p-1"
-        >
-          <GithubIcon />
-        </a>
-        <a
-          href="https://www.linkedin.com/in/rausten/"
-          target="_blank"
-          className="rounded-full border-2 border-current p-1"
-        >
-          <LinkedInIcon />
-        </a>
-      </div>
-    </nav>
-  )
 }
