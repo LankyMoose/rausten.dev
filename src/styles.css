@@ -55,11 +55,10 @@ main {
 }
 
 .text-muted {
-  color: #eae6de;
+  color: #ccc;
 }
 
 .text-spicy {
-  font-family: monospace;
   color: var(--color-primary-500);
 }
 
@@ -119,13 +118,16 @@ article {
 
 #hero .section-content {
   width: var(--content-width);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-#hero .section-content small {
+#hero .section-content span {
   contain: layout;
   view-transition-name: hero-sub;
-  font-size: 150%;
-  font-weight: 600;
+  font-size: 125%;
+  font-weight: light;
 }
 
 #hero .section-content h1 {
@@ -140,7 +142,8 @@ article {
 #hero .section-content p {
   view-transition-name: hero-para;
   font-size: 125%;
-  font-weight: lighter;
+  line-height: 1.25;
+  font-weight: light;
 }
 
 #skills-list {

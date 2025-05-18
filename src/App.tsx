@@ -86,7 +86,9 @@ function PageWrapper({
           wrapper: ({ children }: any) => (
             <article
               className={[
-                "prose prose-invert prose-headings:font-bold prose-headings:text-neutral-50 prose-p:my-4",
+                "prose-p:my-4 prose-p:font-light",
+                "prose-headings:font-bold prose-headings:text-neutral-50",
+                "prose prose-invert",
                 "flex-col max-w-full",
               ]}
             >
