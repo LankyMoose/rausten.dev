@@ -198,5 +198,5 @@ a.repos-list__item__stars {
 }
 
 .repos-list__item__description {
-  @apply text-neutral-200;
+  @apply text-neutral-300 text-sm;
 }
