@@ -50,7 +50,7 @@ function BlogListItemLink({ route }: { route: string }) {
           {new Date(date).toDateString()}
         </small>
       </div>
-      <p className="text-neutral-300">{description}</p>
+      <p className="text-neutral-300 font-light">{description}</p>
     </div>
   )
 }
