@@ -55,13 +55,9 @@ export function App() {
           </SocialLink>
         </div>
         <div className="flex justify-end">
-          <span>
+          <span className="font-light text-neutral-300">
             Made with{" "}
-            <a
-              className="font-semibold"
-              href="https://kaioken.dev"
-              target="_blank"
-            >
+            <a href="https://kaioken.dev" target="_blank">
               Kaioken
             </a>
           </span>
