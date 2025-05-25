@@ -1,4 +1,4 @@
-import { Link } from "kaioken/router"
+import { Link } from "../components/Link"
 import { Hero } from "../components/Hero"
 
 export default function Page() {

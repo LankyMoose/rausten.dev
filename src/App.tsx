@@ -1,4 +1,4 @@
-import { Link } from "kaioken/router"
+import { Link } from "./components/Link"
 import { useRouter } from "./components/ClientRouter"
 import { GithubIcon } from "./components/icons/GithubIcon"
 import { LinkedInIcon } from "./components/icons/LinkedInIcon"

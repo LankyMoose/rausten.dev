@@ -1,4 +1,4 @@
-import { Link } from "kaioken/router"
+import { Link } from "../../components/Link"
 import { getRouteMap } from "../../routes"
 import blogManifest from "virtual:blog-manifest"
 import { useHead } from "../../Head"
