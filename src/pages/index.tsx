@@ -1,16 +1,14 @@
+import { Head } from "$/components/Head"
 import { Hero } from "$/components/Hero"
 import { RepoList } from "$/components/RepoList"
-import { useHead } from "$/hooks/useHead"
 
 export default function Page() {
-  useHead({
-    title: "rausten.dev",
-    meta: {
-      description: "The personal website of Rob Austen",
-    },
-  })
   return (
     <>
+      <Head>
+        <title>rausten.dev</title>
+        <meta name="description" content="The personal website of Rob Austen" />
+      </Head>
       <HeroSection />
       <SkillsList />
       <RepoList />

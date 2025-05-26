@@ -6,6 +6,5 @@ loadPageByPath(window.location.pathname).then((Page) =>
   hydrate(App, document.body, {
     path: window.location.pathname,
     Page,
-    head: {},
   })
 )

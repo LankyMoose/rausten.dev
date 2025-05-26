@@ -1,18 +1,18 @@
 import blogManifest from "virtual:blog-manifest"
 import { Link } from "$/components/Link"
 import { Hero } from "$/components/Hero"
-import { useHead } from "$/hooks/useHead"
+import { Head } from "$/components/Head"
 
 export default function Page() {
-  useHead({
-    title: "Blog - rausten.dev",
-    meta: {
-      description:
-        "The blog of the personal website of the person named Rob Austen",
-    },
-  })
   return (
     <>
+      <Head>
+        <title>Blog - rausten.dev</title>
+        <meta
+          name="description"
+          content="The blog of the personal website of the person named Rob Austen"
+        />
+      </Head>
       <section className="flex flex-col p-4 min-h-[240px] sm:min-h-[320px] justify-end">
         <Hero heading="Blog" sub="Some random ramblings accompanied by code." />
       </section>
