@@ -1,6 +1,6 @@
 import { useCallback, useRef } from "kaioken"
 import { Link as L, LinkProps as LProps } from "kaioken/router"
-import { loadPageByPath } from "$/app/routes"
+import { loadPageByPath } from "$/app"
 
 type LinkProps = LProps & {
   /**

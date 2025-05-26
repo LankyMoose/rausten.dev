@@ -1,5 +1,5 @@
 import { useHead } from "$/hooks/useHead"
-import { getBlogManifestEntryFromRoute } from "$/app/routes"
+import { getBlogManifestEntryFromRoute } from "$/app"
 import { Hero } from "./Hero"
 
 type BlogHeaderProps = {

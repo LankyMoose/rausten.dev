@@ -1,5 +1,5 @@
 import { useContext } from "kaioken"
-import { HeadContext, HeadData } from "$/app/Wrapper"
+import { HeadContext, HeadData } from "$/app"
 
 export function useHead(data: HeadData) {
   const context = useContext(HeadContext)

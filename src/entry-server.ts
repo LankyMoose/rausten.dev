@@ -1,7 +1,5 @@
 import { renderToString } from "kaioken"
-import { Wrapper } from "./app/Wrapper"
-import { loadPageByPath } from "./app/routes"
-import type { HeadData } from "./app/Wrapper"
+import { App, HeadData, loadPageByPath } from "./app"
 
 export async function render({ path }: { path: string }) {
   const Page = await loadPageByPath(path)
@@ -12,7 +10,7 @@ export async function render({ path }: { path: string }) {
     },
   } satisfies HeadData
 
-  const body = renderToString(Wrapper, { path, Page, head })
+  const body = renderToString(App, { path, Page, head })
   const title = `<title>${head.title}</title>`
   const meta = Object.entries(head.meta)
     .map(([key, value]) => `<meta name="${key}" content="${value}">`)

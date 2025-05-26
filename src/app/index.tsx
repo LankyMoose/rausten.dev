@@ -2,6 +2,9 @@ import { createContext } from "kaioken"
 import { Template } from "./Template"
 import { ClientRouter } from "./ClientRouter"
 
+export * from "./ClientRouter"
+export * from "./routes"
+
 export type HeadData = {
   title?: string
   meta?: Record<string, string>
@@ -9,13 +12,13 @@ export type HeadData = {
 
 export const HeadContext = createContext<HeadData>({})
 
-type WrapperProps = {
+type AppProps = {
   head: HeadData
   path: string
   Page: () => JSX.Element
 }
 
-export const Wrapper = ({ head, path, Page }: WrapperProps) => {
+export const App = ({ head, path, Page }: AppProps) => {
   return (
     <HeadContext.Provider value={head}>
       <Template>
