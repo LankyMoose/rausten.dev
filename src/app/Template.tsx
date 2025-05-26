@@ -1,4 +1,3 @@
-import "./styles.css"
 import { Link } from "$/components/Link"
 import { GithubIcon } from "$/components/icons/GithubIcon"
 import { LinkedInIcon } from "$/components/icons/LinkedInIcon"
