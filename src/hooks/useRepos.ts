@@ -20,10 +20,10 @@ const loadRepos = async (): Promise<Repository[]> => {
 
   const start = Date.now()
   const repos = await Promise.all([
-    await fetch("https://api.github.com/repos/CrimsonChi/kaioken").then((r) =>
+    fetch("https://api.github.com/repos/CrimsonChi/kaioken").then((r) =>
       r.json()
     ),
-    await fetch("https://api.github.com/users/LankyMoose/repos")
+    fetch("https://api.github.com/users/LankyMoose/repos")
       .then((r) => r.json())
       .then((res) =>
         res.filter((repo: Repository) =>
