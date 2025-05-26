@@ -4,14 +4,14 @@ import { HeadContext, HeadData } from "$/app/Wrapper"
 export function useHead(data: HeadData) {
   const context = useContext(HeadContext)
   if (data.title) {
-    context.head.title = data.title
+    context.title = data.title
     if ("window" in globalThis) {
       document.title = data.title
     }
   }
   if (data.meta) {
-    context.head.meta = {
-      ...context.head.meta,
+    context.meta = {
+      ...context.meta,
       ...data.meta,
     }
     if ("window" in globalThis) {

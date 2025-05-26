@@ -1,16 +1,15 @@
 import { Link } from "$/components/Link"
-import { useRouter } from "$/components/ClientRouter"
 import { GithubIcon } from "$/components/icons/GithubIcon"
 import { LinkedInIcon } from "$/components/icons/LinkedInIcon"
 import { LogoIcon } from "$/components/icons/LogoIcon"
-import { BlogHeader } from "$/components/BlogHeader"
 import { XIcon } from "$/components/icons/XIcon"
 import { TwitchIcon } from "$/components/icons/TwitchIcon"
 import { SocialLink } from "$/components/SocialLink"
 
-export function App() {
-  const { Page, path } = useRouter()
-
+type TemplateProps = {
+  children: JSX.Children
+}
+export function Template({ children }: TemplateProps) {
   return (
     <>
       <header>
@@ -36,9 +35,7 @@ export function App() {
           ></iframe>
         </nav>
       </header>
-      <main>
-        <PageWrapper Page={Page} key={path} route={path} />
-      </main>
+      <main>{children}</main>
       <footer className="flex flex-col gap-2">
         <div className="flex gap-4 items-center mx-auto">
           <SocialLink href="https://www.github.com/lankymoose">
@@ -65,44 +62,4 @@ export function App() {
       </footer>
     </>
   )
-}
-
-function PageWrapper({
-  Page,
-  route,
-}: {
-  Page: () => JSX.Element
-  route: string
-}) {
-  if (route.startsWith("/blog/")) {
-    return (
-      <Page
-        // @ts-ignore
-        components={{
-          wrapper: ({ children }: any) => (
-            <article
-              className={[
-                "prose-p:my-4 prose-p:font-light",
-                "prose-headings:font-bold prose-headings:text-neutral-50",
-                "prose prose-invert",
-                "flex-col max-w-full",
-              ]}
-            >
-              <BlogHeader route={route}></BlogHeader>
-              {children}
-            </article>
-          ),
-          a: ({ href, children }: any) => (
-            <a
-              href={href}
-              target={href.startsWith("http") ? "_blank" : "_self"}
-            >
-              {children}
-            </a>
-          ),
-        }}
-      />
-    )
-  }
-  return <Page />
 }
