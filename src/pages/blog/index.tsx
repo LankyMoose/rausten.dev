@@ -20,16 +20,24 @@ export default function Page() {
         {Object.keys(blogManifest)
           .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
           .map((path) => (
-            <BlogListItemLink key={path} path={path} />
+            <BlogListItemLink
+              key={path}
+              path={path}
+              meta={blogManifest[path]}
+            />
           ))}
       </section>
     </>
   )
 }
 
-function BlogListItemLink({ path }: { path: string }) {
-  const manifestEntry = blogManifest[path]
-  const { title, description, date } = manifestEntry
+type BlogListItemLinkProps = {
+  path: string
+  meta: BlogItemMeta
+}
+
+function BlogListItemLink({ path, meta }: BlogListItemLinkProps): JSX.Element {
+  const { title, description, date } = meta
   return (
     <div
       className={[
