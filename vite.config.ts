@@ -18,9 +18,6 @@ export default defineConfig({
   optimizeDeps: {
     include: ["**/*.css"],
   },
-  build: {
-    outDir: "docs",
-  },
   plugins: [
     tailwindcss(),
     blogDiscovery(),

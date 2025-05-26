@@ -1,11 +1,4 @@
 import { Hero } from "$/components/Hero"
-import { CsharpIcon } from "$/components/icons/CsharpIcon"
-import { CssIcon } from "$/components/icons/CssIcon"
-import { DotNetIcon } from "$/components/icons/DotNetIcon"
-import { HtmlIcon } from "$/components/icons/HtmlIcon"
-import { JavascriptIcon } from "$/components/icons/JavascriptIcon"
-import { SqlIcon } from "$/components/icons/SqlIcon"
-import { TypescriptIcon } from "$/components/icons/TypescriptIcon"
 import { RepoList } from "$/components/RepoList"
 import { useHead } from "$/hooks/useHead"
 
@@ -41,13 +34,13 @@ function HeroSection() {
 function SkillsList() {
   return (
     <section className="p-4" id="skills-list">
-      <CsharpIcon />
-      <DotNetIcon />
-      <SqlIcon />
-      <TypescriptIcon />
-      <JavascriptIcon />
-      <HtmlIcon />
-      <CssIcon />
+      <img src="/icons/csharp.svg" />
+      <img src="/icons/dotnet.svg" />
+      <img src="/icons/sql.svg" />
+      <img src="/icons/typescript.svg" />
+      <img src="/icons/javascript.svg" />
+      <img src="/icons/html.svg" />
+      <img src="/icons/css.svg" />
     </section>
   )
 }

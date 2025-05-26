@@ -1,5 +1,4 @@
 import { Transition, useEffect, useRef } from "kaioken"
-import { GithubStar } from "./icons/GithubStar"
 import { Loader } from "./Loader"
 import { useRepos } from "$/hooks/useRepos"
 
@@ -90,7 +89,7 @@ function RepoListItem({ repo }: { repo: Repository }) {
           href={repo.html_url + "/stargazers"}
           target="_blank"
         >
-          <GithubStar fill="currentColor" /> {repo.stargazers_count}
+          <img src="/icons/github-star.svg" /> {repo.stargazers_count}
         </a>
       </div>
       <div className="repos-list__item__description">{repo.description}</div>

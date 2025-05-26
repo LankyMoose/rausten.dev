@@ -1,9 +1,4 @@
 import { Link } from "$/components/Link"
-import { GithubIcon } from "$/components/icons/GithubIcon"
-import { LinkedInIcon } from "$/components/icons/LinkedInIcon"
-import { LogoIcon } from "$/components/icons/LogoIcon"
-import { XIcon } from "$/components/icons/XIcon"
-import { TwitchIcon } from "$/components/icons/TwitchIcon"
 import { SocialLink } from "$/components/SocialLink"
 
 type TemplateProps = {
@@ -16,7 +11,7 @@ export function Template({ children }: TemplateProps) {
         <nav className="flex gap-4 items-center justify-between w-full max-w-7xl mx-auto">
           <div className="flex gap-4">
             <Link to="/" className="flex items-center">
-              <LogoIcon />
+              <img src="/icons/logo.svg" alt="Logo" />
             </Link>
             <Link to="/blog" className="flex items-center">
               Blog
@@ -39,16 +34,16 @@ export function Template({ children }: TemplateProps) {
       <footer className="flex flex-col gap-2">
         <div className="flex gap-4 items-center mx-auto">
           <SocialLink href="https://www.github.com/lankymoose">
-            <GithubIcon />
+            <img src="/icons/github.svg" alt="Github" />
           </SocialLink>
           <SocialLink href="https://www.linkedin.com/in/rausten/">
-            <LinkedInIcon />
+            <img src="/icons/linkedin.svg" alt="LinkedIn" />
           </SocialLink>
           <SocialLink href="https://www.x.com/lankymoose/">
-            <XIcon />
+            <img src="/icons/x.svg" alt="X" />
           </SocialLink>
           <SocialLink href="https://www.twitch.tv/lankymoosecodes">
-            <TwitchIcon />
+            <img src="/icons/twitch.svg" alt="Twitch" />
           </SocialLink>
         </div>
         <div className="flex justify-end">

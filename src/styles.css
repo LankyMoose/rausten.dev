@@ -159,13 +159,13 @@ article {
   }
 }
 
-#skills-list svg {
+#skills-list img {
   filter: grayscale(1);
   transition: filter .3s;
 
 }
 
-#skills-list svg:hover {
+#skills-list img:hover {
   filter: grayscale(0);
 }
 
@@ -194,8 +194,9 @@ article {
 }
 
 a.repos-list__item__stars {
-  @apply flex items-center gap-2 cursor-pointer text-neutral-200 hover:text-amber-300 no-underline;
+  @apply flex items-center gap-2 cursor-pointer text-neutral-200 no-underline opacity-75 hover:opacity-100;
 }
+
 
 .repos-list__item__description {
   @apply text-neutral-300 text-sm;
