@@ -14,9 +14,7 @@ export function Link(props: LinkProps) {
   const handlePrefetch = useCallback(() => {
     if (didPrefetch.current || props.prefetch === false) return
     didPrefetch.current = true
-    loadPageByPath(props.to).catch(() => {
-      window.location.href = props.to
-    })
+    loadPageByPath(props.to)
   }, [])
   return <L {...props} onmouseover={handlePrefetch} onfocus={handlePrefetch} />
 }
