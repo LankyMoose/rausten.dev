@@ -1,13 +1,5 @@
-import { createContext, useContext } from "kaioken"
-
-export type HeadData = {
-  title?: string
-  meta?: Record<string, string>
-}
-
-export const HeadContext = createContext({
-  head: {} as HeadData,
-})
+import { useContext } from "kaioken"
+import { HeadContext, HeadData } from "$/app/Wrapper"
 
 export function useHead(data: HeadData) {
   const context = useContext(HeadContext)

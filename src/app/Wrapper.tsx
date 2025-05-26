@@ -1,6 +1,15 @@
+import { createContext } from "kaioken"
 import { App } from "./App"
-import { ClientRouter } from "./components/ClientRouter"
-import { HeadContext, HeadData } from "./Head"
+import { ClientRouter } from "$/components/ClientRouter"
+
+export type HeadData = {
+  title?: string
+  meta?: Record<string, string>
+}
+
+export const HeadContext = createContext({
+  head: {} as HeadData,
+})
 
 export const Wrapper = ({
   path,

@@ -1,8 +1,8 @@
-import { Link } from "../../components/Link"
-import { getRouteMap } from "../../routes"
 import blogManifest from "virtual:blog-manifest"
-import { useHead } from "../../Head"
-import { Hero } from "../../components/Hero"
+import { Link } from "$/components/Link"
+import { Hero } from "$/components/Hero"
+import { getRouteMap } from "$/app/routes"
+import { useHead } from "$/hooks/useHead"
 
 export default function Page() {
   useHead({

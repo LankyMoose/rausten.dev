@@ -1,7 +1,7 @@
 import { Transition, useEffect, useRef } from "kaioken"
 import { GithubStar } from "./icons/GithubStar"
 import { Loader } from "./Loader"
-import { useRepos } from "../hooks/useRepos"
+import { useRepos } from "$/hooks/useRepos"
 
 export function RepoList() {
   const repos = useRepos()

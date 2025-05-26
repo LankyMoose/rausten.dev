@@ -1,13 +1,13 @@
-import { Hero } from "../components/Hero"
-import { CsharpIcon } from "../components/icons/CsharpIcon"
-import { CssIcon } from "../components/icons/CssIcon"
-import { DotNetIcon } from "../components/icons/DotNetIcon"
-import { HtmlIcon } from "../components/icons/HtmlIcon"
-import { JavascriptIcon } from "../components/icons/JavascriptIcon"
-import { SqlIcon } from "../components/icons/SqlIcon"
-import { TypescriptIcon } from "../components/icons/TypescriptIcon"
-import { RepoList } from "../components/RepoList"
-import { useHead } from "../Head"
+import { Hero } from "$/components/Hero"
+import { CsharpIcon } from "$/components/icons/CsharpIcon"
+import { CssIcon } from "$/components/icons/CssIcon"
+import { DotNetIcon } from "$/components/icons/DotNetIcon"
+import { HtmlIcon } from "$/components/icons/HtmlIcon"
+import { JavascriptIcon } from "$/components/icons/JavascriptIcon"
+import { SqlIcon } from "$/components/icons/SqlIcon"
+import { TypescriptIcon } from "$/components/icons/TypescriptIcon"
+import { RepoList } from "$/components/RepoList"
+import { useHead } from "$/hooks/useHead"
 
 export default function Page() {
   useHead({

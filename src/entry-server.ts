@@ -1,7 +1,7 @@
 import { renderToString } from "kaioken"
-import { Wrapper } from "./Wrapper"
-import { loadPageByPath } from "./utils"
-import type { HeadData } from "./Head"
+import { Wrapper } from "./app/Wrapper"
+import { loadPageByPath } from "./app/routes"
+import type { HeadData } from "./app/Wrapper"
 
 export async function render({ path }: { path: string }) {
   const Page = await loadPageByPath(path)

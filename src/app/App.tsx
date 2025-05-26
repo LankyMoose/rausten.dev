@@ -1,12 +1,12 @@
-import { Link } from "./components/Link"
-import { useRouter } from "./components/ClientRouter"
-import { GithubIcon } from "./components/icons/GithubIcon"
-import { LinkedInIcon } from "./components/icons/LinkedInIcon"
-import { LogoIcon } from "./components/icons/LogoIcon"
-import { BlogHeader } from "./components/BlogHeader"
-import { XIcon } from "./components/icons/XIcon"
-import { TwitchIcon } from "./components/icons/TwitchIcon"
-import { SocialLink } from "./components/SocialLink"
+import { Link } from "$/components/Link"
+import { useRouter } from "$/components/ClientRouter"
+import { GithubIcon } from "$/components/icons/GithubIcon"
+import { LinkedInIcon } from "$/components/icons/LinkedInIcon"
+import { LogoIcon } from "$/components/icons/LogoIcon"
+import { BlogHeader } from "$/components/BlogHeader"
+import { XIcon } from "$/components/icons/XIcon"
+import { TwitchIcon } from "$/components/icons/TwitchIcon"
+import { SocialLink } from "$/components/SocialLink"
 
 export function App() {
   const { Page, path } = useRouter()

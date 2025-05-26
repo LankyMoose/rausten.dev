@@ -5,7 +5,7 @@ import {
   useState,
   useViewTransition,
 } from "kaioken"
-import { loadPageByPath } from "../utils"
+import { loadPageByPath } from "$/app/routes"
 
 type ClientRouterContextType = {
   path: string
