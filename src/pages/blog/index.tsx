@@ -42,7 +42,7 @@ function BlogListItemLink({ path, meta }: BlogListItemLinkProps): JSX.Element {
     <div
       className={[
         "flex flex-col gap-2 grow p-4",
-        "bg-white/3 border border-white/5 rounded-lg",
+        "bg-white/2.5 border border-white/5 rounded-lg",
       ]}
     >
       <div className="flex gap-2 justify-between items-center">
