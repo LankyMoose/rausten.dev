@@ -18,7 +18,7 @@ export default function Page() {
 
 function HeroSection() {
   return (
-    <section className="flex flex-col p-4 min-h-[240px] sm:min-h-[320px] justify-end">
+    <section>
       <Hero
         sup="Hi, my name is "
         heading="Rob Austen."
@@ -31,7 +31,10 @@ function HeroSection() {
 
 function SkillsList() {
   return (
-    <section className="p-4" id="skills-list">
+    <section
+      id="skills"
+      className="grid grid-flow-col items-center justify-center gap-4 mb-10"
+    >
       <img src="/icons/csharp.svg" />
       <img src="/icons/dotnet.svg" />
       <img src="/icons/sql.svg" />

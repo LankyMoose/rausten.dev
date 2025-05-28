@@ -7,8 +7,8 @@ type TemplateProps = {
 export function Template({ children }: TemplateProps) {
   return (
     <>
-      <header>
-        <nav className="flex gap-4 items-center justify-between w-full max-w-7xl mx-auto">
+      <header className="p-4 w-full max-w-3xl lg:max-w-5xl mx-auto">
+        <nav className="flex gap-4 items-center justify-between w-full max-w-5xl mx-auto">
           <div className="flex gap-4">
             <Link to="/" className="flex items-center">
               <img src="/icons/logo.svg" alt="Logo" />
@@ -30,7 +30,9 @@ export function Template({ children }: TemplateProps) {
           ></iframe>
         </nav>
       </header>
-      <main>{children}</main>
+      <main className="p-4 flex flex-col gap-6 grow w-full max-w-3xl lg:max-w-5xl mx-auto">
+        {children}
+      </main>
       <footer className="flex flex-col gap-2">
         <div className="flex gap-4 items-center mx-auto">
           <SocialLink href="https://www.github.com/lankymoose">

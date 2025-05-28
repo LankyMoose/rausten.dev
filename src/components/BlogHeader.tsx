@@ -13,7 +13,7 @@ export function BlogHeader({ route }: BlogHeaderProps) {
         <title>{`${title} - rausten.dev`}</title>
         <meta name="description" content={description} />
       </Head>
-      <section className="flex flex-col min-h-[240px] sm:min-h-[320px] justify-end not-prose mb-6">
+      <section className="not-prose mb-6">
         <Hero
           sup={new Date(date).toDateString()}
           heading={title}

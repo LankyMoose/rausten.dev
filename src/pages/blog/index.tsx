@@ -13,10 +13,10 @@ export default function Page() {
           content="The blog of the personal website of the person named Rob Austen"
         />
       </Head>
-      <section className="flex flex-col p-4 min-h-[240px] sm:min-h-[320px] justify-end">
+      <section>
         <Hero heading="Blog" sub="Some random ramblings accompanied by code." />
       </section>
-      <section className="p-4 mx-auto w-full flex flex-wrap gap-4 max-w-[calc(var(--content-width)+2rem)]">
+      <section className="w-full flex flex-wrap gap-4">
         {Object.keys(blogManifest)
           .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
           .map((path) => (
@@ -39,12 +39,7 @@ type BlogListItemLinkProps = {
 function BlogListItemLink({ path, meta }: BlogListItemLinkProps): JSX.Element {
   const { title, description, date } = meta
   return (
-    <div
-      className={[
-        "flex flex-col gap-2 grow p-4",
-        "bg-white/2.5 border border-white/5 rounded-lg",
-      ]}
-    >
+    <div className="card flex flex-col gap-2 grow p-4">
       <div className="flex gap-2 justify-between items-center">
         <Link to={`/blog/${path}`}>{title}</Link>
         <small className="text-neutral-400">

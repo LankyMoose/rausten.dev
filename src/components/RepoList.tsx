@@ -13,7 +13,7 @@ export function RepoList() {
   }, [])
 
   return (
-    <section className="p-4 relative w-full flex items-center justify-center min-h-[200px] grow max-w-7xl mx-auto">
+    <section className="relative w-full flex items-center justify-center min-h-[200px]">
       <Transition
         in={repos.loading}
         initialState={repos.loading ? "entered" : "exited"}
@@ -58,7 +58,7 @@ export function RepoList() {
             </i>
           ) : (
             <ul
-              className="repos-list"
+              className="flex flex-wrap gap-4"
               style={{
                 transform: `translateY(${translateY}%)`,
                 opacity,
@@ -79,20 +79,20 @@ export function RepoList() {
 
 function RepoListItem({ repo }: { repo: Repository }) {
   return (
-    <li className="repos-list__item">
-      <div className="repos-list__item__header">
+    <li className="md:basis-[calc(100%/2-1rem)] lg:basis-[calc(100%/3-1rem)] grow flex flex-col gap-4 card">
+      <div className="flex justify-between gap-4">
         <a href={repo.html_url} target="_blank">
           {repo.name}
         </a>
         <a
-          className="repos-list__item__stars"
+          className="flex gap-2 text-neutral-300!"
           href={repo.html_url + "/stargazers"}
           target="_blank"
         >
           <img src="/icons/github-star.svg" /> {repo.stargazers_count}
         </a>
       </div>
-      <div className="repos-list__item__description">{repo.description}</div>
+      <small className="text-neutral-300">{repo.description}</small>
     </li>
   )
 }
