@@ -79,7 +79,7 @@ export function RepoList() {
 
 function RepoListItem({ repo }: { repo: Repository }) {
   return (
-    <li className="md:basis-[calc(100%/2-1rem)] lg:basis-[calc(100%/3-1rem)] grow flex flex-col gap-4 card">
+    <li className="md:basis-[calc(100%/2-1rem)] lg:basis-[calc(100%/3-1rem)] w-full grow flex flex-col gap-4 card">
       <div className="flex justify-between gap-4">
         <a href={repo.html_url} target="_blank">
           {repo.name}
