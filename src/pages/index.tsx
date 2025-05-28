@@ -9,39 +9,27 @@ export default function Page() {
         <title>rausten.dev</title>
         <meta name="description" content="The personal website of Rob Austen" />
       </Head>
-      <HeroSection />
-      <SkillsList />
+      <section>
+        <Hero
+          sup="Hi, my name is "
+          heading="Rob Austen."
+          sub="I'm a software developer focussed on building interactive
+            applications & tools that make building web applications easier."
+        />
+      </section>
+      <section
+        id="skills"
+        className="grid grid-flow-col items-center justify-center gap-4 mb-10"
+      >
+        <img src="/icons/csharp.svg" />
+        <img src="/icons/dotnet.svg" />
+        <img src="/icons/sql.svg" />
+        <img src="/icons/typescript.svg" />
+        <img src="/icons/javascript.svg" />
+        <img src="/icons/html.svg" />
+        <img src="/icons/css.svg" />
+      </section>
       <RepoList />
     </>
-  )
-}
-
-function HeroSection() {
-  return (
-    <section>
-      <Hero
-        sup="Hi, my name is "
-        heading="Rob Austen."
-        sub="I'm a software developer focussed on building interactive
-            applications & tools that make building web applications easier."
-      />
-    </section>
-  )
-}
-
-function SkillsList() {
-  return (
-    <section
-      id="skills"
-      className="grid grid-flow-col items-center justify-center gap-4 mb-10"
-    >
-      <img src="/icons/csharp.svg" />
-      <img src="/icons/dotnet.svg" />
-      <img src="/icons/sql.svg" />
-      <img src="/icons/typescript.svg" />
-      <img src="/icons/javascript.svg" />
-      <img src="/icons/html.svg" />
-      <img src="/icons/css.svg" />
-    </section>
   )
 }
