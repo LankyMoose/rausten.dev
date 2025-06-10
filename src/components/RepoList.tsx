@@ -1,6 +1,7 @@
 import { Transition, useEffect, useRef } from "kaioken"
 import { Loader } from "./Loader"
 import { useRepos } from "$/hooks/useRepos"
+import Star from "./icons/star"
 
 export function RepoList() {
   const repos = useRepos()
@@ -85,11 +86,12 @@ function RepoListItem({ repo }: { repo: Repository }) {
           {repo.name}
         </a>
         <a
-          className="flex gap-2 text-neutral-300!"
+          className="flex items-center gap-2 text-neutral-300!"
           href={repo.html_url + "/stargazers"}
           target="_blank"
         >
-          <img src="/icons/github-star.svg" /> {repo.stargazers_count}
+          <Star />
+          {repo.stargazers_count}
         </a>
       </div>
       <small className="text-neutral-300">{repo.description}</small>

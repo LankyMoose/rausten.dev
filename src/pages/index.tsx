@@ -1,5 +1,12 @@
 import { Head } from "$/components/Head"
 import { Hero } from "$/components/Hero"
+import Csharp from "$/components/icons/csharp"
+import Css from "$/components/icons/css"
+import Dotnet from "$/components/icons/dotnet"
+import Html from "$/components/icons/html"
+import Javascript from "$/components/icons/javascript"
+import Sql from "$/components/icons/sql"
+import Typescript from "$/components/icons/typescript"
 import { RepoList } from "$/components/RepoList"
 
 export default function Page() {
@@ -21,13 +28,13 @@ export default function Page() {
         id="skills"
         className="grid grid-flow-col items-center justify-center gap-4 mb-10"
       >
-        <img src="/icons/csharp.svg" />
-        <img src="/icons/dotnet.svg" />
-        <img src="/icons/sql.svg" />
-        <img src="/icons/typescript.svg" />
-        <img src="/icons/javascript.svg" />
-        <img src="/icons/html.svg" />
-        <img src="/icons/css.svg" />
+        <Csharp title="C#" />
+        <Dotnet title=".NET" />
+        <Sql title="SQL" />
+        <Typescript title="TypeScript" />
+        <Javascript title="JavaScript" />
+        <Html title="HTML" />
+        <Css title="CSS" />
       </section>
       <RepoList />
     </>

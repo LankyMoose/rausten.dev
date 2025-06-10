@@ -63,7 +63,7 @@ h1 {
   @apply text-neutral-50;
 }
 
-#skills img {
+#skills svg {
   filter: grayscale(1);
   transition: filter .3s;
   width: 100%;
@@ -71,7 +71,7 @@ h1 {
   min-width: unset;
 }
 
-#skills img:hover {
+#skills svg:hover {
   filter: grayscale(0);
 }
 
