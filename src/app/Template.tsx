@@ -38,7 +38,7 @@ export function Template({ children }: TemplateProps) {
       <main className="p-4 flex flex-col gap-6 grow w-full max-w-3xl lg:max-w-5xl mx-auto">
         {children}
       </main>
-      <footer className="flex flex-col gap-2 px-1 py-2">
+      <footer className="flex flex-col gap-4 px-1 py-4">
         <div className="flex gap-4 items-center mx-auto">
           <SocialLink href="https://www.github.com/lankymoose">
             <Github title="GitHub" />
