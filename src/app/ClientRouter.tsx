@@ -13,10 +13,7 @@ type ClientRouterProps = {
 }
 export function ClientRouter(props: ClientRouterProps) {
   const transition = useViewTransition()
-  const routeState = useSignal<RouteState>({
-    path: props.initialState.path,
-    Page: props.initialState.Page,
-  })
+  const routeState = useSignal(props.initialState)
 
   useLayoutEffect(() => {
     const handler = async () => {
