@@ -20,10 +20,12 @@ export function ClientRouter(props: ClientRouterProps) {
 
   useLayoutEffect(() => {
     const handler = async () => {
-      const nextPage = await loadPageByPath(window.location.pathname)
+      const nextPath = window.location.pathname
+      if (routeState.peek().path === nextPath) return
+      const nextPage = await loadPageByPath(nextPath)
       transition(() => {
         routeState.value = {
-          path: window.location.pathname,
+          path: nextPath,
           Page: nextPage,
         }
       })
