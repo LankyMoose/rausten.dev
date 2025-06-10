@@ -1,4 +1,4 @@
-import { getBlogManifestEntryFromRoute } from "$/app"
+import { getBlogManifestEntryFromRoute } from "$/app/routes"
 import { Hero } from "./Hero"
 import { Head } from "./Head"
 

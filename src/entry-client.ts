@@ -1,10 +1,12 @@
+import { createElement } from "kaioken"
 import { hydrate } from "kaioken/ssr/client"
-import { App } from "./app"
+import { App } from "./app/App"
+import { ClientRouter } from "./app/ClientRouter"
 import { loadPageByPath } from "./app/routes"
 
-loadPageByPath(window.location.pathname).then((Page) =>
+const path = window.location.pathname
+loadPageByPath(path).then((Page) =>
   hydrate(App, document.body, {
-    path: window.location.pathname,
-    Page,
+    children: createElement(ClientRouter, { path, Page }),
   })
 )

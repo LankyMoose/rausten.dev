@@ -1,3 +1,8 @@
+type RouteState = {
+  path: string
+  Page: () => JSX.Element
+}
+
 type BlogItemMeta = {
   title: string
   description: string

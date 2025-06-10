@@ -3,17 +3,9 @@ import { loadPageByPath } from "./routes"
 import { BlogHeader } from "$/components/BlogHeader"
 import { MDXProps } from "mdx/types"
 
-type RouteState = {
-  path: string
-  Page: () => JSX.Element
-}
-
-type ClientRouterProps = {
-  initialState: RouteState
-}
-export function ClientRouter(props: ClientRouterProps) {
+export function ClientRouter({ path, Page }: RouteState) {
   const transition = useViewTransition()
-  const routeState = useSignal(props.initialState)
+  const routeState = useSignal({ path, Page })
 
   useLayoutEffect(() => {
     const handler = async () => {

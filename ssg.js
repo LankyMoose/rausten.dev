@@ -19,23 +19,22 @@ const routes = fs
 
 console.log("SSG - routes", routes)
 
-routes.forEach(async (route) => {
-  // we need to transform 'blog\\index.tsx' into '/blog/index.tsx'
-  if (route.split("/").length > 1) {
+routes.forEach(async (path) => {
+  if (path.split("/").length > 1) {
     // ensure child dir is created
 
-    fs.mkdirSync("./dist/client/" + route.split("/").slice(0, -1).join("/"), {
+    fs.mkdirSync("./dist/client/" + path.split("/").slice(0, -1).join("/"), {
       recursive: true,
     })
   }
-  const { body, head } = await render({ path: route })
+  const { body, head } = await render({ path })
 
   const rendered = html
     .replace("<!-- HEAD -->", head)
     .replace("<body></body>", `<body>${body}</body>`)
 
-  if (route.endsWith("/")) {
-    route += "index"
+  if (path.endsWith("/")) {
+    path += "index"
   }
-  fs.writeFileSync("./dist/client" + route + ".html", rendered)
+  fs.writeFileSync("./dist/client" + path + ".html", rendered)
 })

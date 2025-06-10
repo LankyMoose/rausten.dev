@@ -6,10 +6,7 @@ import X from "$/components/icons/x"
 import { Link } from "$/components/Link"
 import { SocialLink } from "$/components/SocialLink"
 
-type TemplateProps = {
-  children: JSX.Children
-}
-export function Template({ children }: TemplateProps) {
+export const App: Kaioken.FC = ({ children }) => {
   return (
     <>
       <header className="p-4 w-full max-w-3xl lg:max-w-5xl mx-auto">
