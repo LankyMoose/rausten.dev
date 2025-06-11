@@ -21,36 +21,41 @@ function pathToRoute(filePath) {
 const html = fs.readFileSync("./dist/client/index.html", "utf-8")
 const routes = fs
   .readdirSync("./src/pages", { recursive: true })
+  .filter((file) => file.endsWith(".tsx") || file.endsWith(".mdx"))
   .map(pathToRoute)
-  .filter((item, idx, arr) => arr.indexOf(item) === idx)
   .sort()
 
-console.log("SSG - routes", routes)
+console.log("[SSG] routes", routes)
 
-routes.forEach(async (path) => {
-  const pathParts = path.split("/").filter(Boolean)
-  if (pathParts.length > 1) {
-    // ensure child dir is created
-    const dir = pathParts.slice(0, -1).join("/")
-    console.log("SSG - creating dir")
-    fs.mkdirSync("./dist/client/" + dir, { recursive: true })
+async function generateHTML() {
+  for (const path of routes) {
+    const pathParts = path.split("/").filter(Boolean)
+    if (pathParts.length > 1) {
+      const dir = pathParts.slice(0, -1).join("/")
+      console.log("[SSG] creating dir", dir)
+      fs.mkdirSync("./dist/client/" + dir, { recursive: true })
+    }
+    const { body, head } = await render({ path })
+
+    const rendered = html
+      .replace("<!-- HEAD -->", head)
+      .replace("<body></body>", `<body>${body}</body>`)
+
+    let outputPath = path
+    if (path.endsWith("/")) {
+      outputPath += "index"
+    }
+    outputPath = `./dist/client${outputPath}.html`
+    fs.writeFileSync(outputPath, rendered)
+    console.log("[SSG] created page", outputPath)
   }
-  const { body, head } = await render({ path })
+}
 
-  const rendered = html
-    .replace("<!-- HEAD -->", head)
-    .replace("<body></body>", `<body>${body}</body>`)
+function generateSitemap() {
+  const excludedSitemapRoutes = ["/404"]
 
-  if (path.endsWith("/")) {
-    path += "index"
-  }
-  fs.writeFileSync("./dist/client" + path + ".html", rendered)
-})
-
-const excludedSitemapRoutes = ["/404"]
-
-const baseUrl = "https://rausten.dev"
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+  const baseUrl = "https://rausten.dev"
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${routes
   .filter((route) => !excludedSitemapRoutes.includes(route))
@@ -61,5 +66,13 @@ ${routes
   .join("\n")}
 </urlset>\n`
 
-fs.writeFileSync("./dist/client/sitemap.xml", sitemap)
-console.log("Sitemap generated:\n", sitemap)
+  fs.writeFileSync("./dist/client/sitemap.xml", sitemap)
+  console.log("[SSG] Sitemap generated:\n", sitemap)
+}
+
+async function main() {
+  await generateHTML()
+  generateSitemap()
+}
+
+main()
