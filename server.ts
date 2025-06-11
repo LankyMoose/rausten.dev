@@ -1,18 +1,13 @@
 import fs from "node:fs/promises"
 import express from "express"
 import { ViteDevServer } from "vite"
+import path from "node:path"
 
-// Constants
+const __dirname = path.resolve()
 const isProduction = process.env.NODE_ENV === "production"
 const port = process.env.PORT || 5173
-const base = process.env.BASE || "/"
+const pageCache = new Map<string, string>()
 
-// Cached production assets
-const templateHtml = isProduction
-  ? await fs.readFile("./dist/client/index.html", "utf-8")
-  : ""
-
-// Create http server
 const app = express()
 
 let vite: ViteDevServer
@@ -21,37 +16,36 @@ if (!isProduction) {
   vite = await createServer({
     server: { middlewareMode: true },
     appType: "custom",
-    base,
   })
   app.use(vite.middlewares)
 } else {
   const compression = (await import("compression")).default
   const sirv = (await import("sirv")).default
   app.use(compression())
-  app.use(base, sirv("./dist/client", { extensions: [] }))
+  app.use(sirv("./dist/client", { extensions: [] }))
 }
 
 // Serve HTML
 app.use("*all", async (req, res) => {
   try {
-    const url = req.originalUrl.replace(base, "")
+    const url = req.originalUrl.replace("/", "")
 
-    let template: string
-    let render: ({ path }: { path: string }) => Promise<{
-      body: string
-      head: string
-    }>
-
-    if (!isProduction) {
-      // Always read fresh template in development
-      template = await fs.readFile("./index.html", "utf-8")
-      template = await vite.transformIndexHtml(url, template)
-      render = (await vite.ssrLoadModule("/src/entry-server.ts")).render
-    } else {
-      template = templateHtml
-      // @ts-expect-error heck you ts
-      render = (await import("./dist/server/entry-server.js")).render
+    if (isProduction) {
+      const contents = await fs.readFile(
+        path.join(__dirname, "dist/client", (url || "index") + ".html"),
+        "utf-8"
+      )
+      res.status(200).set({ "Content-Type": "text/html" }).send(contents)
+      pageCache.set(url, contents)
+      return
     }
+
+    let template = await fs.readFile("./index.html", "utf-8")
+    template = await vite.transformIndexHtml(url, template)
+
+    const { render } = (await vite.ssrLoadModule(
+      "/src/entry-server.ts"
+    )) as typeof import("./src/entry-server")
 
     const { body, head } = await render({ path: req.originalUrl })
     res
