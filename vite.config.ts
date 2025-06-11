@@ -150,7 +150,7 @@ function fullBuildAndSSG(): Plugin {
 
             const rendered = templateHtml
               .replace("<!-- HEAD -->", head)
-              .replace("<body></body>", `<body>${body}</body>`)
+              .replace("<!-- BODY -->", `<body>${body}</body>`)
 
             const filePath = route.endsWith("/")
               ? path.join(clientDist, route, "index.html")

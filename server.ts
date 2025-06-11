@@ -54,7 +54,7 @@ app.use("*all", async (req, res) => {
       .send(
         template
           .replace("<!-- HEAD -->", head)
-          .replace("<body></body>", `<body>${body}</body>`)
+          .replace("<!-- BODY -->", `<body>${body}</body>`)
       )
   } catch (e) {
     const err = e as Error
