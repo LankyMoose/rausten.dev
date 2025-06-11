@@ -167,12 +167,15 @@ function fullBuildAndSSG(): Plugin {
           const baseUrl = "https://rausten.dev"
           const exclude = ["/404"]
           const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
-  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  ${routes
-    .filter((r) => !exclude.includes(r))
-    .map((r) => `  <url><loc>${baseUrl}${r === "/" ? "" : r}</loc></url>`)
-    .join("\n")}
-  </urlset>\n`
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${routes
+  .filter((r) => !exclude.includes(r))
+  .map(
+    (r) => `  <url>
+    <loc>${baseUrl}${r === "/" ? "" : r}</loc>
+  </url>\n`
+  )
+  .join("")}</urlset>`
           await fs.writeFile(path.join(clientDist, "sitemap.xml"), sitemapXml)
           console.log("[SSG] Sitemap generated")
         }
