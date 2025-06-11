@@ -1,49 +1,67 @@
-import { defineConfig, Plugin } from "vite"
+import {
+  defineConfig,
+  Plugin,
+  PluginOption,
+  UserConfig,
+  build as viteBuild,
+} from "vite"
 import kaioken from "vite-plugin-kaioken"
 import mdx from "@mdx-js/rollup"
 import remarkFrontmatter from "remark-frontmatter"
 import { read } from "to-vfile"
 import { matter } from "vfile-matter"
 import tailwindcss from "@tailwindcss/vite"
-
 import path from "node:path"
 import fs from "node:fs/promises"
 
-export default defineConfig({
+const blogDir = path.resolve("src/pages/blog")
+const clientDist = path.resolve("dist/client")
+const serverDist = path.resolve("dist/server")
+
+const virtualManifestModuleId = "virtual:blog-manifest"
+const resolvedVirtualManifestModuleId = "\0" + virtualManifestModuleId
+const manifest: BlogManifest = {}
+
+const sharedPlugins: PluginOption[] = [
+  tailwindcss(),
+  blogDiscovery(),
+  kaioken(),
+  mdx({
+    jsx: false,
+    jsxImportSource: "kaioken",
+    jsxRuntime: "automatic",
+    remarkPlugins: [remarkFrontmatter],
+  }),
+]
+
+const sharedConfig: UserConfig = {
   resolve: {
     alias: {
-      $: path.resolve(__dirname, "src"),
+      $: path.resolve("src"),
     },
   },
   optimizeDeps: {
     include: ["**/*.css"],
   },
-  plugins: [
-    tailwindcss(),
-    blogDiscovery(),
-    kaioken(),
-    mdx({
-      jsx: false,
-      jsxImportSource: "kaioken",
-      jsxRuntime: "automatic",
-      remarkPlugins: [remarkFrontmatter],
-    }),
-    SSG(),
-  ],
+}
+
+export default defineConfig({
+  ...sharedConfig,
+  plugins: [...sharedPlugins, fullBuildAndSSG()],
+  build: {
+    outDir: clientDist,
+    emptyOutDir: true,
+  },
 })
 
-function blogDiscovery() {
-  const virtualManifestModuleId = "virtual:blog-manifest"
-  const resolvedVirtualManifestModuleId = "\0" + virtualManifestModuleId
-
-  const manifest: BlogManifest = {}
+function blogDiscovery(): Plugin {
   let server: import("vite").ViteDevServer | null = null
 
   async function scanArticles() {
-    const files = await fs.readdir("./src/pages/blog")
+    const files = await fs.readdir(blogDir)
     for (const file of files) {
       if (file.endsWith(".mdx")) {
-        const vFile = await read(`./src/pages/blog/${file}`)
+        const vFile = await read(path.join(blogDir, file))
         matter(vFile)
         manifest[file.split(".")[0]] = vFile.data.matter as BlogItemMeta
       }
@@ -51,119 +69,114 @@ function blogDiscovery() {
   }
 
   return {
-    // scans /pages/blog for mdx files, and creates a route for each of them
     name: "blog-discovery",
     enforce: "post",
-    async hotUpdate({ file }) {
-      if (file.endsWith("mdx")) {
-        const { moduleGraph, ws } = server!
-        await scanArticles()
-        moduleGraph.invalidateModule(
-          moduleGraph.getModuleById(resolvedVirtualManifestModuleId)!
-        )
-        ws.send({
-          type: "full-reload",
-        })
-      }
+    configureServer(dev) {
+      server = dev
     },
-    configureServer(devServer) {
-      server = devServer
+    async buildStart() {
+      await scanArticles()
+    },
+    async hotUpdate({ file }) {
+      if (file.endsWith(".mdx")) {
+        await scanArticles()
+        const { moduleGraph, ws } = server!
+        const mod = moduleGraph.getModuleById(resolvedVirtualManifestModuleId)
+        if (mod) moduleGraph.invalidateModule(mod)
+        ws.send({ type: "full-reload" })
+      }
     },
     resolveId(id) {
-      if (id === virtualManifestModuleId) {
-        return resolvedVirtualManifestModuleId
-      }
+      if (id === virtualManifestModuleId) return resolvedVirtualManifestModuleId
     },
     load(id) {
       if (id === resolvedVirtualManifestModuleId) {
         return `export default ${JSON.stringify(manifest)}`
       }
     },
-    async buildStart() {
-      await scanArticles()
-    },
-  } satisfies Plugin
+  }
 }
 
-function SSG() {
+function fullBuildAndSSG(): Plugin {
   return {
-    name: "vite:ssg",
+    name: "full-build-ssg",
     apply: "build",
     enforce: "post",
-
     async closeBundle() {
-      if (!this.environment.config.build.ssr) return
-
-      console.log("[SSG] Starting static site generation...")
-
-      const distDir = path.resolve("./dist/server")
-      const rendererPath = path.join(distDir, "entry-server.js")
-      const { render } = await import(`file://${rendererPath}`)
-
-      const routes = (await fs.readdir("./src/pages", { recursive: true }))
-        .filter(
-          (filePath) => filePath.endsWith(".tsx") || filePath.endsWith(".mdx")
-        )
-        .map((filePath) => {
-          let file = filePath
-            .replace(/\\/g, "/")
-            .replace(/\.tsx$/, "")
-            .replace(/\.mdx$/, "")
-
-          if (file === "index") {
-            return "/"
-          }
-          if (file.endsWith("/index")) {
-            file = file.slice(0, -"/index".length)
-          }
-          return "/" + file
+      ssrBuild: {
+        console.log("[build] Starting server-side build...")
+        await viteBuild({
+          ...sharedConfig,
+          configFile: false,
+          build: {
+            outDir: serverDist,
+            ssr: "src/entry-server.ts",
+            rollupOptions: {
+              input: path.resolve("src/entry-server.ts"),
+            },
+          },
+          plugins: sharedPlugins,
         })
-        .sort()
-
-      pages: {
-        let html
-        try {
-          html = await fs.readFile("./dist/client/index.html", "utf-8")
-        } catch (error) {
-          throw new Error(
-            '[SSG] Failed to read "./dist/client/index.html". Ensure client build is complete.'
-          )
-        }
-        for (const route of routes) {
-          const pathParts = route.split("/").filter(Boolean)
-          if (pathParts.length > 1) {
-            const dir = pathParts.slice(0, -1).join("/")
-            await fs.mkdir("./dist/client/" + dir, { recursive: true })
-          }
-          const { body, head } = await render({ path: route })
-          const rendered = html
-            .replace("<!-- HEAD -->", head)
-            .replace("<body></body>", `<body>${body}</body>`)
-          let outputPath = route
-          if (route.endsWith("/")) {
-            outputPath += "index"
-          }
-          outputPath = `./dist/client${outputPath}.html`
-          await fs.writeFile(outputPath, rendered)
-          console.log("[SSG] created page", outputPath)
-        }
       }
-      sitemap: {
-        const excludedSitemapRoutes = ["/404"]
-        const baseUrl = "https://rausten.dev"
-        const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-      <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      ${routes
-        .filter((route) => !excludedSitemapRoutes.includes(route))
-        .map((route) => {
-          const url = route === "/" ? baseUrl : `${baseUrl}${route}`
-          return `  <url><loc>${url}</loc></url>`
-        })
-        .join("\n")}
-      </urlset>\n`
-        await fs.writeFile("./dist/client/sitemap.xml", sitemap)
-        console.log("[SSG] Sitemap generated")
+
+      ssg: {
+        console.log("[SSG] Starting static site generation...")
+        const routes = (await fs.readdir("src/pages", { recursive: true }))
+          .filter((f) => f.endsWith(".tsx") || f.endsWith(".mdx"))
+          .map(
+            (f) =>
+              "/" +
+              f
+                .replace(/\\/g, "/")
+                .replace(/\.tsx$/, "")
+                .replace(/\.mdx$/, "")
+                .replace(/^index$/, "")
+                .replace(/\/index$/, "")
+          )
+          .map((r) => (r === "" ? "/" : r))
+          .sort()
+
+        generatePages: {
+          console.log("[SSG] Generating pages...")
+          const templateHtml = await fs.readFile(
+            path.join(clientDist, "index.html"),
+            "utf-8"
+          )
+          const rendererPath = path.join(serverDist, "entry-server.js")
+          const { render } = await import(`file://${rendererPath}`)
+
+          for (const route of routes) {
+            const { body, head } = await render({ path: route })
+
+            const rendered = templateHtml
+              .replace("<!-- HEAD -->", head)
+              .replace("<body></body>", `<body>${body}</body>`)
+
+            const filePath = route.endsWith("/")
+              ? path.join(clientDist, route, "index.html")
+              : path.join(clientDist, route + ".html")
+
+            await fs.mkdir(path.dirname(filePath), { recursive: true })
+            await fs.writeFile(filePath, rendered)
+            console.log("[SSG] Created page", filePath)
+          }
+        }
+
+        sitemap: {
+          console.log("[SSG] Generating sitemap...")
+          const baseUrl = "https://rausten.dev"
+          const exclude = ["/404"]
+          const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  ${routes
+    .filter((r) => !exclude.includes(r))
+    .map((r) => `  <url><loc>${baseUrl}${r === "/" ? "" : r}</loc></url>`)
+    .join("\n")}
+  </urlset>\n`
+          await fs.writeFile(path.join(clientDist, "sitemap.xml"), sitemapXml)
+          console.log("[SSG] Sitemap generated")
+        }
       }
     },
-  } satisfies Plugin
+  }
 }

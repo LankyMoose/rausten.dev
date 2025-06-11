@@ -5,9 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx ./server.ts --watch",
-    "build": "pnpm build:client && pnpm build:server",
-    "build:client": "vite build --outDir dist/client",
-    "build:server": "vite build --ssr src/entry-server.ts --outDir dist/server",
+    "build": "vite build",
     "preview": "cross-env NODE_ENV=production tsx ./server.ts"
   },
   "devDependencies": {
