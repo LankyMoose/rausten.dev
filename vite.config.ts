@@ -123,18 +123,18 @@ function fullBuildAndSSG(): Plugin {
         console.log("[SSG] Starting static site generation...")
         const routes = (await fs.readdir("src/pages", { recursive: true }))
           .filter((f) => f.endsWith(".tsx") || f.endsWith(".mdx"))
-          .map(
-            (f) =>
-              "/" +
-              f
-                .replace(/\\/g, "/")
-                .replace(/\.tsx$/, "")
-                .replace(/\.mdx$/, "")
-                .replace(/^index$/, "")
-                .replace(/\/index$/, "")
+          .map((f) =>
+            f
+              .replace(/\\/g, "/")
+              .replace(/\.tsx$/, "")
+              .replace(/\.mdx$/, "")
+              .replace(/^index$/, "")
+              .replace(/\/index$/, "")
           )
-          .map((r) => (r === "" ? "/" : r))
+          .map((r) => `/${r}`)
           .sort()
+
+        console.log("[SSG] Found routes:", routes)
 
         generatePages: {
           console.log("[SSG] Generating pages...")
