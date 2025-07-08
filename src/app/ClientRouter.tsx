@@ -1,4 +1,5 @@
 import { Derive, useLayoutEffect, useSignal, useViewTransition } from "kaioken"
+import { className as cls } from "kaioken/utils"
 import { loadPageByPath } from "./routes"
 import { BlogHeader } from "$/components/BlogHeader"
 import { MDXProps } from "mdx/types"
@@ -36,12 +37,12 @@ export function ClientRouter({ path, Page }: RouteState) {
             components={{
               wrapper: ({ children }) => (
                 <article
-                  className={[
+                  className={cls(
                     "prose-p:my-4 prose-p:font-light",
                     "prose-headings:font-bold prose-headings:text-neutral-50",
                     "prose prose-invert",
-                    "max-w-full",
-                  ]}
+                    "max-w-full"
+                  )}
                 >
                   <BlogHeader route={path}></BlogHeader>
                   {children}
