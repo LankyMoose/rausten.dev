@@ -33,7 +33,6 @@ const loadRepos = async (): Promise<Repository[]> => {
             "matcha-js",
             "lit-match",
             "x-templ",
-            "rausten.dev",
           ].includes(repo.name)
         )
       ),

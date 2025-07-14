@@ -9,8 +9,8 @@ import { SocialLink } from "$/components/SocialLink"
 export const App: Kaioken.FC = ({ children }) => {
   return (
     <>
-      <header className="p-4 w-full max-w-3xl lg:max-w-5xl mx-auto">
-        <nav className="flex gap-4 items-center justify-between w-full max-w-5xl mx-auto">
+      <header className="p-4 w-full max-w-3xl lg:max-w-3xl mx-auto">
+        <nav className="flex gap-4 items-center justify-between w-full max-w-3xl mx-auto">
           <div className="flex gap-4">
             <Link to="/" className="flex items-center">
               <Logo title="rausten.dev" />
@@ -32,7 +32,7 @@ export const App: Kaioken.FC = ({ children }) => {
           ></iframe>
         </nav>
       </header>
-      <main className="p-4 flex flex-col gap-6 grow w-full max-w-3xl lg:max-w-5xl mx-auto">
+      <main className="p-4 flex flex-col gap-6 grow w-full max-w-3xl lg:max-w-3xl mx-auto">
         {children}
       </main>
       <footer className="flex flex-col gap-4 px-1 py-4">
