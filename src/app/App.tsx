@@ -51,7 +51,7 @@ export const App: Kaioken.FC = ({ children }) => {
           </SocialLink>
         </div>
         <div className="flex justify-center">
-          <span className="font-light text-neutral-300">
+          <span className="font-light text-neutral-300 text-sm">
             Made with{" "}
             <a href="https://kaioken.dev" target="_blank">
               Kaioken
