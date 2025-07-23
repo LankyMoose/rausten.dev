@@ -31,14 +31,7 @@
   background-color: #181a1b;
   background-image: linear-gradient(#181a1b, #060606);
   color: #f2f2f2;
-  font-size: 14px;
   scroll-behavior: smooth;
-}
-
-@media screen and (min-width: 768px) {
-  :root {
-    font-size: 16px;
-  }
 }
 
 body {

@@ -14,7 +14,7 @@ export function Hero({ sup, heading, sub }: HeroProps) {
         {sup}
       </span>
       <h1
-        className="mb-2.5 text-6xl font-bold"
+        className="mb-2.5 text-5xl sm:text-6xl font-bold"
         style="view-transition-name:hero-h1"
       >
         {heading}
