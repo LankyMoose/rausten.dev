@@ -1,6 +1,6 @@
-import { signal, UseAsyncState, useEffect } from "kaioken"
+import { signal, UseAsyncState, useEffect, useViewTransition } from "kaioken"
 
-type ReposState = Omit<UseAsyncState<Repository[]>, "invalidate">
+type ReposState = UseAsyncState<Repository[]>
 const reposState = signal<ReposState>(null!)
 
 const loadRepos = async (): Promise<Repository[]> => {
@@ -48,32 +48,43 @@ const loadRepos = async (): Promise<Repository[]> => {
   return repos
 }
 
-export function useRepos() {
+const invalidate = Object.freeze(() => {})
+const loadingState: ReposState = {
+  loading: true,
+  error: null,
+  data: null,
+  invalidate,
+}
+
+export function useRepos(): ReposState {
+  const transition = useViewTransition()
   useEffect(() => {
     if (reposState.value === null) {
-      reposState.sneak({
-        loading: true,
-        error: null,
-        data: null,
-      })
+      reposState.sneak(loadingState)
       loadRepos().then(
         (repos) => {
-          reposState.value = {
-            loading: false,
-            error: null,
-            data: repos,
-          }
+          transition(() => {
+            reposState.value = {
+              loading: false,
+              error: null,
+              data: repos,
+              invalidate,
+            }
+          })
         },
         (err) => {
-          reposState.value = {
-            loading: false,
-            error: err,
-            data: null,
-          }
+          transition(() => {
+            reposState.value = {
+              loading: false,
+              error: err,
+              data: null,
+              invalidate,
+            }
+          })
         }
       )
     }
   }, [])
 
-  return reposState.value ?? { loading: true, error: null, data: null }
+  return reposState.value ?? loadingState
 }
