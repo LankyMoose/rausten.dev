@@ -1,5 +1,6 @@
 import { useRepos } from "$/hooks/useRepos"
 import Star from "./icons/star"
+import Card from "./Card"
 
 export function RepoList() {
   const repos = useRepos()
@@ -25,23 +26,6 @@ export function RepoList() {
   )
 }
 
-function ItemWrapper({
-  children,
-  idx,
-}: {
-  children: JSX.Children
-  idx: number
-}) {
-  return (
-    <li
-      style={`view-transition-name:repo-${idx}`}
-      className="md:basis-[calc(100%/2-1rem)] w-full grow flex flex-col gap-4 card"
-    >
-      {children}
-    </li>
-  )
-}
-
 type RepoListItemProps = {
   repo: Repository
   idx: number
@@ -49,8 +33,11 @@ type RepoListItemProps = {
 
 function RepoListItem({ repo, idx }: RepoListItemProps) {
   return (
-    <ItemWrapper idx={idx}>
-      <div className="flex justify-between gap-4">
+    <Card.Root
+      style={`view-transition-name:repo-${idx}`}
+      className="md:basis-[calc(100%/2-1rem)]"
+    >
+      <Card.Header>
         <a href={repo.html_url} target="_blank">
           {repo.name}
         </a>
@@ -62,9 +49,9 @@ function RepoListItem({ repo, idx }: RepoListItemProps) {
           <Star />
           {repo.stargazers_count}
         </a>
-      </div>
-      <small className="text-neutral-300">{repo.description}</small>
-    </ItemWrapper>
+      </Card.Header>
+      <Card.Footer>{repo.description}</Card.Footer>
+    </Card.Root>
   )
 }
 
@@ -73,12 +60,15 @@ type SkeletonItemProps = {
 }
 function SkeletonItem({ idx }: SkeletonItemProps) {
   return (
-    <ItemWrapper idx={idx}>
-      <div className="flex justify-between gap-4 py-1">
+    <Card.Root
+      style={`view-transition-name:repo-${idx}`}
+      className="md:basis-[calc(100%/2-1rem)]"
+    >
+      <Card.Header className="flex justify-between gap-4 py-1">
         <span className="w-full h-5 bg-neutral-800/50 animate-pulse"></span>
         <span className="w-14 h-5 bg-neutral-800/50 animate-pulse"></span>
-      </div>
+      </Card.Header>
       <span className="w-full h-8 bg-neutral-800/50 animate-pulse"></span>
-    </ItemWrapper>
+    </Card.Root>
   )
 }

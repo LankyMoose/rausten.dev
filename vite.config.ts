@@ -4,15 +4,15 @@ import mdx from "@mdx-js/rollup"
 import remarkFrontmatter from "remark-frontmatter"
 import tailwindcss from "@tailwindcss/vite"
 import path from "node:path"
-import blogDiscovery from "./vite.plugin-blogs"
-import SSG from "./vite.plugin-ssg"
+import blogs from "./vite/plugin.blogs"
+import SSG from "./vite/plugin.ssg"
 
 const clientDist = path.resolve("dist/client")
 const serverDist = path.resolve("dist/server")
 
 const plugins: PluginOption[] = [
   tailwindcss(),
-  blogDiscovery(),
+  blogs(),
   kaioken(),
   mdx({
     jsx: false,

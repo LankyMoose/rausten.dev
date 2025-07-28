@@ -1,6 +1,7 @@
 import { Plugin, build, UserConfig } from "vite"
 import path from "node:path"
 import fs from "node:fs/promises"
+import { ANSI } from "./ansi"
 
 export default function SSG(
   _config: UserConfig & {
@@ -9,13 +10,15 @@ export default function SSG(
   }
 ): Plugin {
   const { clientDist, serverDist, ...config } = _config
+
+  const log = (...args: unknown[]) => console.log(ANSI.cyan("[SSG]"), ...args)
+
   return {
     name: "full-build-ssg",
     apply: "build",
     enforce: "post",
     async closeBundle() {
       ssrBuild: {
-        console.log("[build] Starting server-side build...")
         await build({
           ...config,
           configFile: false,
@@ -30,7 +33,8 @@ export default function SSG(
       }
 
       ssg: {
-        console.log("[SSG] Starting static site generation...")
+        const start = Date.now()
+        log("🔨", "Reading routes...")
         const routes = (await fs.readdir("src/pages", { recursive: true }))
           .filter((f) => f.endsWith(".tsx") || f.endsWith(".mdx"))
           .map((f) =>
@@ -44,10 +48,10 @@ export default function SSG(
           .map((r) => `/${r}`)
           .sort()
 
-        console.log("[SSG] Found routes:", routes)
+        log(ANSI.green(`   ${routes.length} routes found.`), routes)
 
         generatePages: {
-          console.log("[SSG] Generating pages...")
+          log("🔨", "Generating pages...")
           const templateHtml = await fs.readFile(
             path.join(clientDist, "index.html"),
             "utf-8"
@@ -68,12 +72,13 @@ export default function SSG(
 
             await fs.mkdir(path.dirname(filePath), { recursive: true })
             await fs.writeFile(filePath, rendered)
-            console.log("[SSG] Created page", filePath)
+            log(ANSI.green(" +"), ANSI.black(filePath))
           }
+          log(ANSI.green(`   ${routes.length} pages generated.`))
         }
 
         sitemap: {
-          console.log("[SSG] Generating sitemap...")
+          log("🔨", "Generating sitemap...")
           const baseUrl = "https://rausten.dev"
           const exclude = ["/404"]
           const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -87,8 +92,10 @@ ${routes
   )
   .join("")}</urlset>`
           await fs.writeFile(path.join(clientDist, "sitemap.xml"), sitemapXml)
-          console.log("[SSG] Sitemap generated")
+          log(ANSI.green("   Sitemap generated."))
         }
+
+        log(ANSI.green(` ✓`), `Completed in ${Date.now() - start}ms`)
       }
     },
   }

@@ -1,8 +1,8 @@
 import { Derive, useLayoutEffect, useSignal, useViewTransition } from "kaioken"
 import { className as cls } from "kaioken/utils"
 import { loadPageByPath } from "./routes"
-import { BlogHeader } from "$/components/BlogHeader"
 import { MDXProps } from "mdx/types"
+import { BlogHeader } from "$/components/BlogHeader"
 
 export function ClientRouter({ path, Page }: RouteState) {
   const transition = useViewTransition()
@@ -44,8 +44,8 @@ export function ClientRouter({ path, Page }: RouteState) {
                     "max-w-full"
                   )}
                 >
-                  <BlogHeader route={path}></BlogHeader>
-                  {children}
+                  <BlogHeader route={path} />
+                  <section>{children}</section>
                 </article>
               ),
               a: ({ href, children }: any) => (

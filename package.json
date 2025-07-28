@@ -9,30 +9,31 @@
     "preview": "cross-env NODE_ENV=production tsx ./server.ts"
   },
   "devDependencies": {
-    "@types/compression": "^1.8.1",
-    "@types/express": "^5.0.3",
-    "@types/mdx": "^2.0.13",
-    "@types/node": "^24.0.14",
-    "compression": "^1.8.1",
-    "sirv": "^3.0.1",
-    "tsx": "^4.20.3",
-    "typescript": "^5.8.3",
     "@mdx-js/mdx": "^3.1.0",
     "@mdx-js/rollup": "^3.1.0",
     "@tailwindcss/postcss": "^4.1.11",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.11",
-    "cross-env": "^7.0.3",
+    "@types/compression": "^1.8.1",
+    "@types/express": "^5.0.3",
+    "@types/mdx": "^2.0.13",
+    "@types/node": "^24.1.0",
+    "compression": "^1.8.1",
+    "cross-env": "^10.0.0",
     "express": "^5.1.0",
     "postcss": "^8.5.6",
     "remark-frontmatter": "^5.0.0",
+    "sirv": "^3.0.1",
     "tailwindcss": "^4.1.11",
     "to-vfile": "^8.0.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "vfile": "^6.0.3",
     "vfile-matter": "^5.0.1",
-    "vite": "^7.0.5",
-    "vite-plugin-kaioken": "^0.21.1"
+    "vite": "^7.0.6",
+    "vite-plugin-kaioken": "^0.22.0"
   },
   "dependencies": {
-    "kaioken": "^0.43.0"
+    "kaioken": "^0.44.0"
   }
 }
