@@ -38,6 +38,11 @@ app.use("*all", async (req, res) => {
       res.status(200).set({ "Content-Type": "text/html" }).send(contents)
       pageCache.set(url, contents)
       return
+    } else {
+      if (url.includes("/.well-known")) {
+        res.status(404).end()
+        return
+      }
     }
 
     let template = await fs.readFile("./index.html", "utf-8")
