@@ -1,6 +1,6 @@
 import blogManifest from "virtual:blog-manifest"
 
-const pages = import.meta.glob("../pages/**/*")
+const pages = import.meta.glob("../pages/**/*.(ts|md)x")
 
 export type PageModule = {
   default: () => JSX.Element
