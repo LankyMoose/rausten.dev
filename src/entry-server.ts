@@ -1,4 +1,4 @@
-import { createElement, renderToString } from "kaioken"
+import { createElement, renderToString } from "kiru"
 import { App } from "./app/App"
 import { ClientRouter } from "./app/ClientRouter"
 import { loadPageByPath } from "./app/routes"

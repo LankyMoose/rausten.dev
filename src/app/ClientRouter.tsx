@@ -1,5 +1,5 @@
-import { Derive, useLayoutEffect, useSignal, useViewTransition } from "kaioken"
-import { className as cls } from "kaioken/utils"
+import { Derive, useLayoutEffect, useSignal, useViewTransition } from "kiru"
+import { className as cls } from "kiru/utils"
 import { loadPageByPath } from "./routes"
 import { MDXProps } from "mdx/types"
 import { BlogHeader } from "$/components/BlogHeader"
@@ -31,7 +31,7 @@ export function ClientRouter({ path, Page }: RouteState) {
           return <Page />
         }
 
-        const MDXPage = Page as Kaioken.FC<MDXProps>
+        const MDXPage = Page as Kiru.FC<MDXProps>
         return (
           <MDXPage
             components={{

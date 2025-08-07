@@ -6,7 +6,7 @@ import X from "$/components/icons/x"
 import { Link } from "$/components/Link"
 import { SocialLink } from "$/components/SocialLink"
 
-export const App: Kaioken.FC = ({ children }) => {
+export const App: Kiru.FC = ({ children }) => {
   return (
     <>
       <header className="p-4 w-full max-w-3xl lg:max-w-3xl mx-auto">

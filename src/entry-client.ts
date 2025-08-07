@@ -1,5 +1,5 @@
-import { createElement } from "kaioken"
-import { hydrate } from "kaioken/ssr/client"
+import { createElement } from "kiru"
+import { hydrate } from "kiru/ssr/client"
 import { App } from "./app/App"
 import { ClientRouter } from "./app/ClientRouter"
 import { loadPageByPath } from "./app/routes"

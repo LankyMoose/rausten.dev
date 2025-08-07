@@ -1,4 +1,4 @@
-import { isVNode } from "kaioken/utils"
+import { isVNode } from "kiru/utils"
 
 export function Head({ children }: { children: JSX.Children }) {
   if ("window" in globalThis) {

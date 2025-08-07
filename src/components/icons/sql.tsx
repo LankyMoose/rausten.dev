@@ -1,4 +1,4 @@
-import { ElementProps } from "kaioken"
+import type { ElementProps } from "kiru"
 
 export default (props: ElementProps<"svg">) => (
   <svg

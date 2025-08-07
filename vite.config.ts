@@ -1,5 +1,5 @@
 import { defineConfig, PluginOption, UserConfig } from "vite"
-import kaioken from "vite-plugin-kaioken"
+import kiru from "vite-plugin-kiru"
 import mdx from "@mdx-js/rollup"
 import remarkFrontmatter from "remark-frontmatter"
 import tailwindcss from "@tailwindcss/vite"
@@ -13,10 +13,10 @@ const serverDist = path.resolve("dist/server")
 const plugins: PluginOption[] = [
   tailwindcss(),
   blogs(),
-  kaioken(),
+  kiru(),
   mdx({
     jsx: false,
-    jsxImportSource: "kaioken",
+    jsxImportSource: "kiru",
     jsxRuntime: "automatic",
     remarkPlugins: [remarkFrontmatter],
   }),

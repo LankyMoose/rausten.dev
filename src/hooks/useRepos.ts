@@ -1,4 +1,4 @@
-import { signal, useEffect, useViewTransition } from "kaioken"
+import { signal, useEffect, useViewTransition } from "kiru"
 
 type ReposState =
   | {
@@ -42,7 +42,7 @@ const loadRepos = async (
     "X-GitHub-Api-Version": "2022-11-28",
   }
   const toShow = new Set([
-    "kaioken",
+    "kiru",
     "async-idb-orm",
     "async-worker-ts",
     "matcha-js",
@@ -53,7 +53,7 @@ const loadRepos = async (
   const start = Date.now()
   const repos = await Promise.all(
     [
-      fetch(`${base}/repos/CrimsonChi/kaioken`, { headers }),
+      fetch(`${base}/repos/kirujs/kiru`, { headers }),
       fetch(`${base}/users/LankyMoose/repos?type=owner`, { headers }),
     ].map((r) => r.then((res) => res.json()))
   ).then((r) => r.flat<Repository[]>().filter((repo) => toShow.has(repo.name)))

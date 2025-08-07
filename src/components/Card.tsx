@@ -1,5 +1,5 @@
-import { unwrap, type ElementProps } from "kaioken"
-import { className as cls } from "kaioken/utils"
+import { unwrap, type ElementProps } from "kiru"
+import { className as cls } from "kiru/utils"
 
 export default {
   Root,
