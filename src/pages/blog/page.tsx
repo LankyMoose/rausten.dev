@@ -2,7 +2,7 @@ import { Link } from "$/components/Link"
 import { Hero } from "$/components/Hero"
 import { Head } from "$/components/Head"
 import Card from "$/components/Card"
-import { blogLinkData } from "./index.data"
+import { blogLinkData } from "./page.data"
 
 export default function Page() {
   return (

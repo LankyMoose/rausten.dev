@@ -4,6 +4,7 @@ import { read } from "to-vfile"
 import { matter } from "vfile-matter"
 import type { HotUpdateOptions, Plugin } from "vite"
 import { ANSI } from "./ansi"
+import { formatFilePath } from "../src/routes.utils"
 
 declare module "vfile" {
   interface DataMap {
@@ -13,30 +14,40 @@ declare module "vfile" {
 }
 
 export default function blogs(): Plugin {
-  const blogDir = path.resolve("src/pages/blog")
   const manifest: BlogManifest = {}
   const virtualManifestModuleId = "virtual:blog-manifest"
   const resolvedVirtualManifestModuleId = "\0" + virtualManifestModuleId
 
   const log = (...args: unknown[]) => console.log(ANSI.cyan("[blogs]"), ...args)
+  const normalizedCwd = process.cwd().replace(/\\/g, "/")
 
   let server: import("vite").ViteDevServer | null = null
   let updateTimeout: NodeJS.Timeout
 
   async function upsertBlog(file: string) {
-    const vFile = await read(path.join(blogDir, file))
+    const vFile = await read(path.join(process.cwd(), file))
     matter(vFile)
-    manifest[file.split(".")[0]] = vFile.data.matter!
+    const formatted = formatFilePath(file.replace(/\\/g, "/")).replace(
+      "/blog/",
+      ""
+    )
+    manifest[formatted] = vFile.data.matter!
   }
 
   async function handleHotUpdate(options: HotUpdateOptions) {
     const { file: filePath, type } = options
-    const fileName = filePath.split("/").pop()!
+    const normalized = filePath
+      .replace(/\\/g, "/")
+      .replace(normalizedCwd, "")
+      .split("/")
+      .join("/")
+      .substring(1)
 
     if (type === "delete") {
-      delete manifest[fileName.split(".")[0]]
+      const formatted = formatFilePath(normalized).replace("/blog/", "")
+      delete manifest[formatted]
     } else {
-      return upsertBlog(fileName)
+      return upsertBlog(normalized)
     }
   }
 
@@ -57,17 +68,18 @@ export default function blogs(): Plugin {
     async buildStart() {
       const start = Date.now()
       log("🔨", "Reading articles...")
-      const files = (await fs.readdir(blogDir)).filter((f) =>
-        f.endsWith(".mdx")
-      )
-      log(ANSI.green(`   ${files.length} articles found.`))
+
+      const files = fs.glob("src/pages/blog/**/*.mdx")
 
       log("🔨", "Generating manifest entries...")
-      for (const file of files) {
+      let numEntries = 0
+      for await (const file of files) {
+        console.log("file", file)
         await upsertBlog(file)
         log(ANSI.green(" +"), ANSI.black(file))
+        numEntries++
       }
-      log(ANSI.green(`   ${files.length} manifest entries generated.`))
+      log(ANSI.green(`   ${numEntries} manifest entries generated.`))
       log(ANSI.green(` ✓`), `Completed in ${Date.now() - start}ms`)
     },
     async hotUpdate(options) {
@@ -80,7 +92,7 @@ export default function blogs(): Plugin {
       updateTimeout = setTimeout(() => {
         const { moduleGraph, ws } = server!
         const mod = moduleGraph.getModuleById(resolvedVirtualManifestModuleId)
-        if (mod) moduleGraph.invalidateModule(mod)
+        if (mod) moduleGraph.invalidateModule(mod, undefined, undefined, true)
         ws.send({ type: "full-reload" })
       }, 250)
     },

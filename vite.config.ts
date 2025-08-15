@@ -13,13 +13,13 @@ const serverDist = path.resolve("dist/server")
 const plugins: PluginOption[] = [
   tailwindcss(),
   blogs(),
-  kiru(),
   mdx({
     jsx: false,
     jsxImportSource: "kiru",
     jsxRuntime: "automatic",
     remarkPlugins: [remarkFrontmatter],
   }),
+  kiru(),
 ]
 
 const sharedConfig: UserConfig = {

@@ -2,6 +2,7 @@ import { Plugin, build, UserConfig } from "vite"
 import path from "node:path"
 import fs from "node:fs/promises"
 import { ANSI } from "./ansi"
+import { formatFilePath } from "../src/routes.utils"
 
 export default function SSG(
   _config: UserConfig & {
@@ -35,18 +36,11 @@ export default function SSG(
       ssg: {
         const start = Date.now()
         log("🔨", "Reading routes...")
-        const routes = (await fs.readdir("src/pages", { recursive: true }))
-          .filter((f) => f.endsWith(".tsx") || f.endsWith(".mdx"))
-          .map((f) =>
-            f
-              .replace(/\\/g, "/")
-              .replace(/\.tsx$/, "")
-              .replace(/\.mdx$/, "")
-              .replace(/^index$/, "")
-              .replace(/\/index$/, "")
-          )
-          .map((r) => `/${r}`)
-          .sort()
+        const routesIterator = fs.glob("src/pages/**/page.{tsx,mdx}")
+        const routes: string[] = []
+        for await (const route of routesIterator) {
+          routes.push(formatFilePath(route.replace(/\\/g, "/")))
+        }
 
         log(ANSI.green(`   ${routes.length} routes found.`), routes)
 
@@ -59,22 +53,26 @@ export default function SSG(
           const rendererPath = path.join(serverDist, "entry-server.js")
           const { render } = await import(`file://${rendererPath}`)
 
+          let numRoutes = 0
           for (const route of routes) {
+            console.log("route", { route })
             const { body, head } = await render({ path: route })
 
             const rendered = templateHtml
               .replace("<!-- HEAD -->", head)
               .replace("<!-- BODY -->", `<body>${body}</body>`)
 
-            const filePath = route.endsWith("/")
-              ? path.join(clientDist, route, "index.html")
-              : path.join(clientDist, route + ".html")
+            const filePath = path.join(
+              clientDist,
+              (route === "/" ? "index" : route) + ".html"
+            )
 
             await fs.mkdir(path.dirname(filePath), { recursive: true })
             await fs.writeFile(filePath, rendered)
             log(ANSI.green(" +"), ANSI.black(filePath))
+            numRoutes++
           }
-          log(ANSI.green(`   ${routes.length} pages generated.`))
+          log(ANSI.green(`   ${numRoutes} pages generated.`))
         }
 
         sitemap: {

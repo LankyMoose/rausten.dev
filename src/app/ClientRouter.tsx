@@ -1,23 +1,22 @@
 import { Derive, useLayoutEffect, useSignal, useViewTransition } from "kiru"
-import { className as cls } from "kiru/utils"
-import { loadPageByPath } from "./routes"
-import { MDXProps } from "mdx/types"
-import { BlogHeader } from "$/components/BlogHeader"
+import { loadRouteByPath } from "../routes"
 
-export function ClientRouter({ path, Page }: RouteState) {
+export function ClientRouter({ path, Page, Layout }: RouteState) {
   const transition = useViewTransition()
-  const routeState = useSignal({ path, Page })
+  const routeState = useSignal<RouteState>({
+    path,
+    Page,
+    Layout,
+  })
 
   useLayoutEffect(() => {
     const handler = async () => {
-      const nextPath = window.location.pathname
-      if (routeState.peek().path === nextPath) return
-      const nextPage = await loadPageByPath(nextPath)
+      const path = window.location.pathname
+      if (routeState.peek().path === path) return
+
+      const { Page, Layout } = await loadRouteByPath(path)
       transition(() => {
-        routeState.value = {
-          path: nextPath,
-          Page: nextPage,
-        }
+        routeState.value = { path, Page, Layout }
       })
     }
     window.addEventListener("popstate", handler)
@@ -26,40 +25,7 @@ export function ClientRouter({ path, Page }: RouteState) {
 
   return (
     <Derive from={routeState}>
-      {({ Page, path }) => {
-        if (path.substring(0, 6) !== "/blog/") {
-          return <Page />
-        }
-
-        const MDXPage = Page as Kiru.FC<MDXProps>
-        return (
-          <MDXPage
-            components={{
-              wrapper: ({ children }) => (
-                <article
-                  className={cls(
-                    "prose-p:my-4 prose-p:font-light",
-                    "prose-headings:font-bold prose-headings:text-neutral-50",
-                    "prose prose-invert",
-                    "max-w-full"
-                  )}
-                >
-                  <BlogHeader route={path} />
-                  <section>{children}</section>
-                </article>
-              ),
-              a: ({ href, children }: any) => (
-                <a
-                  href={href}
-                  target={href.startsWith("http") ? "_blank" : "_self"}
-                >
-                  {children}
-                </a>
-              ),
-            }}
-          />
-        )
-      }}
+      {({ path, Layout, Page }) => <Layout path={path} Page={Page} />}
     </Derive>
   )
 }
