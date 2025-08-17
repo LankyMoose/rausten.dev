@@ -1,67 +1,68 @@
 import { createElement, lazy } from "kiru"
-import blogManifest from "virtual:blog-manifest"
 import { formatFilePath } from "./routes.utils"
 
-const pages = import.meta.glob("./pages/**/page.(ts|md)x")
-const layouts = import.meta.glob("./pages/**/layout.tsx")
-
-type PageModule = {
+type DefaultComponentModule = {
   default: Kiru.FC
 }
-type LayoutModule = {
-  default: LayoutComponent
+
+type RouteComponents = {
+  Page: Kiru.FC
+  Layout: Kiru.FC
 }
 
-type RouteMap = {
-  [path: string]: {
-    Page: () => Promise<PageModule>
-    Layout: (() => Promise<LayoutModule>) | null
-  }
+const pages = import.meta.glob("./pages/**/page.(ts|md)x") as {
+  [fp: string]: () => Promise<DefaultComponentModule>
 }
-
-// todo: impl layout inheritance
-const routes = Object.keys(pages).reduce<RouteMap>((acc, path) => {
-  let Layout: (() => Promise<LayoutModule>) | null = null
-
-  const layoutPath = path.split("/").slice(0, -1).concat("layout.tsx").join("/")
-  if (layoutPath in layouts) {
-    Layout = layouts[layoutPath] as () => Promise<LayoutModule>
-  }
-
-  const routePath = formatFilePath(path)
-  return {
-    ...acc,
-    [routePath]: {
-      Page: pages[path] as () => Promise<PageModule>,
-      Layout,
-    },
-  }
-}, {})
+const layouts = import.meta.glob("./pages/**/layout.tsx") as {
+  [fp: string]: () => Promise<DefaultComponentModule>
+}
 
 const ErrorPage = lazy(() => import("./pages/404/page"))
-const EmptyLayout: LayoutComponent = ({ Page }) => createElement(Page)
+const EmptyLayout: Kiru.FC = ({ children }) => children
 
-export async function loadRouteByPath(
-  path: string
-): Promise<Omit<RouteState, "path">> {
-  for (const route in routes) {
-    if (route === path || route === path + "/") {
-      const entry = routes[route]
-      const [Page, Layout] = await Promise.all([entry.Page(), entry.Layout?.()])
+const routeCache = new Map<string, Promise<RouteComponents>>()
 
-      return {
-        Page: Page.default,
-        Layout: Layout?.default ?? EmptyLayout,
-      }
+export function loadRouteByPath(path: string): Promise<RouteComponents> {
+  if (!routeCache.has(path)) {
+    routeCache.set(path, loadRouteByPath_impl(path))
+  }
+  return routeCache.get(path)!
+}
+
+async function loadRouteByPath_impl(path: string): Promise<RouteComponents> {
+  for (const fp in pages) {
+    const routePath = formatFilePath(fp)
+    if (routePath !== path) continue
+
+    const parts = fp.split("/").slice(1, -1)
+    const layoutPromises = parts.reduce<Promise<DefaultComponentModule>[]>(
+      (acc, _, i) => {
+        const layoutPath = [".", ...parts.slice(0, i + 1), "layout.tsx"].join(
+          "/"
+        )
+        if (layouts[layoutPath]) {
+          return [...acc, layouts[layoutPath]()]
+        }
+        return acc
+      },
+      []
+    )
+
+    const [Page, ...Layouts] = (
+      await Promise.all([pages[fp](), ...layoutPromises])
+    )
+      .filter((m) => typeof m.default === "function")
+      .map((m) => m.default)
+
+    return {
+      Page,
+      Layout: ({ children }) =>
+        Layouts.reduceRight(
+          (children, Layout) => createElement(Layout, { children }),
+          children
+        ),
     }
   }
 
-  return {
-    Page: ErrorPage,
-    Layout: EmptyLayout,
-  }
-}
-
-export function getBlogManifestEntryFromRoute(route: string) {
-  return blogManifest[route.slice(6)]
+  return { Page: ErrorPage, Layout: EmptyLayout }
 }

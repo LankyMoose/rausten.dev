@@ -10,8 +10,8 @@ export function Head({ children }: { children: JSX.Children }) {
             return (document.title = String(props.children))
           case "meta":
             return document
-              .querySelector(`meta[name="${props.name}"]`)!
-              .setAttribute("content", String(props.content))
+              .querySelector(`meta[name="${props.name}"]`)
+              ?.setAttribute("content", String(props.content))
         }
       })
     return null

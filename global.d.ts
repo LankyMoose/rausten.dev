@@ -1,9 +1,7 @@
-type LayoutComponent = (props: { path: string; Page: Kiru.FC }) => JSX.Element
-
 type RouteState = {
   path: string
   Page: Kiru.FC
-  Layout: LayoutComponent
+  Layout: Kiru.FC
 }
 
 type BlogItemMeta = {

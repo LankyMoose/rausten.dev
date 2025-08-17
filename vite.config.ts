@@ -18,6 +18,7 @@ const plugins: PluginOption[] = [
     jsxImportSource: "kiru",
     jsxRuntime: "automatic",
     remarkPlugins: [remarkFrontmatter],
+    providerImportSource: "$/hooks/useMdxComponents",
   }),
   kiru(),
 ]
@@ -27,6 +28,12 @@ const sharedConfig: UserConfig = {
     alias: {
       $: path.resolve("src"),
     },
+  },
+  esbuild: {
+    sourcemap: false,
+  },
+  build: {
+    sourcemap: false,
   },
   optimizeDeps: {
     include: ["**/*.css"],

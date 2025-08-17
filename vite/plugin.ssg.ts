@@ -55,7 +55,6 @@ export default function SSG(
 
           let numRoutes = 0
           for (const route of routes) {
-            console.log("route", { route })
             const { body, head } = await render({ path: route })
 
             const rendered = templateHtml

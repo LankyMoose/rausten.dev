@@ -1,4 +1,4 @@
-import { getBlogManifestEntryFromRoute } from "$/routes"
+import blogManifest from "virtual:blog-manifest"
 import { Hero } from "./Hero"
 import { Head } from "./Head"
 
@@ -22,4 +22,8 @@ export function BlogHeader({ route }: BlogHeaderProps) {
       </section>
     </>
   )
+}
+
+export function getBlogManifestEntryFromRoute(route: string) {
+  return blogManifest[route.slice(6)]
 }
