@@ -26,7 +26,6 @@ export default function ContactForm() {
     async onSubmit({ state }) {
       const { name, email, message } = state
       try {
-        await new Promise<void>((resolve) => setTimeout(resolve, 1000))
         await new Promise<void>((resolve) => grecaptcha.ready(resolve))
         const token = await grecaptcha.execute(RECAPTCHA_SITE_KEY, {
           action: "submit",
@@ -37,6 +36,7 @@ export default function ContactForm() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ name, email, message, token }),
+          credentials: "same-origin",
         })
         const data = await response.json()
         sent.value = !!data.success
