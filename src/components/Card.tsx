@@ -1,4 +1,4 @@
-import { unwrap, type ElementProps } from "kiru"
+import { createElement, unwrap, type ElementProps } from "kiru"
 import { className as cls } from "kiru/utils"
 
 export default {
@@ -7,13 +7,17 @@ export default {
   Footer,
 }
 
-function Root({ className, ...props }: ElementProps<"li">) {
-  return (
-    <li
-      className={cls("card w-full grow flex flex-col gap-2", unwrap(className))}
-      {...props}
-    />
-  )
+type RootProps<T extends keyof JSX.IntrinsicElements> = ElementProps<T> & {
+  tag?: string
+}
+function Root<T extends keyof JSX.IntrinsicElements = "li">({
+  className,
+  ...props
+}: RootProps<T>) {
+  return createElement(props.tag || "li", {
+    className: cls("card w-full grow flex flex-col gap-2", unwrap(className)),
+    ...props,
+  })
 }
 
 function Header({ className, ...props }: ElementProps<"div">) {

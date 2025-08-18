@@ -11,18 +11,27 @@ export default function Layout({ children }: { children: JSX.Children }) {
     <>
       <header className="p-4 w-full max-w-3xl lg:max-w-3xl mx-auto">
         <nav className="flex gap-4 items-center justify-between w-full max-w-3xl mx-auto">
+          <Link to="/" className="flex items-center">
+            <Logo title="rausten.dev" />
+          </Link>
           <div className="flex gap-4">
-            <Link to="/" className="flex items-center">
-              <Logo title="rausten.dev" />
-            </Link>
             <Link to="/blog" className="flex items-center">
               Blog
+            </Link>
+            <Link to="/contact" className="flex items-center">
+              Contact
             </Link>
             <a href="/Rob-Austen-Resume.pdf" target="_blank">
               Resume
             </a>
           </div>
-
+        </nav>
+      </header>
+      <main className="p-4 flex flex-col gap-6 grow w-full max-w-3xl lg:max-w-3xl mx-auto">
+        {children}
+      </main>
+      <footer className="flex flex-col gap-4 px-1 py-4">
+        <div className="flex justify-center">
           <iframe
             src="https://github.com/sponsors/LankyMoose/button"
             title="Sponsor LankyMoose"
@@ -30,12 +39,7 @@ export default function Layout({ children }: { children: JSX.Children }) {
             width="114"
             style="border: 0; border-radius: 6px;"
           ></iframe>
-        </nav>
-      </header>
-      <main className="p-4 flex flex-col gap-6 grow w-full max-w-3xl lg:max-w-3xl mx-auto">
-        {children}
-      </main>
-      <footer className="flex flex-col gap-4 px-1 py-4">
+        </div>
         <div className="flex gap-4 items-center mx-auto">
           <SocialLink href="https://www.github.com/lankymoose">
             <Github title="GitHub" />

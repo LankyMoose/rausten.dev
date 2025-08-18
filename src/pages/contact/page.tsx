@@ -22,7 +22,7 @@ export default function Page() {
         />
       </section>
       <section>
-        <Card.Root>
+        <Card.Root tag="div">
           <ContactForm />
         </Card.Root>
       </section>

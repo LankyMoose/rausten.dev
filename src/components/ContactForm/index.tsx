@@ -2,6 +2,7 @@ import { useLayoutEffect, useSignal, Derive } from "kiru"
 import { useForm } from "kiru/form"
 import { validateFieldValueLength } from "./utils"
 import { FormFieldWrapper } from "./FormFieldWrapper"
+import { Loader } from "../Loader"
 
 const RECAPTCHA_SITE_KEY = "6Lfjh6krAAAAAFJsIRSW8C5Zs0kAwRW8iZz3TQuZ"
 let hasLoadedRecaptcha = false
@@ -53,7 +54,9 @@ export default function ContactForm() {
       <Derive from={sent}>
         {(sent) =>
           sent ? (
-            "Sent!"
+            <div className="text-center text-lg font-bold">
+              Message Sent! Sit tight and I'll get back to you ASAP.
+            </div>
           ) : (
             <form
               className="flex flex-col gap-4"
@@ -126,10 +129,11 @@ export default function ContactForm() {
                   {([canSubmit, isSubmitting]) => (
                     <button
                       type="submit"
-                      className="px-4 py-2 bg-slate-700 text-white rounded-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 focus:bg-slate-600 text-white rounded-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                       disabled={!canSubmit || isSubmitting}
-                      children={isSubmitting ? "Sending..." : "Send"}
-                    />
+                    >
+                      Send {isSubmitting && <Loader />}
+                    </button>
                   )}
                 </form.Subscribe>
               </div>
