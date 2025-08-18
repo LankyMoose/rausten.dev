@@ -5,7 +5,7 @@
     "module": "ESNext",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
-    "types": ["vite/client", "./global.d.ts"],
+    "types": ["vite/client", "./global.d.ts", "@types/grecaptcha"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
