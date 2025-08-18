@@ -8,9 +8,9 @@ export default {
 }
 
 type RootProps<T extends keyof JSX.IntrinsicElements> = ElementProps<T> & {
-  tag?: string
+  tag?: T
 }
-function Root<T extends keyof JSX.IntrinsicElements = "li">({
+function Root<T extends keyof JSX.IntrinsicElements>({
   className,
   ...props
 }: RootProps<T>) {
