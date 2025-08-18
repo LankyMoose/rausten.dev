@@ -22,7 +22,7 @@ export default function Page() {
           {blogLinkData.map(({ path, title, description, date }) => (
             <Card.Root>
               <Card.Header>
-                <Link to={`/blog/${path}`}>{title}</Link>
+                <Link to={path}>{title}</Link>
                 <small className="text-neutral-400">
                   {new Date(date).toDateString()}
                 </small>

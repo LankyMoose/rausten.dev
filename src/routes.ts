@@ -1,4 +1,4 @@
-import { createElement, lazy } from "kiru"
+import { createElement } from "kiru"
 import { formatFilePath } from "./routes.utils"
 
 type DefaultComponentModule = {
@@ -13,12 +13,20 @@ type RouteComponents = {
 const pages = import.meta.glob("./pages/**/page.(ts|md)x") as {
   [fp: string]: () => Promise<DefaultComponentModule>
 }
+if (!("./pages/404/page.tsx" in pages)) {
+  pages["./pages/404/page.tsx"] = async () => ({
+    default: () => "Page not found",
+  })
+  if (import.meta.env.DEV) {
+    console.warn(
+      "404 page not found. Make sure you have a page at ./pages/404/page.tsx"
+    )
+  }
+}
+
 const layouts = import.meta.glob("./pages/**/layout.tsx") as {
   [fp: string]: () => Promise<DefaultComponentModule>
 }
-
-const ErrorPage = lazy(() => import("./pages/404/page"))
-const EmptyLayout: Kiru.FC = ({ children }) => children
 
 const routeCache = new Map<string, Promise<RouteComponents>>()
 
@@ -64,5 +72,5 @@ async function loadRouteByPath_impl(path: string): Promise<RouteComponents> {
     }
   }
 
-  return { Page: ErrorPage, Layout: EmptyLayout }
+  return loadRouteByPath_impl("/404")
 }

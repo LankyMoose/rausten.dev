@@ -1,12 +1,11 @@
 import blogManifest from "virtual:blog-manifest"
 import { Hero } from "./Hero"
 import { Head } from "./Head"
+import { useRouter } from "$/app"
 
-type BlogHeaderProps = {
-  route: string
-}
-export function BlogHeader({ route }: BlogHeaderProps) {
-  const { title, description, date } = getBlogManifestEntryFromRoute(route)
+export function BlogHeader() {
+  const { path } = useRouter()
+  const { title, description, date } = blogManifest[path]
   return (
     <>
       <Head>
@@ -22,8 +21,4 @@ export function BlogHeader({ route }: BlogHeaderProps) {
       </section>
     </>
   )
-}
-
-export function getBlogManifestEntryFromRoute(route: string) {
-  return blogManifest[route.slice(6)]
 }

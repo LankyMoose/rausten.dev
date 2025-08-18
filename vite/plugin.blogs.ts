@@ -27,10 +27,7 @@ export default function blogs(): Plugin {
   async function upsertBlog(file: string) {
     const vFile = await read(path.join(process.cwd(), file))
     matter(vFile)
-    const formatted = formatFilePath(file.replace(/\\/g, "/")).replace(
-      "/blog/",
-      ""
-    )
+    const formatted = formatFilePath(file.replace(/\\/g, "/"))
     manifest[formatted] = vFile.data.matter!
   }
 
@@ -44,7 +41,7 @@ export default function blogs(): Plugin {
       .substring(1)
 
     if (type === "delete") {
-      const formatted = formatFilePath(normalized).replace("/blog/", "")
+      const formatted = formatFilePath(normalized)
       delete manifest[formatted]
     } else {
       return upsertBlog(normalized)
@@ -79,7 +76,7 @@ export default function blogs(): Plugin {
         log(ANSI.green(" +"), ANSI.black(file))
         numEntries++
       }
-      log(ANSI.green(`   ${numEntries} manifest entries generated.`))
+      log(ANSI.green(`   ${numEntries} manifest entries generated.`), manifest)
       log(ANSI.green(` ✓`), `Completed in ${Date.now() - start}ms`)
     },
     async hotUpdate(options) {

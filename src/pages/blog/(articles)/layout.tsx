@@ -1,11 +1,7 @@
 import { className as cls } from "kiru/utils"
 import { BlogHeader } from "$/components/BlogHeader"
-import { useRouter } from "$/app"
 
 export default function Layout({ children }: { children: JSX.Children }) {
-  const { path } = useRouter()
-  if (path === "/blog") return children
-
   return (
     <article
       className={cls(
@@ -15,7 +11,7 @@ export default function Layout({ children }: { children: JSX.Children }) {
         "max-w-full"
       )}
     >
-      <BlogHeader route={path} />
+      <BlogHeader />
       <section>{children}</section>
     </article>
   )
