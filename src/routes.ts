@@ -24,17 +24,27 @@ if (!("./pages/404/page.tsx" in pages)) {
   }
 }
 
+declare global {
+  interface Map<K, V> {
+    getOrSet(key: K, value: () => V): V
+  }
+}
+Map.prototype.getOrSet = function <K, V>(key: K, value: () => V) {
+  if (!this.has(key)) {
+    this.set(key, value())
+  }
+  return this.get(key)!
+}
+
 const layouts = import.meta.glob("./pages/**/layout.tsx") as {
   [fp: string]: () => Promise<DefaultComponentModule>
 }
 
-const routeCache = new Map<string, Promise<RouteComponents>>()
+const routePromiseCache = new Map<string, Promise<RouteComponents>>()
+const modulePromiseCache = new Map<string, Promise<DefaultComponentModule>>()
 
 export function loadRouteByPath(path: string): Promise<RouteComponents> {
-  if (!routeCache.has(path)) {
-    routeCache.set(path, loadRouteByPath_impl(path))
-  }
-  return routeCache.get(path)!
+  return routePromiseCache.getOrSet(path, () => loadRouteByPath_impl(path))
 }
 
 async function loadRouteByPath_impl(path: string): Promise<RouteComponents> {
@@ -49,15 +59,20 @@ async function loadRouteByPath_impl(path: string): Promise<RouteComponents> {
           "/"
         )
         if (layouts[layoutPath]) {
-          return [...acc, layouts[layoutPath]()]
+          const layoutPromise = modulePromiseCache.getOrSet(
+            layoutPath,
+            layouts[layoutPath]
+          )
+          return [...acc, layoutPromise]
         }
         return acc
       },
       []
     )
 
+    const pagePromise = modulePromiseCache.getOrSet(fp, pages[fp])
     const [Page, ...Layouts] = (
-      await Promise.all([pages[fp](), ...layoutPromises])
+      await Promise.all([pagePromise, ...layoutPromises])
     )
       .filter((m) => typeof m.default === "function")
       .map((m) => m.default)
