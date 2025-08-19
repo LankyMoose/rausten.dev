@@ -32,9 +32,9 @@
     "vfile": "^6.0.3",
     "vfile-matter": "^5.0.1",
     "vite": "^7.1.2",
-    "vite-plugin-kiru": "^0.24.0"
+    "vite-plugin-kiru": "^0.25.0"
   },
   "dependencies": {
-    "kiru": "^0.45.3"
+    "kiru": "^0.46.0"
   }
 }
