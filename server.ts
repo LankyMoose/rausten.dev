@@ -49,7 +49,7 @@ app.use("*all", async (req, res) => {
     template = await vite.transformIndexHtml(url, template)
 
     const { render } = (await vite.ssrLoadModule(
-      "/src/entry-server.ts"
+      "/src/entry-server.tsx"
     )) as typeof import("./src/entry-server")
 
     const { body, head } = await render({ path: req.originalUrl })

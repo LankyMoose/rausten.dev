@@ -1,5 +1,5 @@
 import { createElement } from "kiru"
-import { formatFilePath } from "./routes.utils"
+import { formatFilePath, getOrSetMapEntryFromFactory } from "./routes.utils"
 
 type DefaultComponentModule = {
   default: Kiru.FC
@@ -10,9 +10,13 @@ type RouteComponents = {
   Layout: Kiru.FC
 }
 
+const layouts = import.meta.glob("./pages/**/layout.tsx") as {
+  [fp: string]: () => Promise<DefaultComponentModule>
+}
 const pages = import.meta.glob("./pages/**/page.(ts|md)x") as {
   [fp: string]: () => Promise<DefaultComponentModule>
 }
+
 if (!("./pages/404/page.tsx" in pages)) {
   pages["./pages/404/page.tsx"] = async () => ({
     default: () => "Page not found",
@@ -24,27 +28,13 @@ if (!("./pages/404/page.tsx" in pages)) {
   }
 }
 
-declare global {
-  interface Map<K, V> {
-    getOrSet(key: K, value: () => V): V
-  }
-}
-Map.prototype.getOrSet = function <K, V>(key: K, value: () => V) {
-  if (!this.has(key)) {
-    this.set(key, value())
-  }
-  return this.get(key)!
-}
-
-const layouts = import.meta.glob("./pages/**/layout.tsx") as {
-  [fp: string]: () => Promise<DefaultComponentModule>
-}
-
 const routePromiseCache = new Map<string, Promise<RouteComponents>>()
 const modulePromiseCache = new Map<string, Promise<DefaultComponentModule>>()
 
 export function loadRouteByPath(path: string): Promise<RouteComponents> {
-  return routePromiseCache.getOrSet(path, () => loadRouteByPath_impl(path))
+  return getOrSetMapEntryFromFactory(routePromiseCache, path, () =>
+    loadRouteByPath_impl(path)
+  )
 }
 
 async function loadRouteByPath_impl(path: string): Promise<RouteComponents> {
@@ -59,7 +49,8 @@ async function loadRouteByPath_impl(path: string): Promise<RouteComponents> {
           "/"
         )
         if (layouts[layoutPath]) {
-          const layoutPromise = modulePromiseCache.getOrSet(
+          const layoutPromise = getOrSetMapEntryFromFactory(
+            modulePromiseCache,
             layoutPath,
             layouts[layoutPath]
           )
@@ -70,7 +61,11 @@ async function loadRouteByPath_impl(path: string): Promise<RouteComponents> {
       []
     )
 
-    const pagePromise = modulePromiseCache.getOrSet(fp, pages[fp])
+    const pagePromise = getOrSetMapEntryFromFactory(
+      modulePromiseCache,
+      fp,
+      pages[fp]
+    )
     const [Page, ...Layouts] = (
       await Promise.all([pagePromise, ...layoutPromises])
     )

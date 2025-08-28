@@ -11,13 +11,13 @@ import { loadRouteByPath } from "../routes"
 const RouterContext = createContext<RouteState>(null!)
 export const useRouter = () => useContext(RouterContext)
 
-export function App({ path, Page, Layout }: RouteState) {
+interface AppProps {
+  initialState: RouteState
+}
+
+export function App({ initialState }: AppProps) {
   const transition = useViewTransition()
-  const routeState = useSignal<RouteState>({
-    path,
-    Page,
-    Layout,
-  })
+  const routeState = useSignal(initialState)
 
   useLayoutEffect(() => {
     const handler = async () => {

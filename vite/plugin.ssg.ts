@@ -25,9 +25,9 @@ export default function SSG(
           configFile: false,
           build: {
             outDir: serverDist,
-            ssr: "src/entry-server.ts",
+            ssr: "src/entry-server.tsx",
             rollupOptions: {
-              input: path.resolve("src/entry-server.ts"),
+              input: path.resolve("src/entry-server.tsx"),
             },
           },
         })
