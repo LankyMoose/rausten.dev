@@ -4,7 +4,6 @@ import { read } from "to-vfile"
 import { matter } from "vfile-matter"
 import type { HotUpdateOptions, Plugin } from "vite"
 import { ANSI } from "./ansi"
-import { formatFilePath } from "../src/routes.utils"
 
 declare module "vfile" {
   interface DataMap {
@@ -94,4 +93,12 @@ export default function blogs(): Plugin {
       }, 250)
     },
   }
+}
+
+function formatFilePath(path: string) {
+  const parts = path
+    .split("/")
+    .filter((p) => !!p && !p.startsWith("(") && !p.endsWith(")"))
+  const routePath = parts.slice(2, -1).join("/") // omit /src/pages & filename
+  return `/${routePath}`
 }

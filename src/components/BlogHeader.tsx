@@ -1,17 +1,17 @@
 import blogManifest from "virtual:blog-manifest"
 import { Hero } from "./Hero"
-import { Head } from "./Head"
-import { useRouter } from "$/app"
+import { Head, useFileRouter } from "kiru/router"
 
 export function BlogHeader() {
-  const { path } = useRouter()
-  const { title, description, date } = blogManifest[path]
+  const router = useFileRouter()
+  const { title, description, date } = blogManifest[router.state.path]
+
   return (
     <>
-      <Head>
+      <Head.Content>
         <title>{`${title} - rausten.dev`}</title>
         <meta name="description" content={description} />
-      </Head>
+      </Head.Content>
       <section className="not-prose mb-6">
         <Hero
           sup={new Date(date).toDateString()}

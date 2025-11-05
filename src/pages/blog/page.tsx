@@ -1,19 +1,18 @@
-import { Link } from "$/components/Link"
 import { Hero } from "$/components/Hero"
-import { Head } from "$/components/Head"
 import Card from "$/components/Card"
 import { blogLinkData } from "./page.data"
+import { Head, Link } from "kiru/router"
 
 export default function Page() {
   return (
     <>
-      <Head>
+      <Head.Content>
         <title>Blog - rausten.dev</title>
         <meta
           name="description"
           content="The blog of the personal website of the person named Rob Austen"
         />
-      </Head>
+      </Head.Content>
       <section>
         <Hero heading="Blog" sub="Some random ramblings accompanied by code." />
       </section>

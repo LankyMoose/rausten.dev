@@ -1,10 +1,12 @@
-import { useRepos } from "$/hooks/useRepos"
 import Star from "./icons/star"
 import Card from "./Card"
+import { AsyncTaskState } from "kiru"
 
-export function RepoList() {
-  const repos = useRepos()
+interface RepoListProps {
+  repos: AsyncTaskState<Repository[]>
+}
 
+export function RepoList({ repos }: RepoListProps) {
   return (
     <section className="relative w-full flex items-center justify-center min-h-[200px]">
       {repos.error ? (

@@ -3,8 +3,8 @@ import Linkedin from "$/components/icons/linkedin"
 import Logo from "$/components/icons/logo"
 import Twitch from "$/components/icons/twitch"
 import X from "$/components/icons/x"
-import { Link } from "$/components/Link"
 import { SocialLink } from "$/components/SocialLink"
+import { Link } from "kiru/router"
 
 export default function Layout({ children }: { children: JSX.Children }) {
   return (

@@ -1,20 +1,20 @@
 import Card from "$/components/Card"
-import { Head } from "$/components/Head"
 import { Hero } from "$/components/Hero"
 import { lazy } from "kiru"
+import { Head } from "kiru/router"
 
 const ContactForm = lazy(() => import("$/components/ContactForm"))
 
 export default function Page() {
   return (
     <>
-      <Head>
+      <Head.Content>
         <title>Contact - rausten.dev</title>
         <meta
           name="description"
           content="Reach out to me if you have any questions, comments, or just want to say hi."
         />
-      </Head>
+      </Head.Content>
       <section>
         <Hero
           heading="Contact"
