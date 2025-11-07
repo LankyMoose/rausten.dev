@@ -23,6 +23,7 @@ export default defineConfig({
       providerImportSource: "$/hooks/useMdxComponents",
     }),
     kiru({
+      loggingEnabled: true,
       ssg: {
         page: "page.{tsx,mdx}",
         transition: true,
