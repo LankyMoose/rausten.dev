@@ -13,7 +13,7 @@
     "@mdx-js/rollup": "^3.1.0",
     "@tailwindcss/postcss": "^4.1.12",
     "@tailwindcss/typography": "^0.5.16",
-    "@tailwindcss/vite": "^4.1.12",
+    "@tailwindcss/vite": "^4.1.17",
     "@types/compression": "^1.8.1",
     "@types/express": "^5.0.3",
     "@types/grecaptcha": "^3.0.9",
@@ -31,8 +31,8 @@
     "typescript": "^5.9.2",
     "vfile": "^6.0.3",
     "vfile-matter": "^5.0.1",
-    "vite": "^7.1.2",
-    "vite-plugin-kiru": "0.29.10"
+    "vite": "^7.2.2",
+    "vite-plugin-kiru": "0.29.11"
   },
   "dependencies": {
     "kiru": "0.51.7"

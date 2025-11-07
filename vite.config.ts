@@ -26,6 +26,20 @@ export default defineConfig({
       ssg: {
         page: "page.{tsx,mdx}",
         transition: true,
+        sitemap: {
+          domain: "https://rausten.dev",
+          changefreq: "weekly",
+          overrides: {
+            "/": {
+              changefreq: "daily",
+              priority: 1,
+            },
+            "/blog": {
+              changefreq: "weekly",
+              priority: 0.9,
+            },
+          },
+        },
       },
     }),
   ],
