@@ -7,11 +7,11 @@ import Javascript from "$/components/icons/javascript"
 import Sql from "$/components/icons/sql"
 import Typescript from "$/components/icons/typescript"
 import { RepoList } from "$/components/RepoList"
-import { definePageConfig, Head, PageProps, RouterState } from "kiru/router"
+import { definePageConfig, Head, type PageProps } from "kiru/router"
 
 export const config = definePageConfig({
   loader: {
-    load: async ({ signal }: RouterState): Promise<Repository[]> => {
+    load: async ({ signal }): Promise<Repository[]> => {
       const base = "https://api.github.com"
       const headers = {
         "X-GitHub-Api-Version": "2022-11-28",

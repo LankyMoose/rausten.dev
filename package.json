@@ -25,10 +25,10 @@
     "vfile": "^6.0.3",
     "vfile-matter": "^5.0.1",
     "vite": "^7.2.2",
-    "vite-plugin-kiru": "0.29.11"
+    "vite-plugin-kiru": "0.30.0"
   },
   "dependencies": {
-    "kiru": "0.51.7"
+    "kiru": "0.52.1"
   },
   "overrides": {
     "rollup": "4.52.5"

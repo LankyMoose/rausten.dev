@@ -1,6 +1,6 @@
 import Star from "./icons/star"
 import Card from "./Card"
-import { AsyncTaskState } from "kiru"
+import type { AsyncTaskState } from "kiru"
 
 interface RepoListProps {
   repos: AsyncTaskState<Repository[]>
