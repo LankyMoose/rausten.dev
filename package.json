@@ -28,7 +28,7 @@
     "vite-plugin-kiru": "0.30.0"
   },
   "dependencies": {
-    "kiru": "0.52.2"
+    "kiru": "0.52.4"
   },
   "overrides": {
     "rollup": "4.52.5"
