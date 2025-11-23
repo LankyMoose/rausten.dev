@@ -1,4 +1,4 @@
-import type { ElementProps } from "kiru"
+import { ElementProps } from "kiru"
 
 export default (props: ElementProps<"svg">) => (
   <svg
@@ -13,8 +13,8 @@ export default (props: ElementProps<"svg">) => (
     stroke-linejoin="round"
     {...props}
   >
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect width="4" height="12" x="2" y="9" />
-    <circle cx="4" cy="4" r="2" />
+    <path d="M15 3h6v6" />
+    <path d="M10 14 21 3" />
+    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
   </svg>
 )

@@ -1,6 +1,8 @@
 import Star from "./icons/star"
 import Card from "./Card"
 import type { AsyncTaskState } from "kiru"
+import Github from "./icons/github"
+import ExternalLink from "./icons/external-link"
 
 interface RepoListProps {
   repos: AsyncTaskState<Repository[]>
@@ -40,17 +42,23 @@ function RepoListItem({ repo, idx }: RepoListItemProps) {
       className="md:basis-[calc(100%/2-1rem)]"
     >
       <Card.Header>
-        <a href={repo.html_url} target="_blank">
+        <span className="flex gap-2 items-center">
           {repo.name}
-        </a>
-        <a
-          className="flex items-center gap-2 text-neutral-300!"
-          href={repo.html_url + "/stargazers"}
-          target="_blank"
-        >
-          <Star />
-          {repo.stargazers_count}
-        </a>
+          {repo.homepage && !repo.homepage.includes("npmjs.com") && (
+            <a href={repo.homepage} target="_blank">
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          )}
+        </span>
+        <div className="flex gap-2 items-center">
+          <a href={repo.html_url} target="_blank">
+            <Github className="w-4 h-4" />
+          </a>
+          <span className="flex gap-1 items-center text-neutral-300!">
+            <Star className="w-3 h-3" />
+            <span className="text-xs">{repo.stargazers_count}</span>
+          </span>
+        </div>
       </Card.Header>
       <Card.Footer>{repo.description}</Card.Footer>
     </Card.Root>
@@ -67,7 +75,8 @@ function SkeletonItem({ idx }: SkeletonItemProps) {
       className="md:basis-[calc(100%/2-1rem)]"
     >
       <Card.Header className="flex justify-between gap-4 py-1">
-        <span className="w-full h-5 bg-neutral-800/50 animate-pulse"></span>
+        <span className="w-1/2 h-5 bg-neutral-800/50 animate-pulse"></span>
+        <span></span>
         <span className="w-14 h-5 bg-neutral-800/50 animate-pulse"></span>
       </Card.Header>
       <span className="w-full h-8 bg-neutral-800/50 animate-pulse"></span>

@@ -2,8 +2,8 @@ import type { ElementProps } from "kiru"
 
 export default (props: ElementProps<"svg">) => (
   <svg
-    stroke="#97cad4"
-    fill="#97cad4"
+    stroke="currentColor"
+    fill="currentColor"
     stroke-width="0"
     role="img"
     viewBox="0 0 24 24"
