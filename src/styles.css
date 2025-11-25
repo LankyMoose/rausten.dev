@@ -59,7 +59,7 @@ textarea {
 }
 
 #skills svg {
-  filter: grayscale(1);
+  filter: grayscale(0.5);
   transition: filter .3s;
   width: 100%;
   max-width: 100%;
