@@ -1,25 +1,22 @@
-import { useMemo } from "kiru"
-import { AnyFormFieldContext } from "kiru/form"
-import { capitalizeFirstLetter } from "./utils"
+import { Derive, Signal } from "kiru"
 
-export const FormFieldWrapper: Kiru.FC<{ field: AnyFormFieldContext }> = ({
-  field,
-  children,
-}) => {
-  const labelText = useMemo(() => {
-    return capitalizeFirstLetter(field.name)
-  }, [field.name])
-  return (
-    <div className="flex flex-col gap-1">
-      <div className="flex justify-between">
-        <label className="font-bold" htmlFor={field.name}>
-          {labelText}
-        </label>
-        {field.state.errors.length > 0 && (
-          <span className="text-red-400 text-sm">{field.state.errors[0]}</span>
-        )}
-      </div>
-      {children}
+export const FormFieldWrapper: Kiru.FC<{
+  for: string
+  label: string
+  error: Signal<string | null>
+  children: JSX.Children
+}> = ({ for: htmlFor, label, error, children }) => (
+  <div className="flex flex-col gap-1">
+    <div className="flex justify-between">
+      <label className="font-bold" htmlFor={htmlFor}>
+        {label}
+      </label>
+      <Derive from={error}>
+        {(error) =>
+          error && <span className="text-red-400 text-sm">{error}</span>
+        }
+      </Derive>
     </div>
-  )
-}
+    {children}
+  </div>
+)

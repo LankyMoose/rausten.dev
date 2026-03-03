@@ -1,4 +1,4 @@
-import { ElementProps } from "kiru"
+import type { ElementProps } from "kiru"
 
 export default (props: ElementProps<"svg">) => (
   <svg

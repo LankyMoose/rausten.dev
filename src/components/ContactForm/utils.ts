@@ -11,7 +11,3 @@ export const validateFieldValueLength = (
     return `${name} must be between ${minLength} and ${maxLength} characters long`
   }
 }
-
-export function capitalizeFirstLetter(string: string) {
-  return string.charAt(0).toUpperCase() + string.slice(1)
-}
