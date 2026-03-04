@@ -4,7 +4,9 @@ import { Head, useFileRouter } from "kiru/router"
 
 export function BlogHeader() {
   const router = useFileRouter()
-  const { title, description, date } = blogManifest[router.state.pathname.value]
+  const entry = blogManifest[router.state.pathname.value]
+  if (!entry) return null
+  const { title, description, date } = entry
 
   return (
     <>
