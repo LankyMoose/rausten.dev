@@ -1,4 +1,4 @@
-import { Derive, Signal } from "kiru"
+import { Show, Signal } from "kiru"
 
 export const FormFieldWrapper: Kiru.FC<{
   for: string
@@ -11,11 +11,9 @@ export const FormFieldWrapper: Kiru.FC<{
       <label className="font-bold" htmlFor={htmlFor}>
         {label}
       </label>
-      <Derive from={error}>
-        {(error) =>
-          error && <span className="text-red-400 text-sm">{error}</span>
-        }
-      </Derive>
+      <Show when={error}>
+        <span className="text-red-400 text-sm">{error}</span>
+      </Show>
     </div>
     {children}
   </div>

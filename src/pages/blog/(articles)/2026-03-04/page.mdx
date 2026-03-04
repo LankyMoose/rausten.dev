@@ -1,0 +1,240 @@
+---
+title: Making Web Development Easy Again
+description: How to build for the web in a sensible fashion, and why I built Kiru - a better framework for building UIs.
+date: 2026-03-04
+---
+
+I've been building [Kiru](https://kirujs.dev) for a couple years now. It started out as an aspirational venture of
+"can I make something like React, that's more deserving of the title 'framework'?" - even though React does not call itself a framework. It _is_
+known as a framework, though, due to how it coerces developers into building applications "the React way" - as loose as that is, it often
+means opting into sub-optimal rendering patterns and overly complicated logic flow.
+
+## Escaping the mess that transcends temporal bounds
+
+As much as possible, you should aim to build your app as independent state and features. While UI/UX might be all that users care about,
+**state** is the center of the universe for you, the developer.
+
+Building applications with decoupled state makes for rediculously simple reasoning and understanding of how the entire thing works.
+Your application doesn't _have_ to be formulated by a series of complicated sequences that bounce back and forth between renders:
+
+**_x changed_ -> _component updated_ -> _y updated_ -> _component updated again_ -> _z updated_ -> _finished_**
+
+You might laugh at this if you're an experienced React developer, but it's a pattern I've seen countless times.
+
+## Imperitive, easy-to-follow
+
+This is how the source code of (almost) _any_ web application should be described - after all, _web development is easy!_
+
+Unfortunately, that is often not the case. This isn't just a burn for React, but (most of) today's frameworks as a whole.
+
+So, how can we address this?
+
+## Web apps should be comprised of 3 simple things
+
+- **State**: the source of truth, and derivitives from it
+- **Features**: disposable, reusable, pure units of logic that can create state and interact with the UI
+- **UI**: _what_ we render, _when_ we render, and bindings to or from **state** & **features**
+
+Here's why this model shines: _most features can be made **completely** framework-independant_.
+That's good news for LLMs and agentic coding. It's also good news for developers; you can stop thinking about when renders or other
+miscellaneous things happen, and focus purely on the functionality that you're trying to provide.
+
+If your feature is meant to interact with the DOM, expose `init()` and `dispose` methods. This helps to keep things simple when it
+comes to dealing with rendering in multiple environments, too - SSR, SSG, CSR, can all reference the same implementation of features,
+but the feature can only ever initialize during CSR if it's called within an 'on DOM mounted' (or your framework's equivalent) hook.
+
+Discovering this model was the lightbulb moment that entirely shifted my perspective on how to build web apps, and ultimately shaped
+my criteria for what Kiru should be.
+
+## An intuitive, focussed set of features
+
+Kiru provides powerful reactive primitives that _work anywhere_:
+
+- **Signals**: state containers that hold arbitrary values that can be 'subscribed' to
+- **Computed Signals**: 'derived views' from other state values
+- **Effects**: a way to declaratively react to state changes
+
+```ts
+import { signal, computed, effect } from "kiru"
+
+const count = signal(0)
+const double = computed(() => count.value * 2)
+
+effect(() => console.log("double:", double.value))
+// "double: 0"
+
+count.value++ // "double: 1"
+count.value *= 42 // "double: 42"
+```
+
+The above becomes self-explanatory once you understand one simple concept: _reactivity where it matters, by way of **observation**_.
+Effects fire immediately, to ensure that they're able to observe dependencies and wire up an internal subscription. When an effect's
+dependencies change, the effect is queued to run via `queueMicrotask()`.
+
+To further prove the concept; consider the following:
+
+```ts
+const count = signal(0)
+const double = computed(() => {
+  console.log("computing 'double'")
+  return count.value * 2
+})
+
+count.value++
+// ... we didn't log anything.
+count.value++
+// ... we still didn't log anything.
+console.log(double.value) // or double.subscribe(() => {...})
+// "computing 'double'"
+// 4
+```
+
+## UI integration
+
+Kiru is not a compiler-driven framework, like Solid or Svelte. This is a design decision that stuck around since the beginning;
+_runtime-only apps are just easier to debug_.
+
+With Kiru, you define components that are either 'render only' or 'stateful', using JSX:
+
+```tsx
+// Render only: it can't create state, but it can observe and mutate it.
+const Counter = () => (
+  <button onclick={() => count.value++}>
+    Count: {count}
+  </button>
+)
+// Stateful - able to create local state & effects, and returns a 'render' function.
+const Counter = () => {
+  const count = signal(0)
+  
+  return () => (
+    <button onclick={() => count.value++}>
+      Count: {count}
+    </button>
+  )
+}
+```
+
+## Managing complexity & separation of concerns
+
+Let's take a look at an example:
+
+```tsx
+const ContactForm = () => {
+  const formValues = {
+    name: signal(""),
+    email: signal(""),
+    message: signal(""),
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    // ...    
+  }
+
+  return () => (
+    <form onsubmit={handleSubmit}>
+      <input bind:value={formValues.name} type="text" />
+      <input bind:value={formValues.email} type="email" />
+      <input bind:value={formValues.message} type="text" />
+      <button type="submit">Submit</button>
+    </form>
+  )
+}
+```
+
+This is a basic form implementation without any form of validation or error handling. Let's say we want to go ahead and implement 
+those things, as well as CSRF protection, recaptcha, etc. How can we build it in a way that's easy to reason about, reusable, _and_ easy to test?
+
+The solution: create a **feature** for managing the form:
+
+```tsx
+const createFormController = (opts) => {
+  // create state from initial values, set up validation, etc.
+  // ...
+  return {
+    init() {
+      // perform initialization logic
+    },
+    dispose() {
+      // perform cleanup
+    },
+  }
+}
+```
+
+And then use it in your components:
+```tsx
+const ContactForm = () => {
+  const form = createFormController({
+    initialValues: {...},
+    validators: {...},
+    plugins: [Recaptcha, CSRFProtection],
+    onSubmit: async (values) => {
+      // ...
+    },
+  })
+
+  // gets called after the component has rendered:
+  onMount(() => {
+    form.init()
+    return () => form.dispose()
+  })
+
+  return () => (
+    <form onsubmit={form.handleSubmit}>
+      <input bind:value={form.values.name} type="text" />
+      <Show when={form.errors.name}>
+        <span className="text-red-400">{form.errors.name}</span>
+      </Show>
+      .....
+      <button type="submit" disabled={form.isSubmitting}>Submit</button>
+    </form>
+  )
+}
+```
+
+The complexity of the form has been separated out into a feature that's easy to test, easy to reason about, and easy to reuse.
+The 'form controller' has _zero_ knowledge of how or when the form should be rendered, or how it should interact with the DOM.
+This is a big win for both the developer and the test writer.
+
+
+## Deriving state from props
+
+In Kiru, props are immutable and only exist during render. They are not reactive (unless a `Signal` is passed), and treating them 
+as such quickly leads to awkward patterns: manual diffing, render-time side effects, or state that resets unexpectedly.
+The `setup` function exists to solve this cleanly.
+
+During `setup`, you can explicitly derive state from props using the `derive` function:
+```tsx
+interface MyButtonProps {
+  count?: number
+}
+const MyButton: Kiru.FC<MyButtonProps> = () => {
+  const { derive } = setup<typeof MyButton>()
+
+  const timesClicked = derive((props) => props.count ?? 0)
+
+  return ({ children, ...props }) => (
+    <button {...props} onclick={() => (timesClicked.value++, props.onclick?.())}>
+      {children}
+      {timesClicked}
+    </button>
+  )
+}
+```
+
+`derive(fn)` creates a signal whose value is derived from props.
+When the result of fn(props) changes, the signal updates; otherwise, local mutations are preserved.
+
+This keeps props-driven behavior explicit, predictable, and out of the render path.
+
+## The bottom line
+
+Web development never _needed_ to be "made easy again" - it just got buried 
+under years of unnecessary complexity.
+
+Kiru is my attempt to dig it back out. State, features, UI - and a framework that actually stays in its lane.
+
+[Give it a try.](https://kirujs.dev) If it resonates, a ⭐ on [GitHub](https://github.com/kirujs/kiru) 
+means a lot.

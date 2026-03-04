@@ -74,3 +74,8 @@ textarea {
 .card {
   @apply p-4 bg-white/2.5 rounded-lg border border-white/5;
 }
+
+.prose code:before,
+.prose code:after {
+  content: ''
+}
