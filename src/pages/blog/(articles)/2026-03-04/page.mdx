@@ -207,7 +207,7 @@ The `setup` function exists to solve this cleanly.
 
 During `setup`, you can explicitly derive state from props using the `derive` function:
 ```tsx
-interface MyButtonProps {
+interface MyButtonProps extends ElementProps<"button"> {
   count?: number
 }
 const MyButton: Kiru.FC<MyButtonProps> = () => {
